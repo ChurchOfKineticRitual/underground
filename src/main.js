@@ -120,9 +120,37 @@ function llToXZ(lat, lon) {
   return { x: x * SCALE, z: -z * SCALE };
 }
 
+function buildOffsetCurvesFromCenterline(centerPts, halfSpacing = 1.0) {
+  // Create two offset polylines (left/right) in XZ plane.
+  // For each point, estimate tangent and take a perpendicular in XZ.
+  const left = [];
+  const right = [];
+
+  for (let i = 0; i < centerPts.length; i++) {
+    const p = centerPts[i];
+    const pPrev = centerPts[Math.max(0, i - 1)];
+    const pNext = centerPts[Math.min(centerPts.length - 1, i + 1)];
+
+    const tangent = new THREE.Vector3().subVectors(pNext, pPrev);
+    tangent.y = 0;
+    tangent.normalize();
+
+    // perpendicular in XZ: (x,z) -> (-z,x)
+    const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+
+    left.push(new THREE.Vector3().copy(p).addScaledVector(normal, halfSpacing));
+    right.push(new THREE.Vector3().copy(p).addScaledVector(normal, -halfSpacing));
+  }
+
+  return {
+    leftCurve: new THREE.CatmullRomCurve3(left),
+    rightCurve: new THREE.CatmullRomCurve3(right),
+  };
+}
+
 function addLineFromStopPoints(lineId, colour, stopPoints) {
   // stopPoints: [{lat, lon, name, id}]
-  const pts = stopPoints
+  const centerPts = stopPoints
     .filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon))
     .map(sp => {
       const { x, z } = llToXZ(sp.lat, sp.lon);
@@ -130,23 +158,36 @@ function addLineFromStopPoints(lineId, colour, stopPoints) {
       return new THREE.Vector3(x, -18, z);
     });
 
-  if (pts.length < 2) return null;
+  if (centerPts.length < 2) return null;
 
-  const curve = new THREE.CatmullRomCurve3(pts);
-  const geo = new THREE.TubeGeometry(curve, Math.max(80, pts.length * 10), 1.1, 10, false);
-  const mesh = new THREE.Mesh(geo, frostedTubeMaterial(colour));
-  mesh.userData.lineId = lineId;
-  scene.add(mesh);
+  const { leftCurve, rightCurve } = buildOffsetCurvesFromCenterline(centerPts, 1.15);
 
-  // moving "train" point (plausible regularity)
-  const train = new THREE.Mesh(
-    new THREE.SphereGeometry(0.65, 16, 16),
-    new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: new THREE.Color(colour), emissiveIntensity: 1.6 })
-  );
-  train.userData = { t: Math.random(), speed: 0.018 + Math.random() * 0.01, curve };
-  scene.add(train);
+  const segs = Math.max(80, centerPts.length * 10);
+  const radius = 0.95;
 
-  return { mesh, train };
+  const leftMesh = new THREE.Mesh(new THREE.TubeGeometry(leftCurve, segs, radius, 10, false), frostedTubeMaterial(colour));
+  const rightMesh = new THREE.Mesh(new THREE.TubeGeometry(rightCurve, segs, radius, 10, false), frostedTubeMaterial(colour));
+
+  leftMesh.userData.lineId = lineId;
+  rightMesh.userData.lineId = lineId;
+
+  scene.add(leftMesh, rightMesh);
+
+  function makeTrain(curve, phase = 0) {
+    const train = new THREE.Mesh(
+      new THREE.SphereGeometry(0.62, 16, 16),
+      new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: new THREE.Color(colour), emissiveIntensity: 1.6 })
+    );
+    train.userData = { t: (Math.random() + phase) % 1, speed: 0.018 + Math.random() * 0.01, curve };
+    scene.add(train);
+    return train;
+  }
+
+  // One train each way for MVP.
+  const trainA = makeTrain(leftCurve, 0.0);
+  const trainB = makeTrain(rightCurve, 0.5);
+
+  return { meshes: [leftMesh, rightMesh], trains: [trainA, trainB] };
 }
 
 const trains = [];
@@ -167,7 +208,7 @@ async function buildNetworkMvp() {
 
       const sps = longest?.stopPoint || [];
       const built = addLineFromStopPoints(id, colour, sps);
-      if (built) trains.push(built.train);
+      if (built) trains.push(...built.trains);
       console.log('built', id, 'stops', sps.length);
     }
 
