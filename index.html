@@ -8,6 +8,32 @@
       html, body { height: 100%; margin: 0; }
       body { background: #05070b; overflow: hidden; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
       #app { position: fixed; inset: 0; }
+
+      /* HTML overlay for station labels */
+      #station-overlay {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 10;
+      }
+      .station-label {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transform: translate(-9999px, -9999px);
+        padding: 2px 6px;
+        border-radius: 999px;
+        font-size: 11px;
+        line-height: 1.2;
+        color: rgba(255,255,255,0.92);
+        background: rgba(8, 12, 18, 0.55);
+        border: 1px solid rgba(255,255,255,0.12);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        white-space: nowrap;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+      }
+
       .hud {
         position: fixed; left: 12px; top: 12px; color: rgba(255,255,255,0.85);
         background: rgba(20, 24, 34, 0.35);
@@ -29,6 +55,7 @@
       <h1>UnderGround (MVP)</h1>
       <p>3D Tube network visualiser. Orbit: drag • Pan: right-drag/shift-drag • Zoom: wheel.</p>
       <p class="small">Data: TfL public endpoints (no auth). WIP: route geometry + frosted tubes + trains.</p>
+      <p class="small"><code>V</code>: Victoria stations • <code>L</code>: labels</p>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

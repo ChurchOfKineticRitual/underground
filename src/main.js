@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { fetchTubeLines, fetchRouteSequence } from './tfl.js';
 import { loadStationDepthAnchors, depthForStation } from './depth.js';
 import { tryCreateTerrainMesh } from './terrain.js';
+import { createStationMarkers } from './stations.js';
 
 // ---------- Scene ----------
 const app = document.getElementById('app');
@@ -213,6 +214,11 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors) {
 
 const trains = [];
 
+// Victoria station markers/labels
+let victoriaStationsLayer = null;
+let victoriaStationsVisible = true;
+let victoriaLabelsVisible = true;
+
 async function buildNetworkMvp() {
   try {
     const depthAnchors = await loadStationDepthAnchors();
@@ -237,6 +243,33 @@ async function buildNetworkMvp() {
       const built = addLineFromStopPoints(id, colour, sps, depthAnchors);
       if (built) trains.push(...built.trains);
       console.log('built', id, 'stops', sps.length);
+
+      // Victoria line station markers + labels (from TfL route sequence stop points)
+      if (id === 'victoria') {
+        const stations = sps
+          .filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon))
+          .map(sp => {
+            const { x, z } = llToXZ(sp.lat, sp.lon);
+            const depthM = depthForStation({ naptanId: sp.id, lineId: id, anchors: depthAnchors });
+            const y = -depthM * 0.6;
+            return {
+              id: sp.id,
+              name: sp.name,
+              pos: new THREE.Vector3(x, y, z),
+            };
+          });
+
+        victoriaStationsLayer?.dispose?.();
+        victoriaStationsLayer = createStationMarkers({
+          scene,
+          stations,
+          colour,
+          size: 0.55,
+          labels: true,
+        });
+        victoriaStationsLayer.setLabelsVisible(victoriaLabelsVisible);
+        victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+      }
     }
 
     // frame the camera roughly over the network
@@ -255,6 +288,19 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+// ---------- UI toggles ----------
+window.addEventListener('keydown', (e) => {
+  if (e.repeat) return;
+  if (e.key === 'v' || e.key === 'V') {
+    victoriaStationsVisible = !victoriaStationsVisible;
+    if (victoriaStationsLayer?.mesh) victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+  }
+  if (e.key === 'l' || e.key === 'L') {
+    victoriaLabelsVisible = !victoriaLabelsVisible;
+    victoriaStationsLayer?.setLabelsVisible?.(victoriaLabelsVisible);
+  }
+});
+
 // ---------- Animate ----------
 const clock = new THREE.Clock();
 function tick() {
@@ -267,6 +313,9 @@ function tick() {
     const pos = train.userData.curve.getPointAt(u);
     train.position.copy(pos);
   }
+
+  // Victoria station label projection
+  victoriaStationsLayer?.update?.({ camera, renderer });
 
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
