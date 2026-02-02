@@ -56,6 +56,11 @@
       <p>3D Tube network visualiser. Orbit: drag • Pan: right-drag/shift-drag • Zoom: wheel.</p>
       <p class="small">Data: TfL public endpoints (no auth). WIP: route geometry + frosted tubes + trains.</p>
       <p class="small"><code>V</code>: Victoria stations • <code>L</code>: labels</p>
+      <p class="small">
+        Time scale:
+        <input id="timeScale" type="range" min="0.5" max="30" value="8" step="0.5" style="vertical-align: middle; width: 160px;" />
+        <span id="timeScaleValue">8×</span>
+      </p>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

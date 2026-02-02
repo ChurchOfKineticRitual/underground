@@ -15,17 +15,37 @@ renderer.setClearColor(0x0b1020, 1);
 app.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0x0b1020, 120, 520);
+scene.fog = new THREE.Fog(0x0b1020, 2500, 15000);
 
-const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 2000);
-camera.position.set(0, 55, 120);
+const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 50000);
+camera.position.set(0, 900, 2200);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
 controls.target.set(0, 0, 0);
 controls.minDistance = 10;
-controls.maxDistance = 500;
+controls.maxDistance = 25000;
+
+// ---------- Simulation params ----------
+const sim = {
+  trains: [],
+  timeScale: 8, // 1 = real-time, >1 = sped up
+};
+
+// HUD time-scale control (optional)
+{
+  const el = document.getElementById('timeScale');
+  const out = document.getElementById('timeScaleValue');
+  if (el) {
+    const apply = () => {
+      sim.timeScale = Number(el.value) || 1;
+      if (out) out.textContent = `${sim.timeScale}×`;
+    };
+    el.addEventListener('input', apply);
+    apply();
+  }
+}
 
 // ---------- Lights ----------
 scene.add(new THREE.AmbientLight(0xffffff, 0.75));
@@ -39,7 +59,7 @@ scene.add(rim);
 
 // ---------- Ground (terrain if available, else transparent wireframe grid) ----------
 {
-  const grid = new THREE.GridHelper(900, 90, 0x6b7280, 0x334155);
+  const grid = new THREE.GridHelper(24000, 120, 0x6b7280, 0x334155);
   grid.position.y = -6;
   grid.material.transparent = true;
   grid.material.opacity = 0.25;
@@ -130,13 +150,19 @@ function frostedTubeMaterial(hex) {
   });
 }
 
-// crude geo projection: lon/lat -> x/z (metres-ish scaled) centred on London
+// Geo projection: lon/lat -> x/z in *metres* (local tangent plane-ish), centred on London.
+// This makes scene units ≈ metres, so train speeds and station spacing can feel real.
 const ORIGIN = { lat: 51.5074, lon: -0.1278 };
-const SCALE = 1200; // tweak for visual size
+const METRES_PER_DEG_LAT = 111_320;
+function metresPerDegLonAt(latDeg) {
+  return 111_320 * Math.cos(latDeg * Math.PI / 180);
+}
 function llToXZ(lat, lon) {
-  const x = (lon - ORIGIN.lon) * Math.cos(ORIGIN.lat * Math.PI / 180);
-  const z = (lat - ORIGIN.lat);
-  return { x: x * SCALE, z: -z * SCALE };
+  const dLon = lon - ORIGIN.lon;
+  const dLat = lat - ORIGIN.lat;
+  const x = dLon * metresPerDegLonAt(ORIGIN.lat);
+  const z = dLat * METRES_PER_DEG_LAT;
+  return { x, z: -z };
 }
 
 function buildOffsetCurvesFromCenterline(centerPts, halfSpacing = 1.0) {
@@ -167,7 +193,20 @@ function buildOffsetCurvesFromCenterline(centerPts, halfSpacing = 1.0) {
   };
 }
 
-function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors) {
+function stationUsFromPolyline(centerPts) {
+  // Convert station polyline vertices into approximate curve parameters u in [0,1]
+  // by using cumulative distances along the polyline.
+  let total = 0;
+  const cum = [0];
+  for (let i = 1; i < centerPts.length; i++) {
+    total += centerPts[i].distanceTo(centerPts[i - 1]);
+    cum.push(total);
+  }
+  if (total <= 0) return centerPts.map(() => 0);
+  return cum.map(d => d / total);
+}
+
+function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors, sim) {
   // stopPoints: [{lat, lon, name, id, naptanId?}]
   const centerPts = stopPoints
     .filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon))
@@ -175,17 +214,20 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors) {
       const { x, z } = llToXZ(sp.lat, sp.lon);
       // Depth: use station anchor if available, else heuristic by line.
       const depthM = depthForStation({ naptanId: sp.id, lineId, anchors: depthAnchors });
-      // Scale metres into our scene units (SCALE ~ 1200 per deg; just pick a vertical multiplier)
-      const y = -depthM * 0.6;
+      // Keep vertical axis in metres, but compress a bit for readability.
+      const VERTICAL_SCALE = 0.35; // 1.0 would be true metres
+      const y = -depthM * VERTICAL_SCALE;
       return new THREE.Vector3(x, y, z);
     });
 
   if (centerPts.length < 2) return null;
 
+  const stationUs = stationUsFromPolyline(centerPts).sort((a, b) => a - b);
+
   const { leftCurve, rightCurve } = buildOffsetCurvesFromCenterline(centerPts, 1.15);
 
   const segs = Math.max(80, centerPts.length * 10);
-  const radius = 0.95;
+  const radius = 4.5;
 
   const leftMesh = new THREE.Mesh(new THREE.TubeGeometry(leftCurve, segs, radius, 10, false), frostedTubeMaterial(colour));
   const rightMesh = new THREE.Mesh(new THREE.TubeGeometry(rightCurve, segs, radius, 10, false), frostedTubeMaterial(colour));
@@ -195,24 +237,49 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors) {
 
   scene.add(leftMesh, rightMesh);
 
-  function makeTrain(curve, phase = 0) {
+  function makeTrain(curve, phase = 0, dir = +1) {
     const train = new THREE.Mesh(
-      new THREE.SphereGeometry(0.62, 16, 16),
+      new THREE.SphereGeometry(2.1, 16, 16),
       new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: new THREE.Color(colour), emissiveIntensity: 1.6 })
     );
-    train.userData = { t: (Math.random() + phase) % 1, speed: 0.018 + Math.random() * 0.01, curve };
+
+    // Roughly-Tube-like motion:
+    // - line speeds typically ~30–50 km/h; include dwell at stations.
+    // - We treat scene units as metres, so these are m/s.
+    const cruiseMps = (lineId === 'victoria' ? 14.5 : 12.0); // ~52 km/h vs ~43 km/h
+    const dwellSec = 22;
+
+    const curveLengthM = curve.getLength();
+
+    train.userData = {
+      t: (Math.random() + phase) % 1,
+      curve,
+      dir,
+      curveLengthM,
+      stationUs,
+      nextStationIndex: dir === 1 ? 0 : stationUs.length - 1,
+      cruiseMps,
+      dwellSec,
+      // internal state
+      _pausedLeft: 0,
+    };
+
+    // Place initially
+    train.position.copy(curve.getPointAt(train.userData.t));
+
     scene.add(train);
+    sim.trains.push(train);
     return train;
   }
 
   // One train each way for MVP.
-  const trainA = makeTrain(leftCurve, 0.0);
-  const trainB = makeTrain(rightCurve, 0.5);
+  const trainA = makeTrain(leftCurve, 0.0, +1);
+  const trainB = makeTrain(rightCurve, 0.5, -1);
 
   return { meshes: [leftMesh, rightMesh], trains: [trainA, trainB] };
 }
 
-const trains = [];
+// (trains are kept in sim.trains)
 
 // Victoria station markers/labels
 let victoriaStationsLayer = null;
@@ -240,8 +307,7 @@ async function buildNetworkMvp() {
       , null);
 
       const sps = longest?.stopPoint || [];
-      const built = addLineFromStopPoints(id, colour, sps, depthAnchors);
-      if (built) trains.push(...built.trains);
+      addLineFromStopPoints(id, colour, sps, depthAnchors, sim);
       console.log('built', id, 'stops', sps.length);
 
       // Victoria line station markers + labels (from TfL route sequence stop points)
@@ -251,7 +317,8 @@ async function buildNetworkMvp() {
           .map(sp => {
             const { x, z } = llToXZ(sp.lat, sp.lon);
             const depthM = depthForStation({ naptanId: sp.id, lineId: id, anchors: depthAnchors });
-            const y = -depthM * 0.6;
+            const VERTICAL_SCALE = 0.35;
+            const y = -depthM * VERTICAL_SCALE;
             return {
               id: sp.id,
               name: sp.name,
@@ -273,7 +340,7 @@ async function buildNetworkMvp() {
     }
 
     // frame the camera roughly over the network
-    controls.target.set(0, -18, 0);
+    controls.target.set(0, -120, 0);
   } catch (e) {
     console.warn('Network build failed:', e);
   }
@@ -307,11 +374,46 @@ function tick() {
   const dt = clock.getDelta();
   controls.update();
 
-  for (const train of trains) {
-    const u = (train.userData.t + train.userData.speed * dt) % 1;
+  const simDt = dt * sim.timeScale;
+  for (const train of sim.trains) {
+    // dwell at stations
+    if (train.userData._pausedLeft > 0) {
+      train.userData._pausedLeft = Math.max(0, train.userData._pausedLeft - simDt);
+      continue;
+    }
+
+    const du = (train.userData.cruiseMps * simDt) / Math.max(1e-6, train.userData.curveLengthM);
+    let u = train.userData.t + train.userData.dir * du;
+
+    // wrap
+    if (u >= 1) u -= 1;
+    if (u < 0) u += 1;
+
+    // station arrival detection (very simple): if we crossed the next station u.
+    const stations = train.userData.stationUs;
+    if (stations.length > 0) {
+      const idx = train.userData.nextStationIndex;
+      const targetU = stations[idx];
+
+      const prevU = train.userData.t;
+      const crossed = train.userData.dir === 1
+        ? (prevU <= targetU && u >= targetU) || (prevU > u && (u >= targetU || prevU <= targetU))
+        : (prevU >= targetU && u <= targetU) || (prevU < u && (u <= targetU || prevU >= targetU));
+
+      if (crossed) {
+        u = targetU;
+        train.userData._pausedLeft = train.userData.dwellSec;
+        // advance station index
+        if (train.userData.dir === 1) {
+          train.userData.nextStationIndex = (idx + 1) % stations.length;
+        } else {
+          train.userData.nextStationIndex = (idx - 1 + stations.length) % stations.length;
+        }
+      }
+    }
+
     train.userData.t = u;
-    const pos = train.userData.curve.getPointAt(u);
-    train.position.copy(pos);
+    train.position.copy(train.userData.curve.getPointAt(u));
   }
 
   // Victoria station label projection
