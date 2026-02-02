@@ -95,13 +95,13 @@ const LINE_COLOURS = {
   central: 0xdc241f,
   circle: 0xffd300,
   district: 0x00782a,
-  hammersmithcity: 0xf3a9bb,
+  'hammersmith-city': 0xf3a9bb,
   jubilee: 0x868f98,
   metropolitan: 0x9b0056,
   northern: 0x000000,
   piccadilly: 0x0019a8,
   victoria: 0x0098d4,
-  waterloocity: 0x93ceba,
+  'waterloo-city': 0x93ceba,
 };
 
 function frostedTubeMaterial(hex) {
@@ -205,7 +205,12 @@ const trains = [];
 async function buildNetworkMvp() {
   try {
     const lines = await fetchTubeLines();
-    const wanted = ['central', 'jubilee', 'northern', 'victoria', 'piccadilly'];
+    // Render all TfL tube lines we know about (TfL ids include hyphens for some lines)
+    const wanted = [
+      'bakerloo','central','circle','district','hammersmith-city',
+      'jubilee','metropolitan','northern','piccadilly','victoria','waterloo-city'
+    ];
+
     for (const id of wanted) {
       const colour = LINE_COLOURS[id] ?? 0xffffff;
       const seq = await fetchRouteSequence(id);
