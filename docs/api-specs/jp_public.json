@@ -1,0 +1,62 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API JPlive Public",
+        "description": "STOPSTRUCTURE_REQUEST provides data about the internal structure of a station, stop, pier or other stop point. In other words, it includes data about entrances, concourses, ticket halls and platforms, as well as possible interchanges between these areas.",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://api.tfl.gov.uk/jp_public"
+        }
+    ],
+    "paths": {
+        "/api10/XML_STOPSTRUCTURE_REQUEST": {
+            "get": {
+                "summary": "api XML stop structure request",
+                "description": "Stop Structure request API",
+                "operationId": "api-xml-stop-structure-request",
+                "parameters": [
+                    {
+                        "name": "sSStopNr",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "enum": [
+                                "940GZZLUSJP"
+                            ],
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "apiKeyHeader": {
+                "type": "apiKey",
+                "name": "app_key",
+                "in": "header"
+            },
+            "apiKeyQuery": {
+                "type": "apiKey",
+                "name": "app_key",
+                "in": "query"
+            }
+        }
+    },
+    "security": [
+        {
+            "apiKeyHeader": []
+        },
+        {
+            "apiKeyQuery": []
+        }
+    ]
+}
