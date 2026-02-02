@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { fetchTubeLines, fetchRouteSequence } from './tfl.js';
 
 // ---------- Scene ----------
 const app = document.getElementById('app');
@@ -77,93 +78,107 @@ scene.add(rim);
   scene.add(mesh);
 }
 
-// ---------- Tube lines (placeholder) ----------
+// ---------- Tube lines (real TfL route sequences) ----------
+// Brand-ish colours (can refine later)
 const LINE_COLOURS = {
+  bakerloo: 0xb36305,
   central: 0xdc241f,
+  circle: 0xffd300,
+  district: 0x00782a,
+  hammersmithcity: 0xf3a9bb,
   jubilee: 0x868f98,
+  metropolitan: 0x9b0056,
   northern: 0x000000,
   piccadilly: 0x0019a8,
   victoria: 0x0098d4,
+  waterloocity: 0x93ceba,
 };
 
 function frostedTubeMaterial(hex) {
   return new THREE.MeshPhysicalMaterial({
     color: hex,
     transparent: true,
-    opacity: 0.38,
-    roughness: 0.35,
+    opacity: 0.42,
+    roughness: 0.45,
     metalness: 0.0,
-    transmission: 0.85,
-    thickness: 0.7,
-    ior: 1.25,
-    clearcoat: 0.25,
-    clearcoatRoughness: 0.55,
+    transmission: 0.82,
+    thickness: 0.9,
+    ior: 1.28,
+    clearcoat: 0.22,
+    clearcoatRoughness: 0.6,
     emissive: new THREE.Color(hex),
-    emissiveIntensity: 0.12,
+    emissiveIntensity: 0.10,
   });
 }
 
-function addDemoLine({ id, colour, points }) {
-  const curve = new THREE.CatmullRomCurve3(points.map(p => new THREE.Vector3(p[0], p[1], p[2])));
-  const geo = new THREE.TubeGeometry(curve, 220, 1.4, 12, false);
+// crude geo projection: lon/lat -> x/z (metres-ish scaled) centred on London
+const ORIGIN = { lat: 51.5074, lon: -0.1278 };
+const SCALE = 1200; // tweak for visual size
+function llToXZ(lat, lon) {
+  const x = (lon - ORIGIN.lon) * Math.cos(ORIGIN.lat * Math.PI / 180);
+  const z = (lat - ORIGIN.lat);
+  return { x: x * SCALE, z: -z * SCALE };
+}
+
+function addLineFromStopPoints(lineId, colour, stopPoints) {
+  // stopPoints: [{lat, lon, name, id}]
+  const pts = stopPoints
+    .filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon))
+    .map(sp => {
+      const { x, z } = llToXZ(sp.lat, sp.lon);
+      // push underground a bit (negative y)
+      return new THREE.Vector3(x, -18, z);
+    });
+
+  if (pts.length < 2) return null;
+
+  const curve = new THREE.CatmullRomCurve3(pts);
+  const geo = new THREE.TubeGeometry(curve, Math.max(80, pts.length * 10), 1.1, 10, false);
   const mesh = new THREE.Mesh(geo, frostedTubeMaterial(colour));
-  mesh.userData.lineId = id;
+  mesh.userData.lineId = lineId;
   scene.add(mesh);
 
-  // a moving "train" point
+  // moving "train" point (plausible regularity)
   const train = new THREE.Mesh(
-    new THREE.SphereGeometry(0.8, 16, 16),
-    new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: new THREE.Color(colour), emissiveIntensity: 1.4 })
+    new THREE.SphereGeometry(0.65, 16, 16),
+    new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: new THREE.Color(colour), emissiveIntensity: 1.6 })
   );
-  train.userData = { t: Math.random(), speed: 0.02 + Math.random() * 0.02, curve };
+  train.userData = { t: Math.random(), speed: 0.018 + Math.random() * 0.01, curve };
   scene.add(train);
 
   return { mesh, train };
 }
 
 const trains = [];
-trains.push(
-  addDemoLine({
-    id: 'central',
-    colour: LINE_COLOURS.central,
-    points: [
-      [-80, -2, 12],
-      [-45, -8, 6],
-      [-10, -14, 2],
-      [22, -18, -10],
-      [55, -16, -22],
-      [85, -10, -35],
-    ],
-  }).train
-);
 
-trains.push(
-  addDemoLine({
-    id: 'jubilee',
-    colour: LINE_COLOURS.jubilee,
-    points: [
-      [-65, -10, 30],
-      [-35, -18, 18],
-      [-6, -22, 10],
-      [20, -20, 6],
-      [52, -14, 0],
-      [86, -12, -8],
-    ],
-  }).train
-);
-
-// ---------- TfL fetch (sanity check only) ----------
-async function tflSanity() {
+async function buildNetworkMvp() {
   try {
-    const res = await fetch('https://api.tfl.gov.uk/Line/Mode/tube');
-    if (!res.ok) throw new Error(`TfL HTTP ${res.status}`);
-    const lines = await res.json();
-    console.log('TfL tube lines:', lines.map(l => l.id));
+    const lines = await fetchTubeLines();
+    const wanted = ['central', 'jubilee', 'northern', 'victoria', 'piccadilly'];
+    for (const id of wanted) {
+      const colour = LINE_COLOURS[id] ?? 0xffffff;
+      const seq = await fetchRouteSequence(id);
+
+      // Pick the longest stopPointSequence as our MVP spine
+      const sequences = seq.stopPointSequences || [];
+      const longest = sequences.reduce((best, cur) =>
+        (!best || (cur.stopPoint?.length || 0) > (best.stopPoint?.length || 0)) ? cur : best
+      , null);
+
+      const sps = longest?.stopPoint || [];
+      const built = addLineFromStopPoints(id, colour, sps);
+      if (built) trains.push(built.train);
+      console.log('built', id, 'stops', sps.length);
+    }
+
+    // frame the camera roughly over the network
+    controls.target.set(0, -18, 0);
   } catch (e) {
-    console.warn('TfL fetch failed (ok for now):', e);
+    console.warn('Network build failed (will show placeholders only):', e);
   }
 }
-tflSanity();
+
+buildNetworkMvp();
 
 // ---------- Resize ----------
 window.addEventListener('resize', () => {
