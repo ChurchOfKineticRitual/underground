@@ -194,6 +194,14 @@ const LINE_COLOURS = {
   'waterloo-city': 0x93ceba,
 };
 
+// Track line groups so we can toggle visibility.
+const lineGroups = new Map();
+function setLineVisible(lineId, visible) {
+  const g = lineGroups.get(lineId);
+  if (!g) return;
+  g.visible = visible;
+}
+
 function frostedTubeMaterial(hex) {
   return new THREE.MeshPhysicalMaterial({
     color: hex,
@@ -292,6 +300,11 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors, sim) {
 
   if (centerPts.length < 2) return null;
 
+  const group = new THREE.Group();
+  group.name = `line:${lineId}`;
+  lineGroups.set(lineId, group);
+  scene.add(group);
+
   const stationUs = stationUsFromPolyline(centerPts).sort((a, b) => a - b);
 
   const { leftCurve, rightCurve } = buildOffsetCurvesFromCenterline(centerPts, 1.15);
@@ -305,7 +318,7 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors, sim) {
   leftMesh.userData.lineId = lineId;
   rightMesh.userData.lineId = lineId;
 
-  scene.add(leftMesh, rightMesh);
+  group.add(leftMesh, rightMesh);
 
   function makeTrain(curve, phase = 0, dir = +1) {
     const train = new THREE.Mesh(
@@ -337,7 +350,7 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors, sim) {
     // Place initially
     train.position.copy(curve.getPointAt(train.userData.t));
 
-    scene.add(train);
+    group.add(train);
     sim.trains.push(train);
     return train;
   }
@@ -346,7 +359,7 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors, sim) {
   const trainA = makeTrain(leftCurve, 0.0, +1);
   const trainB = makeTrain(rightCurve, 0.5, -1);
 
-  return { meshes: [leftMesh, rightMesh], trains: [trainA, trainB] };
+  return { group, meshes: [leftMesh, rightMesh], trains: [trainA, trainB] };
 }
 
 // (trains are kept in sim.trains)
@@ -366,6 +379,45 @@ async function buildNetworkMvp() {
       'bakerloo','central','circle','district','hammersmith-city',
       'jubilee','metropolitan','northern','piccadilly','victoria','waterloo-city'
     ];
+
+    // Build UI toggles
+    {
+      const wrap = document.getElementById('lineToggles');
+      if (wrap) {
+        wrap.innerHTML = '';
+        for (const id of wanted) {
+          const label = document.createElement('label');
+          label.style.display = 'flex';
+          label.style.alignItems = 'center';
+          label.style.gap = '6px';
+          label.style.userSelect = 'none';
+
+          const cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.checked = true;
+          cb.addEventListener('change', () => {
+            setLineVisible(id, cb.checked);
+          });
+
+          const swatch = document.createElement('span');
+          swatch.style.display = 'inline-block';
+          swatch.style.width = '10px';
+          swatch.style.height = '10px';
+          swatch.style.borderRadius = '999px';
+          swatch.style.background = `#${(LINE_COLOURS[id] ?? 0xffffff).toString(16).padStart(6, '0')}`;
+          swatch.style.border = '1px solid rgba(255,255,255,0.22)';
+
+          const text = document.createElement('span');
+          text.textContent = id.replace(/-/g, ' ');
+          text.style.opacity = '0.9';
+
+          label.appendChild(cb);
+          label.appendChild(swatch);
+          label.appendChild(text);
+          wrap.appendChild(label);
+        }
+      }
+    }
 
     for (const id of wanted) {
       const colour = LINE_COLOURS[id] ?? 0xffffff;

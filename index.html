@@ -76,6 +76,7 @@
       <p>3D Tube network visualiser. Orbit: drag • Pan: right-drag/shift-drag • Zoom: wheel.</p>
       <p class="small">Data: TfL public endpoints (no auth). Cached for stability; works offline after first load.</p>
       <p class="small"><code>V</code>: Victoria stations • <code>L</code>: labels</p>
+
       <p class="small">
         Time scale:
         <input id="timeScale" type="range" min="0.5" max="30" value="8" step="0.5" style="vertical-align: middle; width: 160px;" />
@@ -91,6 +92,11 @@
         <input id="horizontalScale" type="range" min="0.01" max="1" value="1" step="0.01" style="vertical-align: middle; width: 160px;" />
         <span id="horizontalScaleValue">1.00×</span>
       </p>
+
+      <div class="small" style="margin-top:8px;">
+        <div style="font-weight:600; opacity:0.9; margin-bottom:4px;">Lines</div>
+        <div id="lineToggles" style="display:grid; grid-template-columns: 1fr 1fr; gap:4px 10px;"></div>
+      </div>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
