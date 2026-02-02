@@ -31,7 +31,8 @@ controls.maxDistance = 25000;
 const sim = {
   trains: [],
   timeScale: 8, // 1 = real-time, >1 = sped up
-  verticalScale: 1.2, // multiplies metres of depth into scene units (metres)
+  verticalScale: 3.0, // multiplies metres of depth into scene units
+  horizontalScale: 1.0, // multiplies metres of x/z into scene units
 };
 
 // HUD controls (optional)
@@ -56,6 +57,18 @@ const sim = {
     };
     vEl.addEventListener('input', applyV);
     applyV();
+  }
+
+  const hEl = document.getElementById('horizontalScale');
+  const hOut = document.getElementById('horizontalScaleValue');
+  if (hEl) {
+    const applyH = () => {
+      sim.horizontalScale = Number(hEl.value) || 1;
+      if (hOut) hOut.textContent = `${sim.horizontalScale.toFixed(2)}×`;
+      // Note: requires refresh (rebuild network) to fully apply; in MVP we keep it as a debug aid.
+    };
+    hEl.addEventListener('input', applyH);
+    applyH();
   }
 }
 
@@ -172,8 +185,8 @@ function metresPerDegLonAt(latDeg) {
 function llToXZ(lat, lon) {
   const dLon = lon - ORIGIN.lon;
   const dLat = lat - ORIGIN.lat;
-  const x = dLon * metresPerDegLonAt(ORIGIN.lat);
-  const z = dLat * METRES_PER_DEG_LAT;
+  const x = dLon * metresPerDegLonAt(ORIGIN.lat) * sim.horizontalScale;
+  const z = dLat * METRES_PER_DEG_LAT * sim.horizontalScale;
   return { x, z: -z };
 }
 
