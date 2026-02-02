@@ -8,11 +8,11 @@ const app = document.getElementById('app');
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x05070b, 1);
+renderer.setClearColor(0x0b1020, 1);
 app.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0x05070b, 40, 220);
+scene.fog = new THREE.Fog(0x0b1020, 120, 520);
 
 const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 2000);
 camera.position.set(0, 55, 120);
@@ -25,12 +25,12 @@ controls.minDistance = 10;
 controls.maxDistance = 500;
 
 // ---------- Lights ----------
-scene.add(new THREE.AmbientLight(0xffffff, 0.35));
-const key = new THREE.DirectionalLight(0xffffff, 0.9);
+scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+const key = new THREE.DirectionalLight(0xffffff, 1.2);
 key.position.set(40, 120, 30);
 scene.add(key);
 
-const rim = new THREE.DirectionalLight(0x9bd6ff, 0.4);
+const rim = new THREE.DirectionalLight(0x9bd6ff, 0.65);
 rim.position.set(-60, 80, -40);
 scene.add(rim);
 
@@ -38,9 +38,9 @@ scene.add(rim);
 {
   const geo = new THREE.PlaneGeometry(800, 800, 1, 1);
   const mat = new THREE.MeshPhongMaterial({
-    color: 0x070a12,
-    shininess: 10,
-    specular: 0x0b1a2a,
+    color: 0x111a2d,
+    shininess: 18,
+    specular: 0x1b3b66,
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.rotation.x = -Math.PI / 2;
