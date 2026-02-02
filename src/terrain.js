@@ -6,7 +6,8 @@ export async function tryCreateTerrainMesh() {
   // - /data/terrain/london_height_u16.png
   // - /data/terrain/london_height.json
   try {
-    const metaRes = await fetch('/data/terrain/london_height.json', { cache: 'no-store' });
+    // Prefer Victoria AOI heightmap for now.
+    const metaRes = await fetch('/data/terrain/victoria_dtm_u16.json', { cache: 'no-store' });
     if (!metaRes.ok) return null;
     const meta = await metaRes.json();
 
@@ -20,11 +21,11 @@ export async function tryCreateTerrainMesh() {
     const widthM = xmax - xmin;
     const heightM = ymax - ymin;
 
-    // NOTE: Our scene currently uses a rough lat/lon projection scaling, not EPSG:27700.
-    // For now we just create a local terrain plane for visual relief and tune scale by eye.
-    // Next step: unify coordinates (convert station positions to EPSG:27700 meters).
+    // Our scene x/z are in local metres from ORIGIN (WGS84 tangent plane-ish).
+    // The heightmap is in EPSG:27700 metres. We'll use it *visually* for now:
+    // render a displaced plane roughly under the network.
 
-    const size = 900; // match existing grid plane size
+    const size = 24000; // match grid size
     const segments = 256;
 
     const geom = new THREE.PlaneGeometry(size, size, segments, segments);
@@ -37,10 +38,9 @@ export async function tryCreateTerrainMesh() {
       transparent: true,
       opacity: 0.10,
       displacementMap: tex,
-      displacementScale: 18,
-      displacementBias: -9,
+      displacementScale: 60,
+      displacementBias: -30,
       wireframe: true,
-      wireframeLinewidth: 1,
     });
 
     const mesh = new THREE.Mesh(geom, mat);
