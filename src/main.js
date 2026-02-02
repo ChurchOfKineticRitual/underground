@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { fetchTubeLines, fetchRouteSequence } from './tfl.js';
+import { loadStationDepthAnchors, depthForStation } from './depth.js';
 
 // ---------- Scene ----------
 const app = document.getElementById('app');
@@ -158,14 +159,17 @@ function buildOffsetCurvesFromCenterline(centerPts, halfSpacing = 1.0) {
   };
 }
 
-function addLineFromStopPoints(lineId, colour, stopPoints) {
-  // stopPoints: [{lat, lon, name, id}]
+function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors) {
+  // stopPoints: [{lat, lon, name, id, naptanId?}]
   const centerPts = stopPoints
     .filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon))
     .map(sp => {
       const { x, z } = llToXZ(sp.lat, sp.lon);
-      // push underground a bit (negative y)
-      return new THREE.Vector3(x, -18, z);
+      // Depth: use station anchor if available, else heuristic by line.
+      const depthM = depthForStation({ naptanId: sp.id, lineId, anchors: depthAnchors });
+      // Scale metres into our scene units (SCALE ~ 1200 per deg; just pick a vertical multiplier)
+      const y = -depthM * 0.6;
+      return new THREE.Vector3(x, y, z);
     });
 
   if (centerPts.length < 2) return null;
@@ -204,7 +208,8 @@ const trains = [];
 
 async function buildNetworkMvp() {
   try {
-    const lines = await fetchTubeLines();
+    const depthAnchors = await loadStationDepthAnchors();
+
     // Render all TfL tube lines we know about (TfL ids include hyphens for some lines)
     const wanted = [
       'bakerloo','central','circle','district','hammersmith-city',
@@ -215,14 +220,14 @@ async function buildNetworkMvp() {
       const colour = LINE_COLOURS[id] ?? 0xffffff;
       const seq = await fetchRouteSequence(id);
 
-      // Pick the longest stopPointSequence as our MVP spine
+      // MVP: pick the longest stopPointSequence as our route spine
       const sequences = seq.stopPointSequences || [];
       const longest = sequences.reduce((best, cur) =>
         (!best || (cur.stopPoint?.length || 0) > (best.stopPoint?.length || 0)) ? cur : best
       , null);
 
       const sps = longest?.stopPoint || [];
-      const built = addLineFromStopPoints(id, colour, sps);
+      const built = addLineFromStopPoints(id, colour, sps, depthAnchors);
       if (built) trains.push(...built.trains);
       console.log('built', id, 'stops', sps.length);
     }
@@ -230,7 +235,7 @@ async function buildNetworkMvp() {
     // frame the camera roughly over the network
     controls.target.set(0, -18, 0);
   } catch (e) {
-    console.warn('Network build failed (will show placeholders only):', e);
+    console.warn('Network build failed:', e);
   }
 }
 

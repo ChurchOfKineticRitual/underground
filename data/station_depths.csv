@@ -1,0 +1,13 @@
+# UnderGround station/platform depth anchors
+#
+# Goal: provide Z anchors for a depth-aware network model.
+#
+# Notes:
+# - There is no single open official dataset with platform depths for the entire Underground.
+# - This table is intended to be curated over time with citations.
+# - depth_m is "metres below ground" (positive number). If unknown, leave blank.
+# - Prefer NaPTAN station ids (TfL uses these as naptanId for Tube stations, e.g. 940GZZLUOXC).
+#
+# Columns:
+# naptan_id,name,depth_m,source_url,notes
+naptan_id,name,depth_m,source_url,notes
