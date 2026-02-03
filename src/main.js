@@ -336,9 +336,20 @@ function normalizeLineId(id) {
   return String(id || '').trim().toLowerCase().replace(/\s+/g, '-');
 }
 
+function brightenIfTooDark(hex, { minLuma = 0.08, floor = 0x2a2a2a } = {}) {
+  const c = new THREE.Color(hex);
+  // Relative luminance-ish (linear RGB); good enough for UI visibility decisions.
+  const luma = 0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b;
+  if (luma >= minLuma) return { base: hex, emissive: hex };
+  // For very dark colours (e.g. Northern line black), keep base colour but
+  // lift emissive so the geometry remains readable.
+  return { base: hex, emissive: floor };
+}
+
 function frostedTubeMaterial(hex) {
+  const { base, emissive } = brightenIfTooDark(hex);
   return new THREE.MeshPhysicalMaterial({
-    color: hex,
+    color: base,
     transparent: true,
     opacity: 0.42,
     roughness: 0.45,
@@ -348,7 +359,7 @@ function frostedTubeMaterial(hex) {
     ior: 1.28,
     clearcoat: 0.22,
     clearcoatRoughness: 0.6,
-    emissive: new THREE.Color(hex),
+    emissive: new THREE.Color(emissive),
     emissiveIntensity: 0.10,
   });
 }
@@ -885,11 +896,14 @@ window.addEventListener('resize', () => {
     if (!lineId) return;
     const meshes = lineMeshesById.get(lineId);
     if (!meshes) return;
+
+    // Make hover state clearly visible even for very dark lines (Northern).
+    const isVeryDark = (lineId === 'northern');
     for (const m of meshes) {
       if (!m?.material) continue;
-      m.material.emissiveIntensity = 0.22;
-      m.material.opacity = 0.62;
-      m.material.thickness = 1.25;
+      m.material.emissiveIntensity = isVeryDark ? 0.55 : 0.22;
+      m.material.opacity = 0.70;
+      m.material.thickness = 1.35;
     }
   }
 
