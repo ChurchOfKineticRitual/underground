@@ -661,67 +661,85 @@ async function buildNetworkMvp() {
       }
     }
 
+    const failed = [];
+    let loadedCount = 0;
+
     for (const id of wanted) {
-      const colour = LINE_COLOURS[id] ?? 0xffffff;
+      setNetStatus({ kind: 'warn', text: `Loading TfL route sequences… (${loadedCount}/${wanted.length})` });
 
-      // Prefer live fetch, but allow cached fallback for robustness.
-      // (fetchRouteSequence internally falls back to cache on network error.)
-      let seq;
       try {
-        seq = await fetchRouteSequence(id, { ttlMs: 24 * 60 * 60 * 1000, useCache: true, preferCache: false });
-      } catch (err) {
-        // If we fail here, retry preferring cache explicitly (covers cases where
-        // the first throw happened before fallback due to a parse error etc.)
-        usedCacheFallback = true;
-        seq = await fetchRouteSequence(id, { ttlMs: 7 * 24 * 60 * 60 * 1000, useCache: true, preferCache: true });
-      }
+        const colour = LINE_COLOURS[id] ?? 0xffffff;
 
-      const sequences = seq.stopPointSequences || [];
-      const longest = sequences.reduce((best, cur) =>
-        (!best || (cur.stopPoint?.length || 0) > (best.stopPoint?.length || 0)) ? cur : best
-      , null);
+        // Prefer live fetch, but allow cached fallback for robustness.
+        // (fetchRouteSequence internally falls back to cache on network error.)
+        let seq;
+        try {
+          seq = await fetchRouteSequence(id, { ttlMs: 24 * 60 * 60 * 1000, useCache: true, preferCache: false });
+        } catch (err) {
+          // If we fail here, retry preferring cache explicitly (covers cases where
+          // the first throw happened before fallback due to a parse error etc.)
+          usedCacheFallback = true;
+          seq = await fetchRouteSequence(id, { ttlMs: 7 * 24 * 60 * 60 * 1000, useCache: true, preferCache: true });
+        }
 
-      const sps = longest?.stopPoint || [];
-      const ds = debugDepthStats({ lineId: id, stopPoints: sps, anchors: depthAnchors });
-      addLineFromStopPoints(id, colour, sps, depthAnchors, sim);
-      setLineVisible(id, (initialLineVisibility[id] ?? true) !== false);
-      console.log('built', id, 'stops', sps.length, 'depth[m] min/max', ds.min, ds.max);
+        const sequences = seq.stopPointSequences || [];
+        const longest = sequences.reduce((best, cur) =>
+          (!best || (cur.stopPoint?.length || 0) > (best.stopPoint?.length || 0)) ? cur : best
+        , null);
 
-      // Victoria line station markers + labels (from TfL route sequence stop points)
-      if (id === 'victoria') {
-        const stations = sps
-          .filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon))
-          .map(sp => {
-            const { x, z } = llToXZ(sp.lat, sp.lon);
-            const depthM = depthForStation({ naptanId: sp.id, lineId: id, anchors: depthAnchors });
-            const y = -depthM * sim.verticalScale;
-            return {
-              id: sp.id,
-              name: sp.name,
-              pos: new THREE.Vector3(x, y, z),
-            };
+        const sps = longest?.stopPoint || [];
+        const ds = debugDepthStats({ lineId: id, stopPoints: sps, anchors: depthAnchors });
+        addLineFromStopPoints(id, colour, sps, depthAnchors, sim);
+        setLineVisible(id, (initialLineVisibility[id] ?? true) !== false);
+        console.log('built', id, 'stops', sps.length, 'depth[m] min/max', ds.min, ds.max);
+
+        // Victoria line station markers + labels (from TfL route sequence stop points)
+        if (id === 'victoria') {
+          const stations = sps
+            .filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon))
+            .map(sp => {
+              const { x, z } = llToXZ(sp.lat, sp.lon);
+              const depthM = depthForStation({ naptanId: sp.id, lineId: id, anchors: depthAnchors });
+              const y = -depthM * sim.verticalScale;
+              return {
+                id: sp.id,
+                name: sp.name,
+                pos: new THREE.Vector3(x, y, z),
+              };
+            });
+
+          victoriaStationsLayer?.dispose?.();
+          victoriaStationsLayer = createStationMarkers({
+            scene,
+            stations,
+            colour,
+            size: 0.55,
+            labels: true,
           });
+          victoriaStationsLayer.setLabelsVisible(victoriaLabelsVisible);
+          victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
 
-        victoriaStationsLayer?.dispose?.();
-        victoriaStationsLayer = createStationMarkers({
-          scene,
-          stations,
-          colour,
-          size: 0.55,
-          labels: true,
-        });
-        victoriaStationsLayer.setLabelsVisible(victoriaLabelsVisible);
-        victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+          // Keep HUD checkboxes in sync (in case build happens after user toggled)
+          const stCb = document.getElementById('victoriaStations');
+          if (stCb) stCb.checked = victoriaStationsVisible;
+          const lbCb = document.getElementById('victoriaLabels');
+          if (lbCb) lbCb.checked = victoriaLabelsVisible;
+        }
 
-        // Keep HUD checkboxes in sync (in case build happens after user toggled)
-        const stCb = document.getElementById('victoriaStations');
-        if (stCb) stCb.checked = victoriaStationsVisible;
-        const lbCb = document.getElementById('victoriaLabels');
-        if (lbCb) lbCb.checked = victoriaLabelsVisible;
+        loadedCount++;
+      } catch (e) {
+        console.warn('Failed to build line', id, e);
+        failed.push(id);
       }
     }
 
-    if (navigator.onLine === false) {
+    // Summary status
+    if (failed.length) {
+      setNetStatus({
+        kind: 'warn',
+        text: `Loaded ${loadedCount}/${wanted.length} lines (failed: ${failed.slice(0, 3).join(', ')}${failed.length > 3 ? '…' : ''})`,
+      });
+    } else if (navigator.onLine === false) {
       setNetStatus({ kind: 'warn', text: 'Offline mode (using cached TfL data if available)' });
     } else if (usedCacheFallback) {
       setNetStatus({ kind: 'warn', text: 'TfL unstable — using cached data' });
