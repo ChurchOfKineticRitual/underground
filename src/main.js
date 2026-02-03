@@ -100,6 +100,7 @@ const urlFocusLine = getUrlStringParam('focus');
 
 const sim = {
   trains: [],
+  paused: prefs.paused ?? false,
   // 1 = real-time, >1 = sped up
   timeScale: urlTimeScale ?? (prefs.timeScale ?? 8),
   verticalScale: urlVerticalScale ?? (prefs.verticalScale ?? 3.0),
@@ -111,6 +112,7 @@ const sim = {
 prefs.timeScale = sim.timeScale;
 prefs.verticalScale = sim.verticalScale;
 prefs.horizontalScale = sim.horizontalScale;
+prefs.paused = !!sim.paused;
 savePrefs(prefs);
 
 // HUD controls (optional)
@@ -696,6 +698,24 @@ window.addEventListener('resize', () => {
 });
 
 // ---------- UI toggles ----------
+function updateSimUi() {
+  const btn = document.getElementById('togglePause');
+  const label = document.getElementById('simStatus');
+  if (btn) btn.textContent = sim.paused ? 'Resume' : 'Pause';
+  if (label) label.textContent = sim.paused ? 'Paused' : 'Running';
+}
+
+function setSimPaused(v) {
+  sim.paused = !!v;
+  prefs.paused = sim.paused;
+  savePrefs(prefs);
+  updateSimUi();
+}
+
+function toggleSimPaused() {
+  setSimPaused(!sim.paused);
+}
+
 function setVictoriaStationsVisible(v) {
   victoriaStationsVisible = !!v;
   if (victoriaStationsLayer?.mesh) victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
@@ -729,6 +749,17 @@ function setVictoriaLabelsVisible(v) {
       location.reload();
     });
   }
+
+  const pauseBtn = document.getElementById('togglePause');
+  if (pauseBtn) {
+    pauseBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleSimPaused();
+    });
+  }
+
+  // Initialize pause UI on load.
+  updateSimUi();
 }
 
 window.addEventListener('keydown', (e) => {
@@ -757,6 +788,11 @@ window.addEventListener('keydown', (e) => {
     }
     focusCameraOnStations({ stations: pts.map(pos => ({ pos })), controls, camera, pad: 1.18 });
   }
+  if (e.key === ' ' || e.code === 'Space') {
+    // Pause/resume the simulation.
+    e.preventDefault();
+    toggleSimPaused();
+  }
 });
 
 // ---------- Animate ----------
@@ -765,7 +801,7 @@ function tick() {
   const dt = clock.getDelta();
   controls.update();
 
-  const simDt = dt * sim.timeScale;
+  const simDt = sim.paused ? 0 : (dt * sim.timeScale);
   for (const train of sim.trains) {
     // dwell at stations
     if (train.userData._pausedLeft > 0) {
