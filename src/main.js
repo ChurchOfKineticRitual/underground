@@ -469,6 +469,12 @@ async function buildNetworkMvp() {
         });
         victoriaStationsLayer.setLabelsVisible(victoriaLabelsVisible);
         victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+
+        // Keep HUD checkboxes in sync (in case build happens after user toggled)
+        const stCb = document.getElementById('victoriaStations');
+        if (stCb) stCb.checked = victoriaStationsVisible;
+        const lbCb = document.getElementById('victoriaLabels');
+        if (lbCb) lbCb.checked = victoriaLabelsVisible;
       }
     }
 
@@ -498,15 +504,40 @@ window.addEventListener('resize', () => {
 });
 
 // ---------- UI toggles ----------
+function setVictoriaStationsVisible(v) {
+  victoriaStationsVisible = !!v;
+  if (victoriaStationsLayer?.mesh) victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+}
+function setVictoriaLabelsVisible(v) {
+  victoriaLabelsVisible = !!v;
+  victoriaStationsLayer?.setLabelsVisible?.(victoriaLabelsVisible);
+}
+
+// Hook up HUD checkboxes (optional)
+{
+  const stCb = document.getElementById('victoriaStations');
+  if (stCb) {
+    stCb.checked = victoriaStationsVisible;
+    stCb.addEventListener('change', () => setVictoriaStationsVisible(stCb.checked));
+  }
+  const lbCb = document.getElementById('victoriaLabels');
+  if (lbCb) {
+    lbCb.checked = victoriaLabelsVisible;
+    lbCb.addEventListener('change', () => setVictoriaLabelsVisible(lbCb.checked));
+  }
+}
+
 window.addEventListener('keydown', (e) => {
   if (e.repeat) return;
   if (e.key === 'v' || e.key === 'V') {
-    victoriaStationsVisible = !victoriaStationsVisible;
-    if (victoriaStationsLayer?.mesh) victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+    setVictoriaStationsVisible(!victoriaStationsVisible);
+    const stCb = document.getElementById('victoriaStations');
+    if (stCb) stCb.checked = victoriaStationsVisible;
   }
   if (e.key === 'l' || e.key === 'L') {
-    victoriaLabelsVisible = !victoriaLabelsVisible;
-    victoriaStationsLayer?.setLabelsVisible?.(victoriaLabelsVisible);
+    setVictoriaLabelsVisible(!victoriaLabelsVisible);
+    const lbCb = document.getElementById('victoriaLabels');
+    if (lbCb) lbCb.checked = victoriaLabelsVisible;
   }
 });
 
