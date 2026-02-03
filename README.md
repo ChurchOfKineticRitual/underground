@@ -16,6 +16,16 @@ npm run build
 npm run preview
 ```
 
+## Offline cache (recommended)
+
+To bundle the latest TfL route sequences for offline use / more stable demos:
+
+```bash
+npm run cache:tfl
+```
+
+This writes JSON into `public/data/tfl/route-sequence/` and updates `index.json`.
+
 ## Controls
 
 - Mouse: orbit/pan/zoom (OrbitControls)
