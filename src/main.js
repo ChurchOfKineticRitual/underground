@@ -1123,6 +1123,19 @@ function updateSimUi() {
     const focusId = normalizeLineId(getUrlStringParam('focus')) || 'all';
     focusLabel.textContent = `Focus: ${focusId.replace(/-/g, ' ')}`;
   }
+
+  // Mobile-friendly: auto-collapse the HUD after initial load
+  // so the scene is visible without scrolling.
+  // (User can re-open via the <summary> header.)
+  try {
+    const details = document.getElementById('hudDetails');
+    if (details && window.innerWidth <= 520 && details.open) {
+      // Collapse on next tick to avoid fighting initial layout.
+      setTimeout(() => { try { details.open = false; } catch {} }, 50);
+    }
+  } catch {
+    // ignore
+  }
 }
 
 function setSimPaused(v) {
