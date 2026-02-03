@@ -41,6 +41,17 @@ controls.target.set(0, 0, 0);
 controls.minDistance = 10;
 controls.maxDistance = 25000;
 
+// Mobile/touch UX:
+// - 1 finger: rotate
+// - 2 fingers: dolly + pan
+// (Three.js OrbitControls defaults vary by version; set explicitly.)
+controls.enablePan = true;
+controls.screenSpacePanning = false;
+controls.touches = {
+  ONE: THREE.TOUCH.ROTATE,
+  TWO: THREE.TOUCH.DOLLY_PAN,
+};
+
 // ---------- Persistent UI prefs (localStorage) ----------
 const PREFS_KEY = 'ug:prefs:v1';
 function loadPrefs() {
