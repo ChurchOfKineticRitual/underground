@@ -834,7 +834,24 @@ async function buildNetworkMvp() {
     if (!focusId) controls.target.set(0, -120, 0);
   } catch (e) {
     console.warn('Network build failed:', e);
-    setNetStatus({ kind: 'err', text: 'TfL fetch failed (no cache yet). Refresh later.' });
+
+    const offline = (typeof navigator !== 'undefined' && navigator.onLine === false);
+    // Try to detect whether a bundled cache exists, so we can show a less misleading error.
+    let hasBundled = false;
+    try {
+      const idx = await fetchBundledRouteSequenceIndex();
+      hasBundled = !!(idx && idx.lines && Object.keys(idx.lines).length);
+    } catch {
+      hasBundled = false;
+    }
+
+    if (offline && hasBundled) {
+      setNetStatus({ kind: 'err', text: 'Offline: bundled TfL cache missing/unreadable. Rebuild with cached data.' });
+    } else if (offline) {
+      setNetStatus({ kind: 'err', text: 'Offline: no cached TfL data yet. Load once online or bundle cache.' });
+    } else {
+      setNetStatus({ kind: 'err', text: 'TfL fetch failed. Try refresh; the app will use cache when available.' });
+    }
   }
 }
 
