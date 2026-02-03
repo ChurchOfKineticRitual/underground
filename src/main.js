@@ -41,12 +41,31 @@ controls.minDistance = 10;
 controls.maxDistance = 25000;
 
 // ---------- Simulation params ----------
+function getUrlNumberParam(key) {
+  const sp = new URLSearchParams(location.search);
+  if (!sp.has(key)) return null;
+  const n = Number(sp.get(key));
+  return Number.isFinite(n) ? n : null;
+}
+
+const urlTimeScale = getUrlNumberParam('t');
+const urlVerticalScale = getUrlNumberParam('vz');
+const urlHorizontalScale = getUrlNumberParam('hx');
+
 const sim = {
   trains: [],
-  timeScale: Number(new URLSearchParams(location.search).get('t')) || 8, // 1 = real-time, >1 = sped up
-  verticalScale: Number(new URLSearchParams(location.search).get('vz')) || 3.0,
-  horizontalScale: Number(new URLSearchParams(location.search).get('hx')) || 1.0,
+  // 1 = real-time, >1 = sped up
+  timeScale: urlTimeScale ?? (prefs.timeScale ?? 8),
+  verticalScale: urlVerticalScale ?? (prefs.verticalScale ?? 3.0),
+  horizontalScale: urlHorizontalScale ?? (prefs.horizontalScale ?? 1.0),
 };
+
+// Persist current values back to prefs so the next load (without URL params)
+// uses the last-seen settings.
+prefs.timeScale = sim.timeScale;
+prefs.verticalScale = sim.verticalScale;
+prefs.horizontalScale = sim.horizontalScale;
+savePrefs(prefs);
 
 // ---------- Persistent UI prefs (localStorage) ----------
 const PREFS_KEY = 'ug:prefs:v1';
@@ -85,6 +104,8 @@ const prefs = loadPrefs();
 
     el.addEventListener('input', () => {
       sim.timeScale = Number(el.value) || 1;
+      prefs.timeScale = sim.timeScale;
+      savePrefs(prefs);
       if (out) out.textContent = `${sim.timeScale}×`;
     });
 
@@ -101,6 +122,8 @@ const prefs = loadPrefs();
 
     vEl.addEventListener('input', () => {
       sim.verticalScale = Number(vEl.value) || 1;
+      prefs.verticalScale = sim.verticalScale;
+      savePrefs(prefs);
       if (vOut) vOut.textContent = `${sim.verticalScale.toFixed(2)}×`;
     });
 
@@ -118,6 +141,8 @@ const prefs = loadPrefs();
 
     hEl.addEventListener('input', () => {
       sim.horizontalScale = Number(hEl.value) || 1;
+      prefs.horizontalScale = sim.horizontalScale;
+      savePrefs(prefs);
       if (hOut) hOut.textContent = `${sim.horizontalScale.toFixed(2)}×`;
     });
 
