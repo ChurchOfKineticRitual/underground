@@ -605,20 +605,30 @@ async function buildNetworkMvp() {
           btn.style.color = 'rgba(255,255,255,0.88)';
           btn.style.cursor = 'pointer';
 
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+          function ensureVisibleAndFocus() {
+            // If the user hid the line earlier, focusing should also reveal it.
+            setLineVisible(id, true);
+            initialLineVisibility[id] = true;
+            prefs.lineVisibility = initialLineVisibility;
+            savePrefs(prefs);
+            const cb = lineCheckboxes.get(id);
+            if (cb) cb.checked = true;
+
             const pts = lineCenterPoints.get(id);
             if (!pts || pts.length === 0) return;
             focusCameraOnStations({ stations: pts.map(pos => ({ pos })), controls, camera, pad: 1.22 });
+          }
+
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            ensureVisibleAndFocus();
           });
 
           // Nice UX: double-click the label row to focus too.
           label.addEventListener('dblclick', (e) => {
             e.preventDefault();
-            const pts = lineCenterPoints.get(id);
-            if (!pts || pts.length === 0) return;
-            focusCameraOnStations({ stations: pts.map(pos => ({ pos })), controls, camera, pad: 1.22 });
+            ensureVisibleAndFocus();
           });
 
           row.appendChild(label);
@@ -812,7 +822,7 @@ window.addEventListener('resize', () => {
     if (!lineId) return;
 
     // UX:
-    // - Click: focus camera on that line
+    // - Click: focus camera on that line (and ensure it's visible)
     // - Shift+Click: toggle visibility for that line
     if (ev.shiftKey) {
       const g = lineGroups.get(lineId);
@@ -829,6 +839,16 @@ window.addEventListener('resize', () => {
       if (cb) cb.checked = next;
       return;
     }
+
+    // Ensure visible before focusing.
+    setLineVisible(lineId, true);
+    initialLineVisibility[lineId] = true;
+    prefs.lineVisibility = initialLineVisibility;
+    savePrefs(prefs);
+
+    const wrap = document.getElementById('lineToggles');
+    const cb = wrap?.querySelector?.(`input[type="checkbox"][data-line="${lineId}"]`);
+    if (cb) cb.checked = true;
 
     const pts = lineCenterPoints.get(lineId);
     if (!pts || pts.length === 0) return;
