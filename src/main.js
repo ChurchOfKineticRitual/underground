@@ -704,10 +704,38 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// ---------- Click-to-focus / shift-click toggle ----------
+// ---------- Click-to-focus / shift-click toggle + hover tooltip ----------
 {
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
+
+  const tip = document.getElementById('hoverTip');
+  let lastHoverLineId = null;
+
+  function prettyLineName(lineId) {
+    return String(lineId || '').replace(/-/g, ' ');
+  }
+
+  function moveTip(ev, lineId) {
+    if (!tip) return;
+    if (!lineId) {
+      tip.style.display = 'none';
+      tip.style.transform = 'translate(-9999px, -9999px)';
+      lastHoverLineId = null;
+      return;
+    }
+
+    const name = prettyLineName(lineId);
+    if (lastHoverLineId !== lineId) {
+      tip.innerHTML = `<b>${name}</b> <span class="muted">(click to focus, shift+click to toggle)</span>`;
+      tip.style.display = 'block';
+      lastHoverLineId = lineId;
+    }
+
+    const x = (ev.clientX ?? 0) + 12;
+    const y = (ev.clientY ?? 0) + 14;
+    tip.style.transform = `translate(${x}px, ${y}px)`;
+  }
 
   function getMouseNdc(ev) {
     const rect = renderer.domElement.getBoundingClientRect();
@@ -715,18 +743,29 @@ window.addEventListener('resize', () => {
     mouse.y = -(((ev.clientY - rect.top) / rect.height) * 2 - 1);
   }
 
+  function pickLineUnderPointer(ev) {
+    getMouseNdc(ev);
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(linePickables, false);
+    if (!hits || hits.length === 0) return null;
+    const hit = hits[0].object;
+    return hit?.userData?.lineId || null;
+  }
+
+  function onPointerMove(ev) {
+    const lineId = pickLineUnderPointer(ev);
+    moveTip(ev, lineId);
+  }
+
+  function onPointerLeave() {
+    moveTip({}, null);
+  }
+
   function onPointerDown(ev) {
     // Only left click / primary.
     if (ev.button !== 0) return;
 
-    getMouseNdc(ev);
-    raycaster.setFromCamera(mouse, camera);
-
-    const hits = raycaster.intersectObjects(linePickables, false);
-    if (!hits || hits.length === 0) return;
-
-    const hit = hits[0].object;
-    const lineId = hit?.userData?.lineId;
+    const lineId = pickLineUnderPointer(ev);
     if (!lineId) return;
 
     // UX:
@@ -753,6 +792,8 @@ window.addEventListener('resize', () => {
     focusCameraOnStations({ stations: pts.map(pos => ({ pos })), controls, camera, pad: 1.22 });
   }
 
+  renderer.domElement.addEventListener('pointermove', onPointerMove);
+  renderer.domElement.addEventListener('pointerleave', onPointerLeave);
   renderer.domElement.addEventListener('pointerdown', onPointerDown);
 }
 
