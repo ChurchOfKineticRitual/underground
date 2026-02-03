@@ -811,8 +811,19 @@ async function buildNetworkMvp() {
     }
 
     // Optional: focus on a specific line after everything is built.
+    // If the line was previously hidden (persisted prefs), focusing should also reveal it.
     const focusId = normalizeLineId(urlFocusLine);
     if (focusId) {
+      setLineVisible(focusId, true);
+      initialLineVisibility[focusId] = true;
+      prefs.lineVisibility = initialLineVisibility;
+      savePrefs(prefs);
+
+      // Sync checkbox UI if present.
+      const wrap = document.getElementById('lineToggles');
+      const cb = wrap?.querySelector?.(`input[type="checkbox"][data-line="${focusId}"]`);
+      if (cb) cb.checked = true;
+
       const pts = lineCenterPoints.get(focusId);
       if (pts && pts.length) {
         focusCameraOnStations({ stations: pts.map(pos => ({ pos })), controls, camera, pad: 1.22 });
