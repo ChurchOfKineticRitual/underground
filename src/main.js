@@ -48,6 +48,26 @@ const sim = {
   horizontalScale: Number(new URLSearchParams(location.search).get('hx')) || 1.0,
 };
 
+// ---------- Persistent UI prefs (localStorage) ----------
+const PREFS_KEY = 'ug:prefs:v1';
+function loadPrefs() {
+  if (typeof localStorage === 'undefined') return {};
+  try {
+    return JSON.parse(localStorage.getItem(PREFS_KEY) || '{}') || {};
+  } catch {
+    return {};
+  }
+}
+function savePrefs(next) {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(PREFS_KEY, JSON.stringify(next));
+  } catch {
+    // ignore quota/private mode
+  }
+}
+const prefs = loadPrefs();
+
 // HUD controls (optional)
 {
   function setUrlParam(key, value) {
@@ -193,6 +213,9 @@ const LINE_COLOURS = {
   victoria: 0x0098d4,
   'waterloo-city': 0x93ceba,
 };
+
+// Persisted line visibility (defaults to all-on)
+const initialLineVisibility = (prefs.lineVisibility && typeof prefs.lineVisibility === 'object') ? prefs.lineVisibility : {};
 
 // Track line groups so we can toggle visibility.
 const lineGroups = new Map();
@@ -366,8 +389,8 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors, sim) {
 
 // Victoria station markers/labels
 let victoriaStationsLayer = null;
-let victoriaStationsVisible = true;
-let victoriaLabelsVisible = true;
+let victoriaStationsVisible = prefs.victoriaStationsVisible ?? true;
+let victoriaLabelsVisible = prefs.victoriaLabelsVisible ?? true;
 
 // Simple camera focus helpers (MVP)
 function focusCameraOnStations({ stations, controls, camera, pad = 1.35 } = {}) {
@@ -422,10 +445,13 @@ async function buildNetworkMvp() {
 
       function applyAll(visible) {
         for (const id of wanted) {
+          initialLineVisibility[id] = visible;
           setLineVisible(id, visible);
           const cb = lineCheckboxes.get(id);
           if (cb) cb.checked = visible;
         }
+        prefs.lineVisibility = initialLineVisibility;
+        savePrefs(prefs);
       }
 
       if (btnShowAll) btnShowAll.addEventListener('click', () => applyAll(true));
@@ -442,8 +468,12 @@ async function buildNetworkMvp() {
 
           const cb = document.createElement('input');
           cb.type = 'checkbox';
-          cb.checked = true;
+          const startVisible = (initialLineVisibility[id] ?? true) !== false;
+          cb.checked = startVisible;
           cb.addEventListener('change', () => {
+            initialLineVisibility[id] = cb.checked;
+            prefs.lineVisibility = initialLineVisibility;
+            savePrefs(prefs);
             setLineVisible(id, cb.checked);
           });
           lineCheckboxes.set(id, cb);
@@ -491,6 +521,7 @@ async function buildNetworkMvp() {
       const sps = longest?.stopPoint || [];
       const ds = debugDepthStats({ lineId: id, stopPoints: sps, anchors: depthAnchors });
       addLineFromStopPoints(id, colour, sps, depthAnchors, sim);
+      setLineVisible(id, (initialLineVisibility[id] ?? true) !== false);
       console.log('built', id, 'stops', sps.length, 'depth[m] min/max', ds.min, ds.max);
 
       // Victoria line station markers + labels (from TfL route sequence stop points)
@@ -556,10 +587,14 @@ window.addEventListener('resize', () => {
 function setVictoriaStationsVisible(v) {
   victoriaStationsVisible = !!v;
   if (victoriaStationsLayer?.mesh) victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+  prefs.victoriaStationsVisible = victoriaStationsVisible;
+  savePrefs(prefs);
 }
 function setVictoriaLabelsVisible(v) {
   victoriaLabelsVisible = !!v;
   victoriaStationsLayer?.setLabelsVisible?.(victoriaLabelsVisible);
+  prefs.victoriaLabelsVisible = victoriaLabelsVisible;
+  savePrefs(prefs);
 }
 
 // Hook up HUD checkboxes (optional)
