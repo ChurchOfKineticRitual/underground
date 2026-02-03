@@ -115,13 +115,20 @@ prefs.horizontalScale = sim.horizontalScale;
 prefs.paused = !!sim.paused;
 savePrefs(prefs);
 
+function setUrlParam(key, value) {
+  const url = new URL(location.href);
+  url.searchParams.set(key, String(value));
+  history.replaceState(null, '', url.toString());
+}
+
+function deleteUrlParam(key) {
+  const url = new URL(location.href);
+  url.searchParams.delete(key);
+  history.replaceState(null, '', url.toString());
+}
+
 // HUD controls (optional)
 {
-  function setUrlParam(key, value) {
-    const url = new URL(location.href);
-    url.searchParams.set(key, String(value));
-    history.replaceState(null, '', url.toString());
-  }
 
   const el = document.getElementById('timeScale');
   const out = document.getElementById('timeScaleValue');
@@ -138,7 +145,9 @@ savePrefs(prefs);
     });
 
     el.addEventListener('change', () => {
-      setUrlParam('t', Number(el.value) || 1);
+      const v = Number(el.value) || 1;
+      if (v === 8) deleteUrlParam('t');
+      else setUrlParam('t', v);
     });
   }
 
@@ -156,7 +165,9 @@ savePrefs(prefs);
     });
 
     vEl.addEventListener('change', () => {
-      setUrlParam('vz', Number(vEl.value) || 1);
+      const v = Number(vEl.value) || 1;
+      if (v === 3.0) deleteUrlParam('vz');
+      else setUrlParam('vz', v);
       rebuildFromSimScales();
     });
   }
@@ -175,7 +186,9 @@ savePrefs(prefs);
     });
 
     hEl.addEventListener('change', () => {
-      setUrlParam('hx', Number(hEl.value) || 1);
+      const v = Number(hEl.value) || 1;
+      if (v === 1.0) deleteUrlParam('hx');
+      else setUrlParam('hx', v);
       rebuildFromSimScales();
     });
   }
