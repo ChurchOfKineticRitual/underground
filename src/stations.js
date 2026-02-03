@@ -108,5 +108,5 @@ export function createStationMarkers({
     for (const el of labelEls) el.remove();
   }
 
-  return { mesh, setLabelsVisible, update, dispose };
+  return { mesh, stations, setLabelsVisible, update, dispose };
 }

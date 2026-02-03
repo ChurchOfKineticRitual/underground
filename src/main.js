@@ -369,6 +369,32 @@ let victoriaStationsLayer = null;
 let victoriaStationsVisible = true;
 let victoriaLabelsVisible = true;
 
+// Simple camera focus helpers (MVP)
+function focusCameraOnStations({ stations, controls, camera, pad = 1.35 } = {}) {
+  if (!stations || stations.length === 0) return;
+
+  const box = new THREE.Box3();
+  for (const st of stations) box.expandByPoint(st.pos);
+
+  const size = new THREE.Vector3();
+  const center = new THREE.Vector3();
+  box.getSize(size);
+  box.getCenter(center);
+
+  // Frame the box: distance derived from vertical fov.
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const fov = camera.fov * Math.PI / 180;
+  const dist = (maxDim * pad) / Math.max(1e-6, 2 * Math.tan(fov / 2));
+
+  controls.target.copy(center);
+
+  // Put camera at a pleasing oblique angle.
+  const dir = new THREE.Vector3(1, 0.6, 1).normalize();
+  camera.position.copy(center).addScaledVector(dir, dist);
+
+  controls.update();
+}
+
 async function buildNetworkMvp() {
   let usedCacheFallback = false;
   try {
@@ -561,6 +587,10 @@ window.addEventListener('keydown', (e) => {
     setVictoriaLabelsVisible(!victoriaLabelsVisible);
     const lbCb = document.getElementById('victoriaLabels');
     if (lbCb) lbCb.checked = victoriaLabelsVisible;
+  }
+  if (e.key === 'f' || e.key === 'F') {
+    // Focus the camera on the Victoria line stations for quick re-orientation.
+    focusCameraOnStations({ stations: victoriaStationsLayer?.stations, controls, camera });
   }
 });
 
