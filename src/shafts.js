@@ -25,6 +25,11 @@ export function addShaftsToScene({
   const platformGeo = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
   const groundGeo = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
 
+  // A vertical "shaft" between surface and platform.
+  // Unit height; we'll scale Y per-station.
+  const shaftRadius = 2.2;
+  const shaftGeo = new THREE.CylinderGeometry(shaftRadius, shaftRadius, 1, 10, 1, true);
+
   const platformMat = new THREE.MeshStandardMaterial({
     color: 0xffffff,
     emissive: new THREE.Color(colour),
@@ -46,8 +51,30 @@ export function addShaftsToScene({
     opacity: 0.45,
   });
 
-  // Keep handles so we can adjust groundY later (e.g., after terrain loads).
+  const shaftMat = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    emissive: new THREE.Color(colour),
+    emissiveIntensity: 0.25,
+    roughness: 0.55,
+    metalness: 0.0,
+    transparent: true,
+    opacity: 0.35,
+    side: THREE.DoubleSide,
+  });
+
+  // Keep handles so we can adjust ground/platform Y later (e.g., after terrain loads).
   const byId = new Map();
+
+  function buildShaftBetween({ x, z, groundY, platformY }) {
+    const h = Math.max(0.01, Math.abs(platformY - groundY));
+    const midY = (platformY + groundY) * 0.5;
+
+    const shaft = new THREE.Mesh(shaftGeo, shaftMat);
+    shaft.position.set(x, midY, z);
+    shaft.scale.y = h; // geometry height is 1
+
+    return shaft;
+  }
 
   for (const s of shaftsData.shafts) {
     const platform = new THREE.Mesh(platformGeo, platformMat);
@@ -71,8 +98,10 @@ export function addShaftsToScene({
     ]);
     const link = new THREE.Line(geom, lineMat);
 
-    group.add(link, platform, ground);
-    if (s.id) byId.set(s.id, { link, platform, ground });
+    const shaft = buildShaftBetween({ x: s.x, z: s.z, groundY, platformY });
+
+    group.add(shaft, link, platform, ground);
+    if (s.id) byId.set(s.id, { link, platform, ground, shaft });
   }
 
   scene.add(group);
@@ -85,6 +114,17 @@ export function addShaftsToScene({
         if (!Number.isFinite(y)) continue;
 
         parts.ground.position.y = y;
+
+        // Update shaft geometry.
+        if (parts.shaft) {
+          const x = parts.ground.position.x;
+          const z = parts.ground.position.z;
+          const platformY = parts.platform.position.y;
+          const h = Math.max(0.01, Math.abs(platformY - y));
+          const midY = (platformY + y) * 0.5;
+          parts.shaft.position.set(x, midY, z);
+          parts.shaft.scale.y = h;
+        }
 
         // Update line geometry endpoints in-place.
         const pos = parts.link.geometry.attributes.position;
@@ -101,6 +141,17 @@ export function addShaftsToScene({
 
         parts.platform.position.y = y;
 
+        // Update shaft geometry.
+        if (parts.shaft) {
+          const x = parts.ground.position.x;
+          const z = parts.ground.position.z;
+          const groundY = parts.ground.position.y;
+          const h = Math.max(0.01, Math.abs(y - groundY));
+          const midY = (y + groundY) * 0.5;
+          parts.shaft.position.set(x, midY, z);
+          parts.shaft.scale.y = h;
+        }
+
         // Update line geometry endpoints in-place.
         const pos = parts.link.geometry.attributes.position;
         // vertex 1 (platform)
@@ -113,9 +164,11 @@ export function addShaftsToScene({
       scene.remove(group);
       platformGeo.dispose();
       groundGeo.dispose();
+      shaftGeo.dispose();
       platformMat.dispose();
       groundMat.dispose();
       lineMat.dispose();
+      shaftMat.dispose();
       for (const obj of group.children) {
         if (obj.geometry) obj.geometry.dispose?.();
       }
