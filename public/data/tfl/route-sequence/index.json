@@ -1,0 +1,50 @@
+{
+  "kind": "tfl-route-sequence-cache",
+  "generatedAt": "2026-02-03T01:01:58.090Z",
+  "lines": {
+    "bakerloo": {
+      "file": "bakerloo.json",
+      "url": "https://api.tfl.gov.uk/Line/bakerloo/Route/Sequence/all"
+    },
+    "central": {
+      "file": "central.json",
+      "url": "https://api.tfl.gov.uk/Line/central/Route/Sequence/all"
+    },
+    "circle": {
+      "file": "circle.json",
+      "url": "https://api.tfl.gov.uk/Line/circle/Route/Sequence/all"
+    },
+    "district": {
+      "file": "district.json",
+      "url": "https://api.tfl.gov.uk/Line/district/Route/Sequence/all"
+    },
+    "hammersmith-city": {
+      "file": "hammersmith-city.json",
+      "url": "https://api.tfl.gov.uk/Line/hammersmith-city/Route/Sequence/all"
+    },
+    "jubilee": {
+      "file": "jubilee.json",
+      "url": "https://api.tfl.gov.uk/Line/jubilee/Route/Sequence/all"
+    },
+    "metropolitan": {
+      "file": "metropolitan.json",
+      "url": "https://api.tfl.gov.uk/Line/metropolitan/Route/Sequence/all"
+    },
+    "northern": {
+      "file": "northern.json",
+      "url": "https://api.tfl.gov.uk/Line/northern/Route/Sequence/all"
+    },
+    "piccadilly": {
+      "file": "piccadilly.json",
+      "url": "https://api.tfl.gov.uk/Line/piccadilly/Route/Sequence/all"
+    },
+    "victoria": {
+      "file": "victoria.json",
+      "url": "https://api.tfl.gov.uk/Line/victoria/Route/Sequence/all"
+    },
+    "waterloo-city": {
+      "file": "waterloo-city.json",
+      "url": "https://api.tfl.gov.uk/Line/waterloo-city/Route/Sequence/all"
+    }
+  }
+}

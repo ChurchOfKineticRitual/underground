@@ -1,7 +1,9 @@
 // Minimal TfL fetch helpers (public endpoints, no auth)
 //
-// MVP improvement: cache responses in localStorage with TTL + offline fallback.
-// TfL endpoints can occasionally rate-limit or error; caching makes the demo more robust.
+// Robustness strategy:
+// 1) Try live fetch
+// 2) Fall back to localStorage cache (TTL)
+// 3) Fall back to bundled on-disk cache in /public/data/tfl (so the demo works offline)
 
 const CACHE_PREFIX = 'ug:tfl:';
 const DEFAULT_TTL_MS = 24 * 60 * 60 * 1000; // 24h
@@ -32,10 +34,28 @@ function cacheSet(url, value) {
   }
 }
 
+function bundledCacheUrlForTfl(url) {
+  // Only route-sequence is bundled for now.
+  // https://api.tfl.gov.uk/Line/<id>/Route/Sequence/all  -> /data/tfl/route-sequence/<id>.json
+  const m = url.match(/^https:\/\/api\.tfl\.gov\.uk\/Line\/([^/]+)\/Route\/Sequence\/all\/?$/i);
+  if (!m) return null;
+  const lineId = decodeURIComponent(m[1]);
+  return `/data/tfl/route-sequence/${encodeURIComponent(lineId)}.json`;
+}
+
+async function fetchBundledJsonFor(url) {
+  const localUrl = bundledCacheUrlForTfl(url);
+  if (!localUrl) return null;
+  const res = await fetch(localUrl, { cache: 'no-store' });
+  if (!res.ok) return null;
+  return res.json();
+}
+
 export async function fetchJson(url, {
   ttlMs = DEFAULT_TTL_MS,
   useCache = true,
   preferCache = false,
+  allowBundledFallback = true,
 } = {}) {
   const cached = useCache ? cacheGet(url, { ttlMs }) : null;
   if (preferCache && cached) return cached;
@@ -52,6 +72,13 @@ export async function fetchJson(url, {
   } catch (err) {
     // Offline/blocked/rate-limited: fall back to cached if we have it.
     if (cached) return cached;
+
+    // Final fallback: try bundled JSON shipped with the app.
+    if (allowBundledFallback) {
+      const bundled = await fetchBundledJsonFor(url).catch(() => null);
+      if (bundled) return bundled;
+    }
+
     throw err;
   }
 }
