@@ -40,6 +40,26 @@ controls.target.set(0, 0, 0);
 controls.minDistance = 10;
 controls.maxDistance = 25000;
 
+// ---------- Persistent UI prefs (localStorage) ----------
+const PREFS_KEY = 'ug:prefs:v1';
+function loadPrefs() {
+  if (typeof localStorage === 'undefined') return {};
+  try {
+    return JSON.parse(localStorage.getItem(PREFS_KEY) || '{}') || {};
+  } catch {
+    return {};
+  }
+}
+function savePrefs(next) {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(PREFS_KEY, JSON.stringify(next));
+  } catch {
+    // ignore quota/private mode
+  }
+}
+const prefs = loadPrefs();
+
 // ---------- Simulation params ----------
 function getUrlNumberParam(key) {
   const sp = new URLSearchParams(location.search);
@@ -66,26 +86,6 @@ prefs.timeScale = sim.timeScale;
 prefs.verticalScale = sim.verticalScale;
 prefs.horizontalScale = sim.horizontalScale;
 savePrefs(prefs);
-
-// ---------- Persistent UI prefs (localStorage) ----------
-const PREFS_KEY = 'ug:prefs:v1';
-function loadPrefs() {
-  if (typeof localStorage === 'undefined') return {};
-  try {
-    return JSON.parse(localStorage.getItem(PREFS_KEY) || '{}') || {};
-  } catch {
-    return {};
-  }
-}
-function savePrefs(next) {
-  if (typeof localStorage === 'undefined') return;
-  try {
-    localStorage.setItem(PREFS_KEY, JSON.stringify(next));
-  } catch {
-    // ignore quota/private mode
-  }
-}
-const prefs = loadPrefs();
 
 // HUD controls (optional)
 {
