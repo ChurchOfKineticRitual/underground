@@ -29,9 +29,16 @@ This writes JSON into `public/data/tfl/route-sequence/` and updates `index.json`
 ## Controls
 
 - Mouse: orbit/pan/zoom (OrbitControls)
+- In-scene interaction:
+  - Hover a line to see its name
+  - Click a line to focus the camera
+  - Shift+Click a line to toggle its visibility
 - Keyboard:
   - `V` toggle Victoria line station markers
   - `L` toggle Victoria line station labels
+  - `F` focus camera on the Victoria line
+  - `A` focus camera on all currently-visible lines
+  - `Space` pause/resume the simulation
 
 ## URL parameters
 
