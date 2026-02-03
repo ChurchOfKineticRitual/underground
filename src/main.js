@@ -4,7 +4,7 @@ import { fetchRouteSequence, fetchBundledRouteSequenceIndex, fetchTubeLines } fr
 import { loadStationDepthAnchors, depthForStation, debugDepthStats } from './depth.js';
 import { tryCreateTerrainMesh, xzToTerrainUV, terrainHeightToWorldY } from './terrain.js';
 import { createStationMarkers } from './stations.js';
-import { loadVictoriaShafts, addShaftsToScene } from './shafts.js';
+import { loadLineShafts, addShaftsToScene } from './shafts.js';
 
 function setNetStatus({ kind, text }) {
   const el = document.getElementById('netStatus');
@@ -796,7 +796,7 @@ async function buildNetworkMvp() {
           // Ground cube + platform cube + connecting line (MVP)
           // Make platform Y match the built tunnel centerline so shafts always intersect the tube.
           try {
-            const shaftsData = await loadVictoriaShafts();
+            const shaftsData = await loadLineShafts('victoria');
 
             // Build a lookup from station id -> nearest centerline y.
             const centerPts = lineCenterPoints.get('victoria');
@@ -819,7 +819,7 @@ async function buildNetworkMvp() {
             }
 
             victoriaShaftsLayer?.dispose?.();
-            victoriaShaftsLayer = addShaftsToScene({ scene, shaftsData, colour, platformYById });
+            victoriaShaftsLayer = addShaftsToScene({ scene, shaftsData, colour, platformYById, kind: 'victoria-shafts' });
 
             // If terrain is already loaded, snap ground cubes to terrain surface (approx).
             if (victoriaShaftsLayer?.updateGroundYById && terrain?.heightSampler) {

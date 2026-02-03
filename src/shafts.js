@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 
-export async function loadVictoriaShafts() {
-  const res = await fetch('/data/victoria/shafts.json', { cache: 'no-store' });
+export async function loadLineShafts(lineId) {
+  const id = String(lineId || '').trim().toLowerCase();
+  if (!id) return null;
+  const res = await fetch(`/data/${encodeURIComponent(id)}/shafts.json`, { cache: 'no-store' });
   if (!res.ok) return null;
   return res.json();
 }
@@ -12,11 +14,12 @@ export function addShaftsToScene({
   colour = 0x0098d4,
   platformYById = null,
   groundYById = null,
+  kind = 'shafts',
 } = {}) {
   if (!shaftsData?.shafts?.length) return null;
 
   const group = new THREE.Group();
-  group.userData.kind = 'victoria-shafts';
+  group.userData.kind = kind;
 
   const cubeSize = 18; // metres in our scene
   const platformGeo = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
@@ -87,6 +90,21 @@ export function addShaftsToScene({
         const pos = parts.link.geometry.attributes.position;
         // vertex 0 (ground)
         pos.setY(0, y);
+        pos.needsUpdate = true;
+        parts.link.geometry.computeBoundingSphere();
+      }
+    },
+    updatePlatformYById(nextPlatformYById = {}) {
+      for (const [id, parts] of byId.entries()) {
+        const y = nextPlatformYById[id];
+        if (!Number.isFinite(y)) continue;
+
+        parts.platform.position.y = y;
+
+        // Update line geometry endpoints in-place.
+        const pos = parts.link.geometry.attributes.position;
+        // vertex 1 (platform)
+        pos.setY(1, y);
         pos.needsUpdate = true;
         parts.link.geometry.computeBoundingSphere();
       }
