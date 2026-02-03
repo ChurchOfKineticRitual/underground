@@ -104,7 +104,13 @@
       </p>
 
       <div class="small" style="margin-top:8px;">
-        <div style="font-weight:600; opacity:0.9; margin-bottom:4px;">Lines</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:4px;">
+          <div style="font-weight:600; opacity:0.9;">Lines</div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <button id="linesShowAll" style="font-size:11px; padding:3px 8px; border-radius:999px; border:1px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.88); cursor:pointer;">Show all</button>
+            <button id="linesHideAll" style="font-size:11px; padding:3px 8px; border-radius:999px; border:1px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.88); cursor:pointer;">Hide all</button>
+          </div>
+        </div>
         <div id="lineToggles" style="display:grid; grid-template-columns: 1fr 1fr; gap:4px 10px;"></div>
       </div>
     </div>

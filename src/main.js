@@ -388,6 +388,23 @@ async function buildNetworkMvp() {
     // Build UI toggles
     {
       const wrap = document.getElementById('lineToggles');
+      const btnShowAll = document.getElementById('linesShowAll');
+      const btnHideAll = document.getElementById('linesHideAll');
+
+      // Keep references so we can bulk-toggle.
+      const lineCheckboxes = new Map();
+
+      function applyAll(visible) {
+        for (const id of wanted) {
+          setLineVisible(id, visible);
+          const cb = lineCheckboxes.get(id);
+          if (cb) cb.checked = visible;
+        }
+      }
+
+      if (btnShowAll) btnShowAll.addEventListener('click', () => applyAll(true));
+      if (btnHideAll) btnHideAll.addEventListener('click', () => applyAll(false));
+
       if (wrap) {
         wrap.innerHTML = '';
         for (const id of wanted) {
@@ -403,6 +420,7 @@ async function buildNetworkMvp() {
           cb.addEventListener('change', () => {
             setLineVisible(id, cb.checked);
           });
+          lineCheckboxes.set(id, cb);
 
           const swatch = document.createElement('span');
           swatch.style.display = 'inline-block';
