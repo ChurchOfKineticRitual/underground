@@ -4,6 +4,7 @@ import { fetchRouteSequence, fetchBundledRouteSequenceIndex, fetchTubeLines } fr
 import { loadStationDepthAnchors, depthForStation, debugDepthStats } from './depth.js';
 import { tryCreateTerrainMesh } from './terrain.js';
 import { createStationMarkers } from './stations.js';
+import { loadVictoriaShafts, addShaftsToScene } from './shafts.js';
 
 function setNetStatus({ kind, text }) {
   const el = document.getElementById('netStatus');
@@ -513,6 +514,9 @@ let victoriaStationsLayer = null;
 let victoriaStationsVisible = prefs.victoriaStationsVisible ?? true;
 let victoriaLabelsVisible = prefs.victoriaLabelsVisible ?? true;
 
+// Victoria station shafts (ground cube + platform cube + vertical line)
+let victoriaShaftsLayer = null;
+
 // Simple camera focus helpers (MVP)
 function focusCameraOnStations({ stations, controls, camera, pad = 1.35 } = {}) {
   if (!stations || stations.length === 0) return;
@@ -728,7 +732,7 @@ async function buildNetworkMvp() {
         setLineVisible(id, (initialLineVisibility[id] ?? true) !== false);
         console.log('built', id, 'stops', sps.length, 'depth[m] min/max', ds.min, ds.max);
 
-        // Victoria line station markers + labels (from TfL route sequence stop points)
+        // Victoria line station markers + labels + simple shafts
         if (id === 'victoria') {
           const stations = sps
             .filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon))
@@ -748,11 +752,20 @@ async function buildNetworkMvp() {
             scene,
             stations,
             colour,
-            size: 0.55,
+            size: 6.0,
             labels: true,
           });
           victoriaStationsLayer.setLabelsVisible(victoriaLabelsVisible);
           victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+
+          // Ground cube + platform cube + connecting line (MVP)
+          try {
+            const shaftsData = await loadVictoriaShafts();
+            victoriaShaftsLayer?.dispose?.();
+            victoriaShaftsLayer = addShaftsToScene({ scene, shaftsData, colour });
+          } catch {
+            // ignore
+          }
 
           // Keep HUD checkboxes in sync (in case build happens after user toggled)
           const stCb = document.getElementById('victoriaStations');
