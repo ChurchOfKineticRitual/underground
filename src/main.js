@@ -775,10 +775,32 @@ async function buildNetworkMvp() {
           victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
 
           // Ground cube + platform cube + connecting line (MVP)
+          // Make platform Y match the built tunnel centerline so shafts always intersect the tube.
           try {
             const shaftsData = await loadVictoriaShafts();
+
+            // Build a lookup from station id -> nearest centerline y.
+            const centerPts = lineCenterPoints.get('victoria');
+            const platformYById = {};
+            if (centerPts?.length) {
+              for (const st of stations) {
+                let bestY = st.pos.y;
+                let bestD2 = Infinity;
+                for (const p of centerPts) {
+                  const dx = p.x - st.pos.x;
+                  const dz = p.z - st.pos.z;
+                  const d2 = dx * dx + dz * dz;
+                  if (d2 < bestD2) {
+                    bestD2 = d2;
+                    bestY = p.y;
+                  }
+                }
+                platformYById[st.id] = bestY;
+              }
+            }
+
             victoriaShaftsLayer?.dispose?.();
-            victoriaShaftsLayer = addShaftsToScene({ scene, shaftsData, colour });
+            victoriaShaftsLayer = addShaftsToScene({ scene, shaftsData, colour, platformYById });
           } catch {
             // ignore
           }

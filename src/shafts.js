@@ -6,7 +6,7 @@ export async function loadVictoriaShafts() {
   return res.json();
 }
 
-export function addShaftsToScene({ scene, shaftsData, colour = 0x0098d4 } = {}) {
+export function addShaftsToScene({ scene, shaftsData, colour = 0x0098d4, platformYById = null } = {}) {
   if (!shaftsData?.shafts?.length) return null;
 
   const group = new THREE.Group();
@@ -39,14 +39,19 @@ export function addShaftsToScene({ scene, shaftsData, colour = 0x0098d4 } = {}) 
 
   for (const s of shaftsData.shafts) {
     const platform = new THREE.Mesh(platformGeo, platformMat);
-    platform.position.set(s.x, s.platformY, s.z);
+
+    const platformY = (platformYById && s.id && Number.isFinite(platformYById[s.id]))
+      ? platformYById[s.id]
+      : s.platformY;
+
+    platform.position.set(s.x, platformY, s.z);
 
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.position.set(s.x, s.groundY, s.z);
 
     const geom = new THREE.BufferGeometry().setFromPoints([
       new THREE.Vector3(s.x, s.groundY, s.z),
-      new THREE.Vector3(s.x, s.platformY, s.z),
+      new THREE.Vector3(s.x, platformY, s.z),
     ]);
     const link = new THREE.Line(geom, lineMat);
 
