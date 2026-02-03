@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { fetchRouteSequence, fetchBundledRouteSequenceIndex } from './tfl.js';
+import { fetchRouteSequence, fetchBundledRouteSequenceIndex, fetchTubeLines } from './tfl.js';
 import { loadStationDepthAnchors, depthForStation, debugDepthStats } from './depth.js';
 import { tryCreateTerrainMesh } from './terrain.js';
 import { createStationMarkers } from './stations.js';
@@ -518,12 +518,35 @@ async function buildNetworkMvp() {
     // If the bundled cache index exists, use it as the source of truth (keeps demo working offline
     // and avoids hard-coding line ids in two places).
     const bundledIndex = await fetchBundledRouteSequenceIndex();
-    const wanted = bundledIndex?.lines
-      ? Object.keys(bundledIndex.lines)
-      : [
+
+    // Decide which line ids to render.
+    // Priority:
+    // 1) bundled cache index (best for offline demos)
+    // 2) live discovery from TfL (/Line/Mode/tube)
+    // 3) hard-coded fallback list
+    let wanted;
+    if (bundledIndex?.lines) {
+      wanted = Object.keys(bundledIndex.lines);
+    } else {
+      try {
+        const tubeLines = await fetchTubeLines({ ttlMs: 24 * 60 * 60 * 1000, useCache: true });
+        wanted = (Array.isArray(tubeLines) ? tubeLines : [])
+          .map(l => normalizeLineId(l?.id))
+          .filter(Boolean);
+      } catch {
+        wanted = null;
+      }
+
+      if (!wanted || wanted.length === 0) {
+        wanted = [
           'bakerloo','central','circle','district','hammersmith-city',
           'jubilee','metropolitan','northern','piccadilly','victoria','waterloo-city'
         ];
+      }
+    }
+
+    // Keep a stable order for UI.
+    wanted = Array.from(new Set(wanted)).sort();
 
     // Build UI toggles
     {
