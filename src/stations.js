@@ -107,7 +107,9 @@ export function createStationMarkers({
       const alpha = THREE.MathUtils.clamp(1.0 - (d - 70) / 220, 0.12, 1.0);
 
       el.style.display = 'block';
-      el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+      // Center the pill label on the projected point.
+      // (Translate order matters: percentage is based on the element's box.)
+      el.style.transform = `translate(-50%, -50%) translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
       el.style.opacity = alpha.toFixed(3);
     }
   }
