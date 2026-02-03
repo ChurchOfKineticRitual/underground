@@ -248,6 +248,10 @@ scene.add(rim);
     if (!result) return;
     terrain = result;
     scene.add(result.mesh);
+
+    // If we have real terrain, hide the debug grid so it doesn't visually fight the heightmap.
+    grid.visible = false;
+
     applyTerrainOpacity(prefs.groundOpacity ?? 0.10);
   });
 
