@@ -293,7 +293,10 @@ function rebuildFromSimScales() {
   url.searchParams.set('t', String(sim.timeScale));
   url.searchParams.set('vz', String(sim.verticalScale));
   url.searchParams.set('hx', String(sim.horizontalScale));
-  location.href = url.toString();
+
+  // Avoid a full navigation to preserve devtools state; still reloads the page.
+  history.replaceState(null, '', url.toString());
+  location.reload();
 }
 
 function buildOffsetCurvesFromCenterline(centerPts, halfSpacing = 1.0) {
