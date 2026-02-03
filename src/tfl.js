@@ -35,12 +35,25 @@ function cacheSet(url, value) {
 }
 
 function bundledCacheUrlForTfl(url) {
-  // Only route-sequence is bundled for now.
-  // https://api.tfl.gov.uk/Line/<id>/Route/Sequence/all  -> /data/tfl/route-sequence/<id>.json
-  const m = url.match(/^https:\/\/api\.tfl\.gov\.uk\/Line\/([^/]+)\/Route\/Sequence\/all\/?$/i);
-  if (!m) return null;
-  const lineId = decodeURIComponent(m[1]);
-  return `/data/tfl/route-sequence/${encodeURIComponent(lineId)}.json`;
+  // Bundled fallbacks shipped with the app (so first load can work offline).
+  //
+  // Route sequence:
+  //   https://api.tfl.gov.uk/Line/<id>/Route/Sequence/all  -> /data/tfl/route-sequence/<id>.json
+  {
+    const m = url.match(/^https:\/\/api\.tfl\.gov\.uk\/Line\/([^/]+)\/Route\/Sequence\/all\/?$/i);
+    if (m) {
+      const lineId = decodeURIComponent(m[1]);
+      return `/data/tfl/route-sequence/${encodeURIComponent(lineId)}.json`;
+    }
+  }
+
+  // Tube line list:
+  //   https://api.tfl.gov.uk/Line/Mode/tube -> /data/tfl/lines/mode-tube.json
+  if (/^https:\/\/api\.tfl\.gov\.uk\/Line\/Mode\/tube\/?$/i.test(url)) {
+    return '/data/tfl/lines/mode-tube.json';
+  }
+
+  return null;
 }
 
 async function fetchBundledJsonFor(url) {
