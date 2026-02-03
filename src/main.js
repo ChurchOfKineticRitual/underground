@@ -68,9 +68,19 @@ function getUrlNumberParam(key) {
   return Number.isFinite(n) ? n : null;
 }
 
+function getUrlStringParam(key) {
+  const sp = new URLSearchParams(location.search);
+  if (!sp.has(key)) return null;
+  const v = (sp.get(key) ?? '').trim();
+  return v.length ? v : null;
+}
+
 const urlTimeScale = getUrlNumberParam('t');
 const urlVerticalScale = getUrlNumberParam('vz');
 const urlHorizontalScale = getUrlNumberParam('hx');
+
+// Optional: pre-focus camera on a line id (e.g. ?focus=victoria)
+const urlFocusLine = getUrlStringParam('focus');
 
 const sim = {
   trains: [],
@@ -251,6 +261,10 @@ function setLineVisible(lineId, visible) {
   const g = lineGroups.get(lineId);
   if (!g) return;
   g.visible = visible;
+}
+
+function normalizeLineId(id) {
+  return String(id || '').trim().toLowerCase().replace(/\s+/g, '-');
 }
 
 function frostedTubeMaterial(hex) {
@@ -638,8 +652,17 @@ async function buildNetworkMvp() {
       setNetStatus({ kind: 'ok', text: 'TfL data loaded' });
     }
 
-    // frame the camera roughly over the network
-    controls.target.set(0, -120, 0);
+    // Optional: focus on a specific line after everything is built.
+    const focusId = normalizeLineId(urlFocusLine);
+    if (focusId) {
+      const pts = lineCenterPoints.get(focusId);
+      if (pts && pts.length) {
+        focusCameraOnStations({ stations: pts.map(pos => ({ pos })), controls, camera, pad: 1.22 });
+      }
+    }
+
+    // Otherwise frame the camera roughly over the network.
+    if (!focusId) controls.target.set(0, -120, 0);
   } catch (e) {
     console.warn('Network build failed:', e);
     setNetStatus({ kind: 'err', text: 'TfL fetch failed (no cache yet). Refresh later.' });
