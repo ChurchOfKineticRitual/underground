@@ -1,0 +1,263 @@
+{
+  "line": "piccadilly",
+  "origin": {
+    "lat": 51.5074,
+    "lon": -0.1278
+  },
+  "verticalScale": 3,
+  "groundY": -6,
+  "shafts": [
+    {
+      "id": "940GZZLUCKS",
+      "name": "Cockfosters Underground Station",
+      "x": -1480.7341194052049,
+      "z": -16043.438400000101,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUOAK",
+      "name": "Oakwood Underground Station",
+      "x": -303.61597076569194,
+      "z": -15621.090320000192,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUSGT",
+      "name": "Southgate Underground Station",
+      "x": -1.1085932296339418,
+      "z": -13905.53780000016,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUASG",
+      "name": "Arnos Grove Underground Station",
+      "x": -364.5885983954991,
+      "z": -12139.000720000715,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUBDS",
+      "name": "Bounds Green Underground Station",
+      "x": 247.00842897756553,
+      "z": -11091.256880000197,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUWOG",
+      "name": "Wood Green Underground Station",
+      "x": 1241.2086947276607,
+      "z": -10027.594280000323,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUTPN",
+      "name": "Turnpike Lane Underground Station",
+      "x": 1721.5759985429372,
+      "z": -9225.311040000204,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUMRH",
+      "name": "Manor House Underground Station",
+      "x": 2195.1531688267137,
+      "z": -7050.786160000186,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUFPK",
+      "name": "Finsbury Park Underground Station",
+      "x": 1453.2964369717915,
+      "z": -6318.3005600002325,
+      "groundY": -6,
+      "platformY": -75,
+      "depth_m": 25
+    },
+    {
+      "id": "940GZZLUASL",
+      "name": "Arsenal Underground Station",
+      "x": 1409.5070044012953,
+      "z": -5705.706600000524,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUHWY",
+      "name": "Holloway Road Underground Station",
+      "x": 1008.5426906584698,
+      "z": -5042.46204000056,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUCAR",
+      "name": "Caledonian Road Underground Station",
+      "x": 644.8548242620483,
+      "z": -4577.367080000212,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUKSX",
+      "name": "King's Cross St. Pancras Underground Station",
+      "x": 319.1362759805517,
+      "z": -2589.637160000004,
+      "groundY": -6,
+      "platformY": -51,
+      "depth_m": 17
+    },
+    {
+      "id": "940GZZLURSQ",
+      "name": "Russell Square Underground Station",
+      "x": 243.54407513496233,
+      "z": -1744.718359999956,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUHBN",
+      "name": "Holborn Underground Station",
+      "x": 507.52783794128123,
+      "z": -1133.237600000602,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUCGN",
+      "name": "Covent Garden Underground Station",
+      "x": 233.0817265303026,
+      "z": -633.744760000093,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLULSQ",
+      "name": "Leicester Square Underground Station",
+      "x": -43.37371010938566,
+      "z": -443.7215200005241,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUPCC",
+      "name": "Piccadilly Circus Underground Station",
+      "x": -415.5838869586085,
+      "z": -294.9980000003012,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUGPK",
+      "name": "Green Park Underground Station",
+      "x": -1038.4054207817044,
+      "z": 50.427960000028804,
+      "groundY": -6,
+      "platformY": -54,
+      "depth_m": 18
+    },
+    {
+      "id": "940GZZLUHPC",
+      "name": "Hyde Park Corner Underground Station",
+      "x": -1707.3028607114147,
+      "z": 485.9117999999947,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUKNB",
+      "name": "Knightsbridge Underground Station",
+      "x": -2266.24170967692,
+      "z": 637.9749199996957,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUSKS",
+      "name": "South Kensington Underground Station",
+      "x": -3210.6245671703878,
+      "z": 1481.2239200000045,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUGTR",
+      "name": "Gloucester Road Underground Station",
+      "x": -3800.9504619498716,
+      "z": 1456.5108799999118,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUECT",
+      "name": "Earl's Court Underground Station",
+      "x": -4543.70792580387,
+      "z": 1707.3148399994736,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUBSC",
+      "name": "Barons Court Underground Station",
+      "x": -5932.844529610663,
+      "z": 1902.3474799998417,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUHSD",
+      "name": "Hammersmith (Dist&Picc Line) Underground Station",
+      "x": -6639.08770396363,
+      "z": 1680.931999999642,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUTNG",
+      "name": "Turnham Green Underground Station",
+      "x": -8782.483426381857,
+      "z": 1363.8926399996215,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    },
+    {
+      "id": "940GZZLUACT",
+      "name": "Acton Town Underground Station",
+      "x": -10577.503726387971,
+      "z": 483.4627599998501,
+      "groundY": -6,
+      "platformY": -84,
+      "depth_m": 28
+    }
+  ]
+}
