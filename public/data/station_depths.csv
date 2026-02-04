@@ -87,3 +87,17 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLURBG,Redbridge Underground Station,12,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
 940GZZLUBKE,Barkingside Underground Station,25,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
 940GZZLUNBP,Newbury Park Underground Station,19,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+# Northern line depths (from various sources)
+940GZZLUHMP,Hampstead Underground Station,58,https://www.dailymail.co.uk/sciencetech/article-12938867/,wikipedia-estimate
+940GZZLUHGT,Highgate Underground Station,37,https://www.dailymail.co.uk/sciencetech/article-12938867/,wikipedia-estimate
+940GZZLUAGL,Angel Underground Station,36,https://www.dailymail.co.uk/sciencetech/article-12938867/,wikipedia-estimate
+940GZZLUBZP,Belsize Park Underground Station,36,https://www.dailymail.co.uk/sciencetech/article-12938867/,wikipedia-estimate
+# Piccadilly line depths (from various sources)
+940GZZLUHBN,Holborn Underground Station,41,https://www.dailymail.co.uk/sciencetech/article-12938867/,wikipedia-estimate Piccadilly platforms
+940GZZLUCGN,Covent Garden Underground Station,37,https://www.dailymail.co.uk/sciencetech/article-12938867/,wikipedia-estimate
+940GZZLULSQ,Leicester Square Underground Station,33,https://www.dailymail.co.uk/sciencetech/article-12938867/,wikipedia-estimate
+940GZZLURSQ,Russell Square Underground Station,33,https://www.dailymail.co.uk/sciencetech/article-12938867/,wikipedia-estimate
+940GZZLUPCC,Piccadilly Circus Underground Station,32,https://www.dailymail.co.uk/sciencetech/article-12938867/,wikipedia-estimate
+# Jubilee line depths (from various sources)
+940GZZLUWMS,Westminster Underground Station,69,https://www.mylondon.news/news/zone-1-news/,wikipedia-estimate Jubilee platforms (68.8m below ground)
+940GZZLUWLO,Waterloo Underground Station,32,https://www.mylondon.news/news/zone-1-news/,wikipedia-estimate Jubilee platforms (26m below sea level, ~32m below ground)
