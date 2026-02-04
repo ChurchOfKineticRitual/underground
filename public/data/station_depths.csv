@@ -27,3 +27,29 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUVIC,Victoria Underground Station,5,https://content.tfl.gov.uk/bakerloo-central-victoria-lines-tube-depths.pdf,depth-diagrams-pdf
 940GZZLUWWL,Walthamstow Central Underground Station,24,https://content.tfl.gov.uk/bakerloo-central-victoria-lines-tube-depths.pdf,depth-diagrams-pdf
 940GZZLUWRR,Warren Street Underground Station,27,https://content.tfl.gov.uk/bakerloo-central-victoria-lines-tube-depths.pdf,depth-diagrams-pdf
+# Bakerloo line depths (from london-underground-depth-diagrams.pdf)
+940GZZLUKEN,Kenton Underground Station,56,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUHAW,Harrow & Wealdstone Underground Station,52,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUNWY,North Wembley Underground Station,48,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUWYC,Wembley Central Underground Station,45,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUSKT,South Kenton Underground Station,43,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUKSG,Kensal Green Underground Station,42,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUWJN,Willesden Junction Underground Station,40,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUQPK,Queen's Park Underground Station,38,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUHSD,Harlesden Underground Station,38,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUKPK,Kilburn Park Underground Station,27,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUWAR,Warwick Avenue Underground Station,27,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUSGP,Stonebridge Park Underground Station,24,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUMVL,Maida Vale Underground Station,31,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUPAC,Paddington Underground Station,25,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf Bakerloo platforms
+940GZZLUMYB,Marylebone Underground Station,29,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUERB,Edgware Road (Bakerloo) Underground Station,32,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf Bakerloo platforms
+940GZZLUBST,Baker Street Underground Station,27,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLURGP,Regent's Park Underground Station,28,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUOXC,Oxford Circus Underground Station,27,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf Bakerloo platforms
+940GZZLUPCC,Piccadilly Circus Underground Station,19,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUCHX,Charing Cross Underground Station,12,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUEMB,Embankment Underground Station,5,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUWLO,Waterloo Underground Station,4,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf Bakerloo platforms
+940GZZLULBN,Lambeth North Underground Station,3,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
+940GZZLUEAC,Elephant & Castle Underground Station,3,https://content.tfl.gov.uk/london-underground-depth-diagrams.pdf,depth-diagrams-pdf
