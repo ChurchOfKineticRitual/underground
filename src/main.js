@@ -5,6 +5,7 @@ import { loadStationDepthAnchors, depthForStation, debugDepthStats, buildDepthIn
 import { tryCreateTerrainMesh, xzToTerrainUV, terrainHeightToWorldY, TERRAIN_CONFIG, createSkyDome, updateEnvironment, createAtmosphere, updateLighting } from './terrain.js';
 import { createStationMarkers } from './stations.js';
 import { loadLineShafts, addShaftsToScene } from './shafts.js';
+import { loadThamesData, createThamesMesh } from './thames.js';
 
 // Real-world tube tunnels are built as parallel bores roughly 5–10 m apart (centre-to-centre).
 // With 4.5m radius tubes, we need ~6-8m half-spacing to show clear separation.
@@ -431,36 +432,21 @@ scene.add(rim);
   scene.add(mesh);
 }
 
-// ---------- Thames (placeholder ribbon) ----------
-{
-  const points = [
-    new THREE.Vector3(-90, -5.5, 30),
-    new THREE.Vector3(-50, -5.5, 15),
-    new THREE.Vector3(-10, -5.5, 10),
-    new THREE.Vector3(30, -5.5, 0),
-    new THREE.Vector3(70, -5.5, -18),
-    new THREE.Vector3(110, -5.5, -40),
-  ];
-  const curve = new THREE.CatmullRomCurve3(points);
-  // River as a distinct surface ribbon (not a tube)
-  const tube = new THREE.TubeGeometry(curve, 200, 1.0, 8, false);
-
-  const mat = new THREE.MeshStandardMaterial({
-    color: 0x1d4ed8,
-    transparent: true,
-    opacity: 0.35,
-    roughness: 0.08,
-    metalness: 0.02,
-    emissive: new THREE.Color(0x0b1e5b),
-    emissiveIntensity: 0.25,
-  });
-
-  // Flatten the tube into a ribbon-ish mesh by scaling Y heavily.
-  const mesh = new THREE.Mesh(tube, mat);
-  mesh.scale.y = 0.10;
-  mesh.position.y = -2.0;
-  scene.add(mesh);
-}
+// ---------- Thames (accurate river from BNG data) ----------
+let thamesMesh = null;
+loadThamesData().then(thamesData => {
+  if (thamesData) {
+    thamesMesh = createThamesMesh(thamesData, {
+      width: 200,
+      color: 0x1d4ed8,
+      opacity: 0.4,
+    });
+    if (thamesMesh) {
+      thamesMesh.position.y = -2.0;
+      scene.add(thamesMesh);
+    }
+  }
+});
 
 // ---------- Tube lines (real TfL route sequences) ----------
 // Brand-ish colours (can refine later)
