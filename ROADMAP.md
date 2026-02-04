@@ -25,9 +25,9 @@
 - [ ] Snap Victoria shaft ground cubes to terrain surface
 
 ### New Lines
-- [ ] Add Bakerloo line to 3D scene (shafts)
-- [ ] Add Central line to 3D scene (shafts)
-- [ ] Generalize shaft loader for any line ID
+- [x] Add Bakerloo line shafts (25 stations, heuristic depths)
+- [ ] Add Central line shafts
+- [x] Generalize shaft loader for any line ID
 
 ## Technical Debt
 - [ ] Depth heuristics for lines without CSV data
