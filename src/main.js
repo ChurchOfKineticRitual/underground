@@ -512,7 +512,7 @@ function frostedTubeMaterial(hex) {
     clearcoat: 0.22,
     clearcoatRoughness: 0.6,
     emissive: new THREE.Color(emissive),
-    emissiveIntensity: 0.10,
+    emissiveIntensity: 0.15,
   });
 }
 
