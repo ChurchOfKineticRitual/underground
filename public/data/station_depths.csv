@@ -101,3 +101,6 @@ naptan_id,name,depth_m,source_url,notes
 # Jubilee line depths (from various sources)
 940GZZLUWMS,Westminster Underground Station,69,https://www.mylondon.news/news/zone-1-news/,wikipedia-estimate Jubilee platforms (68.8m below ground)
 940GZZLUWLO,Waterloo Underground Station,32,https://www.mylondon.news/news/zone-1-news/,wikipedia-estimate Jubilee platforms (26m below sea level, ~32m below ground)
+# Waterloo & City line depths (estimated from web sources)
+940GZZLUWLO,Waterloo Underground Station,12,https://en.wikipedia.org/wiki/Waterloo_%26_City_line,wikipedia-estimate Waterloo & City platforms (~12m below ground)
+940GZZLUBNK,Bank Underground Station,15,https://metro-londres.es/en/waterloo-and-city-line/,wikipedia-estimate Waterloo & City platforms (deep tube line)

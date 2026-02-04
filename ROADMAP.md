@@ -19,7 +19,7 @@
 - [x] Extract Central depths from PDF (29 stations)
 - [ ] Research Jubilee, Northern, Piccadilly, Waterloo & City depths
 - [x] Research Jubilee, Northern, Piccadilly depths from web sources (11 stations added)
-- [ ] Research Waterloo & City line depths
+- [x] Research Waterloo & City line depths (2 stations added)
 - [ ] Add depth interpolation for stations between known anchors
 
 ### Twin Tunnels
