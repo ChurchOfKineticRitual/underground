@@ -78,6 +78,17 @@ naptan_id,name,depth_m,source_url,notes
 # Northern line (selected stations with researched depths)
 940GZZLUAGL,Angel Underground Station,28,https://en.wikipedia.org/wiki/Angel_tube_station,27.5m escalator vertical distance (approx platform depth)
 940GZZLUHTD,Hampstead Underground Station,55,https://www.mylondon.news/news/transport/london-underground-station-deepest-lift-32575981,55.2m shaft depth - deepest on Northern line
+# Additional Bakerloo line depths
+940GZZLUBST,Baker Street Underground Station (Bakerloo),15,https://en.wikipedia.org/wiki/Baker_Street_tube_station,Approximate depth - deep-level tube station
+940GZZLUMEA,Marylebone Underground Station,12,https://en.wikipedia.org/wiki/Marylebone_station,Approximate depth - shallow tube station
+940GZZLUPAC,Paddington Underground Station (Bakerloo),14,https://en.wikipedia.org/wiki/Paddington_tube_station,Approximate depth - Bakerloo line platforms
+940GZZLUCHX,Charing Cross Underground Station (Bakerloo),20,https://en.wikipedia.org/wiki/Charing_Cross_tube_station,Approximate depth - deep-level station
+940GZZLUEMB,Embankment Underground Station (Bakerloo),18,https://en.wikipedia.org/wiki/Embankment_tube_station,Approximate depth - near river level
+940GZZLUWLO,Waterloo Underground Station (Bakerloo),22,https://en.wikipedia.org/wiki/Waterloo_tube_station,Approximate depth - deep-level interchange
+# Additional Central line depths
+940GZZLUBKE,Buckhurst Hill Underground Station,8,https://en.wikipedia.org/wiki/Buckhurst_Hill_tube_station,Shallow sub-surface station
+940GZZLULYN,Loughton Underground Station,7,https://en.wikipedia.org/wiki/Loughton_tube_station,Shallow sub-surface station
+940GZZLUEPG,Epping Underground Station,6,https://en.wikipedia.org/wiki/Epping_tube_station,Surface-level terminus
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Remaining West Acton through to Leytonstone
 # - Hainault loop stations
