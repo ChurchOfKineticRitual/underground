@@ -277,14 +277,16 @@ scene.add(rim);
 
     // If station shafts already exist, snap their ground cubes to the terrain surface (approx).
     // This improves the "shaft length" feel without needing per-station survey data.
-    if (victoriaShaftsLayer?.updateGroundYById && terrain.heightSampler) {
-      const groundYById = {};
-      for (const s of victoriaShaftsLayer.shaftsData?.shafts ?? []) {
-        const { u, v } = xzToTerrainUV({ x: s.x, z: s.z, terrainSize: 24000 });
-        const h01 = terrain.heightSampler(u, v);
-        groundYById[s.id] = terrainHeightToWorldY({ h01, displacementScale: 60, displacementBias: -30, baseY: -6 });
+    for (const [lineId, layers] of lineShaftLayers) {
+      if (layers.shaftsLayer?.updateGroundYById && terrain.heightSampler) {
+        const groundYById = {};
+        for (const s of layers.shaftsLayer.shaftsData?.shafts ?? []) {
+          const { u, v } = xzToTerrainUV({ x: s.x, z: s.z, terrainSize: 24000 });
+          const h01 = terrain.heightSampler(u, v);
+          groundYById[s.id] = terrainHeightToWorldY({ h01, displacementScale: 60, displacementBias: -30, baseY: -6 });
+        }
+        layers.shaftsLayer.updateGroundYById(groundYById);
       }
-      victoriaShaftsLayer.updateGroundYById(groundYById);
     }
   });
 
@@ -558,14 +560,20 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors, sim) {
 
 // (trains are kept in sim.trains)
 
-// Victoria station markers/labels
+// Victoria station markers/labels (legacy - now per-line tracking below)
 let victoriaStationsLayer = null;
 let victoriaStationsVisible = prefs.victoriaStationsVisible ?? true;
 let victoriaLabelsVisible = prefs.victoriaLabelsVisible ?? true;
 
-// Victoria station shafts (ground cube + platform cube + vertical line)
+// Victoria station shafts (legacy - now per-line tracking below)
 let victoriaShaftsLayer = null;
 let victoriaShaftsVisible = prefs.victoriaShaftsVisible ?? true;
+
+// Per-line shaft and station layer tracking (supports all 11 Underground lines + DLR)
+const lineShaftLayers = new Map(); // lineId -> { shaftsLayer, stationsLayer }
+const lineStationsVisible = new Map(); // lineId -> boolean
+const lineLabelsVisible = new Map(); // lineId -> boolean
+const lineShaftsVisible = new Map(); // lineId -> boolean
 
 // Simple camera focus helpers (MVP)
 function focusCameraOnStations({ stations, controls, camera, pad = 1.35 } = {}) {
@@ -802,16 +810,22 @@ async function buildNetworkMvp() {
               };
             });
 
-          victoriaStationsLayer?.dispose?.();
-          victoriaStationsLayer = createStationMarkers({
+          // Dispose old per-line layers if they exist
+          const existing = lineShaftLayers.get(id);
+          existing?.stationsLayer?.dispose?.();
+          existing?.shaftsLayer?.dispose?.();
+
+          const stationsLayer = createStationMarkers({
             scene,
             stations,
             colour,
             size: 6.0,
             labels: true,
           });
-          victoriaStationsLayer.setLabelsVisible(victoriaLabelsVisible);
-          victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+          const sv = lineStationsVisible.get(id) ?? true;
+          const lv = lineLabelsVisible.get(id) ?? true;
+          stationsLayer.setLabelsVisible(lv);
+          stationsLayer.mesh.visible = sv;
 
           // Ground cube + platform cube + connecting line (MVP)
           // Make platform Y match the built tunnel centerline so shafts always intersect the tube.
@@ -857,11 +871,10 @@ async function buildNetworkMvp() {
               }
             }
 
-            victoriaShaftsLayer?.dispose?.();
-            victoriaShaftsLayer = addShaftsToScene({ scene, shaftsData, colour, platformYById, kind: 'victoria-shafts' });
+            const shaftsLayer = addShaftsToScene({ scene, shaftsData, colour, platformYById, kind: `${id}-shafts` });
 
             // If terrain is already loaded, snap ground cubes to terrain surface (approx).
-            if (victoriaShaftsLayer?.updateGroundYById && terrain?.heightSampler) {
+            if (shaftsLayer?.updateGroundYById && terrain?.heightSampler) {
               const groundYById = {};
               for (const s of shaftsData?.shafts ?? []) {
                 if (!s?.id) continue;
@@ -869,10 +882,14 @@ async function buildNetworkMvp() {
                 const h01 = terrain.heightSampler(u, v);
                 groundYById[s.id] = terrainHeightToWorldY({ h01, displacementScale: 60, displacementBias: -30, baseY: -6 });
               }
-              victoriaShaftsLayer.updateGroundYById(groundYById);
+              shaftsLayer.updateGroundYById(groundYById);
             }
 
-            if (victoriaShaftsLayer?.group) victoriaShaftsLayer.group.visible = victoriaShaftsVisible;
+            const shv = lineShaftsVisible.get(id) ?? true;
+            if (shaftsLayer?.group) shaftsLayer.group.visible = shv;
+
+            // Store per-line layers for later access
+            lineShaftLayers.set(id, { stationsLayer, shaftsLayer });
           } catch {
             // ignore
           }
@@ -1159,19 +1176,29 @@ function toggleSimPaused() {
 
 function setVictoriaStationsVisible(v) {
   victoriaStationsVisible = !!v;
-  if (victoriaStationsLayer?.mesh) victoriaStationsLayer.mesh.visible = victoriaStationsVisible;
+  // Toggle visibility for ALL lines with stations, not just Victoria
+  for (const [lineId, layers] of lineShaftLayers) {
+    if (layers.stationsLayer?.mesh) layers.stationsLayer.mesh.visible = victoriaStationsVisible;
+  }
   prefs.victoriaStationsVisible = victoriaStationsVisible;
   savePrefs(prefs);
 }
 function setVictoriaLabelsVisible(v) {
   victoriaLabelsVisible = !!v;
-  victoriaStationsLayer?.setLabelsVisible?.(victoriaLabelsVisible);
+  // Toggle labels for ALL lines, not just Victoria
+  for (const [lineId, layers] of lineShaftLayers) {
+    layers.stationsLayer?.setLabelsVisible?.(victoriaLabelsVisible);
+  }
   prefs.victoriaLabelsVisible = victoriaLabelsVisible;
   savePrefs(prefs);
 }
 
 function setVictoriaShaftsVisible(v) {
   victoriaShaftsVisible = !!v;
+  // Toggle visibility for ALL lines with shafts, not just Victoria
+  for (const [lineId, layers] of lineShaftLayers) {
+    if (layers.shaftsLayer?.group) layers.shaftsLayer.group.visible = victoriaShaftsVisible;
+  }
   if (victoriaShaftsLayer?.group) victoriaShaftsLayer.group.visible = victoriaShaftsVisible;
   prefs.victoriaShaftsVisible = victoriaShaftsVisible;
   savePrefs(prefs);
@@ -1343,8 +1370,10 @@ function tick() {
     train.position.copy(train.userData.curve.getPointAt(u));
   }
 
-  // Victoria station label projection
-  victoriaStationsLayer?.update?.({ camera, renderer });
+  // Update station label projections for ALL lines
+  for (const [lineId, layers] of lineShaftLayers) {
+    layers.stationsLayer?.update?.({ camera, renderer });
+  }
 
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
