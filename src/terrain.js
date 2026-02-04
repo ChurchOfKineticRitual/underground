@@ -81,6 +81,10 @@ export async function tryCreateTerrainMesh({ opacity = TERRAIN_CONFIG.opacity, w
       displacementScale: TERRAIN_CONFIG.displacementScale,
       displacementBias: TERRAIN_CONFIG.displacementBias,
       wireframe: !!wireframe,
+      // Enhanced terrain appearance
+      emissive: new THREE.Color(0x1a3a5c),
+      emissiveIntensity: 0.1,
+      side: THREE.DoubleSide,
     });
 
     const mesh = new THREE.Mesh(geom, mat);
@@ -140,4 +144,127 @@ export function xzToTerrainUV({
   const u = (x + terrainSize / 2) / terrainSize;
   const v = (z + terrainSize / 2) / terrainSize;
   return { u, v };
+}
+
+// Environment configuration for above/below ground differentiation
+export const ENV_CONFIG = {
+  // Altitude thresholds (in scene units/metres)
+  surfaceY: 0,           // Ground level
+  skyStartY: 200,        // Where sky becomes visible
+  fogDepthY: -100,       // Where underground fog thickens
+  
+  // Colors
+  skyColor: 0x87CEEB,    // Sky blue (above)
+  groundColor: 0x0b1020, // Dark underground (below)
+  fogColorSky: 0x87CEEB,
+  fogColorGround: 0x0b1020,
+  
+  // Fog distances
+  fogNear: 500,
+  fogFar: 15000,
+  
+  // Lighting intensities
+  ambientAbove: 0.4,
+  ambientBelow: 0.15,
+  sunIntensity: 1.0,
+};
+
+// Create sky dome (simple gradient hemisphere)
+export function createSkyDome(scene) {
+  const geometry = new THREE.SphereGeometry(20000, 32, 32);
+  const material = new THREE.MeshBasicMaterial({
+    color: ENV_CONFIG.skyColor,
+    side: THREE.BackSide,
+    transparent: true,
+    opacity: 0.0, // Start invisible, fade in based on camera
+    fog: false,
+  });
+  const sky = new THREE.Mesh(geometry, material);
+  sky.name = 'skyDome';
+  scene.add(sky);
+  return sky;
+}
+
+// Update environment based on camera height
+export function updateEnvironment(camera, scene, sky) {
+  const y = camera.position.y;
+  
+  // Calculate blend factor (0 = below ground, 1 = above ground/sky)
+  const surfaceBlend = Math.max(0, Math.min(1, (y - ENV_CONFIG.surfaceY) / ENV_CONFIG.skyStartY));
+  
+  // Update fog color and density
+  const fogColor = new THREE.Color().lerpColors(
+    new THREE.Color(ENV_CONFIG.fogColorGround),
+    new THREE.Color(ENV_CONFIG.fogColorSky),
+    surfaceBlend
+  );
+  
+  if (scene.fog) {
+    scene.fog.color.copy(fogColor);
+    // Underground: denser fog for mystery; Above: lighter fog for clarity
+    scene.fog.near = ENV_CONFIG.fogNear * (0.5 + 0.5 * surfaceBlend);
+  }
+  
+  // Update sky visibility
+  if (sky) {
+    sky.material.opacity = surfaceBlend * 0.8;
+    sky.visible = surfaceBlend > 0.05;
+  }
+  
+  // Update background color
+  const bgColor = new THREE.Color().lerpColors(
+    new THREE.Color(ENV_CONFIG.groundColor),
+    new THREE.Color(ENV_CONFIG.skyColor),
+    surfaceBlend
+  );
+  
+  return { 
+    surfaceBlend, 
+    bgColor,
+    isAboveGround: y > ENV_CONFIG.surfaceY 
+  };
+}
+
+// Create atmospheric lighting
+export function createAtmosphere(scene) {
+  // Ambient light - base illumination
+  const ambient = new THREE.AmbientLight(0xffffff, ENV_CONFIG.ambientAbove);
+  ambient.name = 'ambientLight';
+  scene.add(ambient);
+  
+  // Directional "sun" light - only affects above-ground areas primarily
+  const sun = new THREE.DirectionalLight(0xfff4e6, ENV_CONFIG.sunIntensity);
+  sun.name = 'sunLight';
+  sun.position.set(1000, 2000, 1000);
+  sun.castShadow = false; // Keep it simple, no shadows
+  scene.add(sun);
+  
+  // Underground fill light - subtle blue from below
+  const underground = new THREE.DirectionalLight(0x4a6fa5, 0.3);
+  underground.name = 'undergroundLight';
+  underground.position.set(0, -500, 0);
+  scene.add(underground);
+  
+  return { ambient, sun, underground };
+}
+
+// Update lighting based on camera position
+export function updateLighting(camera, lights) {
+  if (!lights) return;
+  
+  const y = camera.position.y;
+  const surfaceBlend = Math.max(0, Math.min(1, (y - ENV_CONFIG.surfaceY) / ENV_CONFIG.skyStartY));
+  
+  // Adjust ambient light intensity
+  lights.ambient.intensity = THREE.MathUtils.lerp(
+    ENV_CONFIG.ambientBelow,
+    ENV_CONFIG.ambientAbove,
+    surfaceBlend
+  );
+  
+  // Sun becomes stronger above ground
+  lights.sun.intensity = THREE.MathUtils.lerp(0.2, ENV_CONFIG.sunIntensity, surfaceBlend);
+  
+  // Underground light fades as we go up
+  lights.underground.intensity = THREE.MathUtils.lerp(0.4, 0, surfaceBlend);
 }

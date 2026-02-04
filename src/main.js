@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { fetchRouteSequence, fetchBundledRouteSequenceIndex, fetchTubeLines } from './tfl.js';
 import { loadStationDepthAnchors, depthForStation, debugDepthStats, buildDepthInterpolator } from './depth.js';
-import { tryCreateTerrainMesh, xzToTerrainUV, terrainHeightToWorldY, TERRAIN_CONFIG } from './terrain.js';
+import { tryCreateTerrainMesh, xzToTerrainUV, terrainHeightToWorldY, TERRAIN_CONFIG, createSkyDome, updateEnvironment, createAtmosphere, updateLighting } from './terrain.js';
 import { createStationMarkers } from './stations.js';
 import { loadLineShafts, addShaftsToScene } from './shafts.js';
 
@@ -316,7 +316,7 @@ function deleteUrlParam(key) {
   const gEl = document.getElementById('groundOpacity');
   const gOut = document.getElementById('groundOpacityValue');
   if (gEl) {
-    const defaultOpacity = 0.10;
+    const defaultOpacity = 0.35;
     const cur = prefs.groundOpacity ?? defaultOpacity;
     gEl.value = String(cur);
     if (gOut) gOut.textContent = Number(cur).toFixed(2);
@@ -353,12 +353,18 @@ function deleteUrlParam(key) {
   }
 }
 
-// ---------- Lights ----------
-scene.add(new THREE.AmbientLight(0xffffff, 0.75));
-const key = new THREE.DirectionalLight(0xffffff, 1.2);
-key.position.set(40, 120, 30);
-scene.add(key);
+// ---------- Lights & Atmosphere ----------
+// Remove old lighting setup - we'll use the atmospheric system
+let atmosphereLights = null;
+let skyDome = null;
 
+// Initialize atmospheric lighting (adapts based on camera height)
+atmosphereLights = createAtmosphere(scene);
+
+// Create sky dome for above-ground visibility
+skyDome = createSkyDome(scene);
+
+// Keep rim light for tube highlighting
 const rim = new THREE.DirectionalLight(0x9bd6ff, 0.65);
 rim.position.set(-60, 80, -40);
 scene.add(rim);
@@ -381,7 +387,7 @@ scene.add(rim);
     terrain.mesh.material.needsUpdate = true;
   };
 
-  tryCreateTerrainMesh({ opacity: prefs.groundOpacity ?? 0.10, wireframe: false }).then(result => {
+  tryCreateTerrainMesh({ opacity: prefs.groundOpacity ?? 0.35, wireframe: false }).then(result => {
     if (!result) return;
     terrain = result;
     scene.add(result.mesh);
@@ -389,7 +395,7 @@ scene.add(rim);
     // If we have real terrain, hide the debug grid so it doesn't visually fight the heightmap.
     grid.visible = false;
 
-    applyTerrainOpacity(prefs.groundOpacity ?? 0.10);
+    applyTerrainOpacity(prefs.groundOpacity ?? 0.35);
 
     // If station shafts already exist, snap their ground cubes to the terrain surface (approx).
     // This improves the "shaft length" feel without needing per-station survey data.
@@ -1530,6 +1536,17 @@ function tick() {
   for (const [lineId, layers] of lineShaftLayers) {
     layers.stationsLayer?.update?.({ camera, renderer });
   }
+
+  // Update environment based on camera height (sky/fog/background)
+  if (skyDome) {
+    const env = updateEnvironment(camera, scene, skyDome);
+    if (env?.bgColor) {
+      renderer.setClearColor(env.bgColor, 1);
+    }
+  }
+  
+  // Update lighting based on camera position
+  updateLighting(camera, atmosphereLights);
 
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
