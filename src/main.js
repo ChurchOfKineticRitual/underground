@@ -1570,10 +1570,7 @@ function tick() {
 
   // Update environment based on camera height (sky/fog/background)
   if (skyDome) {
-    const env = updateEnvironment(camera, scene, skyDome);
-    if (env?.bgColor) {
-      renderer.setClearColor(env.bgColor, 1);
-    }
+    updateEnvironment(camera, scene, skyDome, renderer);
   }
   
   // Update lighting based on camera position

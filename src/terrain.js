@@ -23,14 +23,14 @@ export const TERRAIN_CONFIG = {
   baseY: -6.0,           // Base elevation offset
   
   // Material/displacement settings
-  displacementScale: 60,
-  displacementBias: -30,
-  opacity: 0.10,
+  displacementScale: 80,
+  displacementBias: -40,
+  opacity: 0.55,
   
-  // Color theming
-  color: 0x0b1223,
-  roughness: 0.95,
-  metalness: 0.0,
+  // Color theming - lighter, more distinct from background
+  color: 0x1a2a3a,
+  roughness: 0.85,
+  metalness: 0.1,
 };
 
 export async function tryCreateTerrainMesh({ opacity = TERRAIN_CONFIG.opacity, wireframe = false } = {}) {
@@ -172,8 +172,22 @@ export const ENV_CONFIG = {
 // Create sky dome (simple gradient hemisphere)
 export function createSkyDome(scene) {
   const geometry = new THREE.SphereGeometry(20000, 32, 32);
+  
+  // Create a simple gradient texture for the sky
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 512;
+  const ctx = canvas.getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 512);
+  gradient.addColorStop(0, '#4a90d9'); // Deep blue at top
+  gradient.addColorStop(0.5, '#87CEEB'); // Sky blue at middle
+  gradient.addColorStop(1, '#e8f4f8'); // Light near horizon
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 512, 512);
+  const texture = new THREE.CanvasTexture(canvas);
+  
   const material = new THREE.MeshBasicMaterial({
-    color: ENV_CONFIG.skyColor,
+    map: texture,
     side: THREE.BackSide,
     transparent: true,
     opacity: 0.0, // Start invisible, fade in based on camera
@@ -186,11 +200,12 @@ export function createSkyDome(scene) {
 }
 
 // Update environment based on camera height
-export function updateEnvironment(camera, scene, sky) {
+export function updateEnvironment(camera, scene, sky, renderer) {
   const y = camera.position.y;
   
   // Calculate blend factor (0 = below ground, 1 = above ground/sky)
-  const surfaceBlend = Math.max(0, Math.min(1, (y - ENV_CONFIG.surfaceY) / ENV_CONFIG.skyStartY));
+  // Lower threshold so sky becomes visible earlier when ascending
+  const surfaceBlend = Math.max(0, Math.min(1, (y - ENV_CONFIG.surfaceY) / (ENV_CONFIG.skyStartY * 0.6)));
   
   // Update fog color and density
   const fogColor = new THREE.Color().lerpColors(
@@ -205,10 +220,12 @@ export function updateEnvironment(camera, scene, sky) {
     scene.fog.near = ENV_CONFIG.fogNear * (0.5 + 0.5 * surfaceBlend);
   }
   
-  // Update sky visibility
+  // Update sky visibility - visible even from underground (dimly) to show "up"
   if (sky) {
-    sky.material.opacity = surfaceBlend * 0.8;
-    sky.visible = surfaceBlend > 0.05;
+    // Minimum 15% opacity even underground so you can see the sky direction
+    // Full 90% opacity when above ground
+    sky.material.opacity = 0.15 + (surfaceBlend * 0.75);
+    sky.visible = true; // Always visible
   }
   
   // Update background color
@@ -217,6 +234,11 @@ export function updateEnvironment(camera, scene, sky) {
     new THREE.Color(ENV_CONFIG.skyColor),
     surfaceBlend
   );
+  
+  // Update renderer background
+  if (renderer) {
+    renderer.setClearColor(bgColor, 1);
+  }
   
   return { 
     surfaceBlend, 
