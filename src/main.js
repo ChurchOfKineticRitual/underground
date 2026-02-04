@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { fetchRouteSequence, fetchBundledRouteSequenceIndex, fetchTubeLines } from './tfl.js';
-import { loadStationDepthAnchors, depthForStation, debugDepthStats } from './depth.js';
+import { loadStationDepthAnchors, depthForStation, debugDepthStats, buildDepthInterpolator } from './depth.js';
 import { tryCreateTerrainMesh, xzToTerrainUV, terrainHeightToWorldY } from './terrain.js';
 import { createStationMarkers } from './stations.js';
 import { loadLineShafts, addShaftsToScene } from './shafts.js';
@@ -612,18 +612,25 @@ function stationUsFromPolyline(centerPts) {
 
 function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors, sim) {
   // stopPoints: [{lat, lon, name, id, naptanId?}]
+  // Filter valid points first
+  const validStopPoints = stopPoints.filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon));
+
+  // Build depth interpolator for this line (interpolates between known anchors)
+  const interpolateDepth = buildDepthInterpolator(validStopPoints, depthAnchors);
+
   // Build curve points using shared X/Z for stations (so interchanges show vertical stacks)
   const centerPts = [];
 
-  for (const sp of stopPoints) {
-    if (!Number.isFinite(sp.lat) || !Number.isFinite(sp.lon)) continue;
-
+  for (const sp of validStopPoints) {
     // Register this station's ground position (shared across all lines)
     registerStationPosition(sp.id, sp.lat, sp.lon);
     const pos = getStationPosition(sp.id);
 
-    // Depth is line-specific (Y coordinate)
-    const depthM = depthForStation({ naptanId: sp.id, lineId, anchors: depthAnchors });
+    // Depth: prefer interpolated value from anchors, fallback to per-line heuristic
+    let depthM = interpolateDepth(sp.id);
+    if (depthM === null) {
+      depthM = depthForStation({ naptanId: sp.id, lineId, anchors: depthAnchors });
+    }
     const y = -depthM * sim.verticalScale;
 
     // Use shared X/Z, line-specific Y
