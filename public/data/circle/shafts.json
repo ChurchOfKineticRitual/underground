@@ -1,0 +1,263 @@
+{
+  "line": "circle",
+  "origin": {
+    "lat": 51.5074,
+    "lon": -0.1278
+  },
+  "verticalScale": 3,
+  "groundY": -6,
+  "shafts": [
+    {
+      "id": "940GZZLUERC",
+      "name": "Edgware Road (Circle Line) Underground Station",
+      "x": -2773.700260541349,
+      "z": -1386.824560000256,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUPAC",
+      "name": "Paddington Underground Station",
+      "x": -3318.0888233679225,
+      "z": -1022.0289200005802,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUBWT",
+      "name": "Bayswater Underground Station",
+      "x": -4166.786227728707,
+      "z": -543.6868800004572,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUNHG",
+      "name": "Notting Hill Gate Underground Station",
+      "x": -4732.584497302564,
+      "z": -192.36095999999463,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUHSK",
+      "name": "High Street Kensington Underground Station",
+      "x": -4503.105698768567,
+      "z": 706.3253999995601,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUGTR",
+      "name": "Gloucester Road Underground Station",
+      "x": -3800.9504619498716,
+      "z": 1456.5108799999118,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUSKS",
+      "name": "South Kensington Underground Station",
+      "x": -3210.6245671703878,
+      "z": 1481.2239200000045,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUSSQ",
+      "name": "Sloane Square Underground Station",
+      "x": -1980.0167952010913,
+      "z": 1684.271599999911,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUVIC",
+      "name": "Victoria Underground Station",
+      "x": -1060.2308499901014,
+      "z": 1229.0841199998604,
+      "groundY": -6,
+      "platformY": -15,
+      "depth_m": 5
+    },
+    {
+      "id": "940GZZLUSJP",
+      "name": "St. James's Park Underground Station",
+      "x": -402.4193423567189,
+      "z": 874.5299199996387,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUWSM",
+      "name": "Westminster Underground Station",
+      "x": 203.6347188681808,
+      "z": 676.8255999996882,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUEMB",
+      "name": "Embankment Underground Station",
+      "x": 355.71985255843526,
+      "z": 38.07143999958697,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUTMP",
+      "name": "Temple Underground Station",
+      "x": 938.1470205767847,
+      "z": -401.4199200005436,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUBKF",
+      "name": "Blackfriars Underground Station",
+      "x": 1672.6593222853885,
+      "z": -465.42892000029553,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUMSH",
+      "name": "Mansion House Underground Station",
+      "x": 2341.2796139076913,
+      "z": -525.096440000726,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUCST",
+      "name": "Cannon Street Underground Station",
+      "x": 2589.1194878074816,
+      "z": -457.5252000004761,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUMMT",
+      "name": "Monument Underground Station",
+      "x": 2898.3477117981893,
+      "z": -367.3560000003303,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUTWH",
+      "name": "Tower Hill Underground Station",
+      "x": 3551.2398369750763,
+      "z": -286.2037200003573,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUALD",
+      "name": "Aldgate Underground Station",
+      "x": 3610.6188618372844,
+      "z": -762.0967200003358,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLULVT",
+      "name": "Liverpool Street Underground Station",
+      "x": 3091.4507949848585,
+      "z": -1110.0830400005293,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUMGT",
+      "name": "Moorgate Underground Station",
+      "x": 2735.3152199653114,
+      "z": -1199.5843199999886,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUBBN",
+      "name": "Barbican Underground Station",
+      "x": 2065.239899729116,
+      "z": -1433.2450000001202,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUFCN",
+      "name": "Farringdon Underground Station",
+      "x": 1585.773327912915,
+      "z": -1430.6846400002566,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUKSX",
+      "name": "King's Cross St. Pancras Underground Station",
+      "x": 319.1362759805517,
+      "z": -2589.637160000004,
+      "groundY": -6,
+      "platformY": -51,
+      "depth_m": 17
+    },
+    {
+      "id": "940GZZLUESQ",
+      "name": "Euston Square Underground Station",
+      "x": -556.3059400451266,
+      "z": -2026.4692800004818,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUGPS",
+      "name": "Great Portland Street Underground Station",
+      "x": -1140.6038591384813,
+      "z": -1830.1008000003226,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUBST",
+      "name": "Baker Street Underground Station",
+      "x": -2032.1899640706868,
+      "z": -1723.567560000361,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUERC",
+      "name": "Edgware Road (Circle Line) Underground Station",
+      "x": -2773.700260541349,
+      "z": -1386.824560000256,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    }
+  ]
+}
