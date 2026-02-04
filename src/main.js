@@ -419,8 +419,10 @@ scene.add(rim);
       return;
     }
     terrain = result;
-    console.log('Adding terrain mesh to scene');
+    console.log('Adding terrain mesh to scene:', result.mesh.name);
     scene.add(result.mesh);
+    console.log('Terrain mesh added, scene children:', scene.children.length);
+    console.log('Terrain in scene:', scene.getObjectByName('terrainMesh') ? 'yes' : 'no');
 
     applyTerrainOpacity(prefs.groundOpacity ?? TERRAIN_CONFIG.opacity);
 

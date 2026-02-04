@@ -89,6 +89,14 @@ export async function tryCreateTerrainMesh({ opacity = TERRAIN_CONFIG.opacity, w
 
     const mesh = new THREE.Mesh(geom, mat);
     mesh.position.y = TERRAIN_CONFIG.baseY;
+    mesh.name = 'terrainMesh';
+    console.log('Terrain mesh created:', { 
+      position: mesh.position, 
+      opacity: mat.opacity, 
+      visible: mesh.visible,
+      color: mat.color.getHexString(),
+      displacementScale: mat.displacementScale
+    });
 
     // Convenience sampler: read "height" from the displacement map by sampling the same
     // texture used by the terrain material. This is approximate (no geo alignment yet)
