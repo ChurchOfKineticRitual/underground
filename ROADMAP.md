@@ -16,7 +16,8 @@
 
 ### Depth Accuracy
 - [x] Extract Bakerloo depths from `data/sources/london-underground-depth-diagrams.pdf` (25 stations)
-- [ ] Extract Central depths from PDF
+- [x] Extract Central depths from PDF (29 stations)
+- [ ] Research Jubilee, Northern, Piccadilly, Waterloo & City depths
 - [ ] Research Jubilee, Northern, Piccadilly, Waterloo & City depths (Wikipedia, TfL archives)
 - [ ] Add depth interpolation for stations between known anchors
 
