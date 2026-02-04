@@ -13,7 +13,8 @@ const TUNNEL_OFFSET_METRES = 6.0;
 
 // Twin tunnel toggle preference
 let twinTunnelsEnabled = prefs.twinTunnelsEnabled ?? true;
-let twinTunnelOffset = twinTunnelsEnabled ? TUNNEL_OFFSET_METRES : 0;
+let tunnelOffsetM = prefs.tunnelOffsetM ?? TUNNEL_OFFSET_METRES;
+let twinTunnelOffset = twinTunnelsEnabled ? tunnelOffsetM : 0;
 
 function setNetStatus({ kind, text }) {
   const el = document.getElementById('netStatus');
@@ -645,7 +646,7 @@ function addLineFromStopPoints(lineId, colour, stopPoints, depthAnchors, sim) {
 
   const stationUs = stationUsFromPolyline(centerPts).sort((a, b) => a - b);
 
-  const { leftCurve, rightCurve } = buildOffsetCurvesFromCenterline(centerPts, twinTunnelOffset);
+  const { leftCurve, rightCurve } = buildOffsetCurvesFromCenterline(centerPts, twinTunnelsEnabled ? tunnelOffsetM : 0);
 
   const segs = Math.max(80, centerPts.length * 10);
   const radius = 4.5;
@@ -1355,14 +1356,38 @@ function setVictoriaShaftsVisible(v) {
 
   // Twin tunnel toggle
   const twinCb = document.getElementById('twinTunnels');
+  const tunnelOffsetContainer = document.getElementById('tunnelOffsetContainer');
+  const tunnelOffsetSlider = document.getElementById('tunnelOffset');
+  const tunnelOffsetValue = document.getElementById('tunnelOffsetValue');
+  
   if (twinCb) {
     twinCb.checked = twinTunnelsEnabled;
+    // Show/hide offset slider based on twin tunnel state
+    if (tunnelOffsetContainer) {
+      tunnelOffsetContainer.style.display = twinTunnelsEnabled ? '' : 'none';
+    }
     twinCb.addEventListener('change', () => {
       twinTunnelsEnabled = twinCb.checked;
-      twinTunnelOffset = twinTunnelsEnabled ? TUNNEL_OFFSET_METRES : 0;
+      twinTunnelOffset = twinTunnelsEnabled ? tunnelOffsetM : 0;
       prefs.twinTunnelsEnabled = twinTunnelsEnabled;
       savePrefs(prefs);
       // Reload to apply tunnel offset change
+      location.reload();
+    });
+  }
+  
+  // Tunnel offset slider
+  if (tunnelOffsetSlider && tunnelOffsetValue) {
+    tunnelOffsetSlider.value = tunnelOffsetM;
+    tunnelOffsetValue.textContent = tunnelOffsetM.toFixed(1) + 'm';
+    tunnelOffsetSlider.addEventListener('input', () => {
+      const v = parseFloat(tunnelOffsetSlider.value);
+      tunnelOffsetM = v;
+      tunnelOffsetValue.textContent = v.toFixed(1) + 'm';
+    });
+    tunnelOffsetSlider.addEventListener('change', () => {
+      prefs.tunnelOffsetM = tunnelOffsetM;
+      savePrefs(prefs);
       location.reload();
     });
   }
