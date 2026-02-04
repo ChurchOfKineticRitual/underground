@@ -26,7 +26,7 @@
 
 ### New Lines
 - [x] Add Bakerloo line shafts (25 stations, heuristic depths)
-- [ ] Add Central line shafts
+- [x] Add Central line shafts (22 stations, heuristic depths)
 - [x] Generalize shaft loader for any line ID
 
 ## Technical Debt
