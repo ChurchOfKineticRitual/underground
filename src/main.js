@@ -405,18 +405,27 @@ scene.add(rim);
 
     // If station shafts already exist, snap their ground cubes to the terrain surface (approx).
     // This improves the "shaft length" feel without needing per-station survey data.
+    snapAllShaftsToTerrain();
+  });
+  
+  // Helper: snap all line shafts to current terrain height
+  function snapAllShaftsToTerrain() {
+    if (!terrain?.heightSampler) return;
     for (const [lineId, layers] of lineShaftLayers) {
-      if (layers.shaftsLayer?.updateGroundYById && terrain.heightSampler) {
+      if (layers.shaftsLayer?.updateGroundYById) {
         const groundYById = {};
         for (const s of layers.shaftsLayer.shaftsData?.shafts ?? []) {
+          if (!s?.id) continue;
           const { u, v } = xzToTerrainUV({ x: s.x, z: s.z, terrainSize: TERRAIN_CONFIG.size });
           const h01 = terrain.heightSampler(u, v);
           groundYById[s.id] = terrainHeightToWorldY({ h01 });
         }
-        layers.shaftsLayer.updateGroundYById(groundYById);
+        if (Object.keys(groundYById).length > 0) {
+          layers.shaftsLayer.updateGroundYById(groundYById);
+        }
       }
     }
-  });
+  }
 
   // faint "surface" plane to catch light but not obscure the network
   const geo = new THREE.PlaneGeometry(900, 900, 1, 1);
@@ -1024,14 +1033,7 @@ async function buildNetworkMvp() {
 
             // If terrain is already loaded, snap ground cubes to terrain surface (approx).
             if (shaftsLayer?.updateGroundYById && terrain?.heightSampler) {
-              const groundYById = {};
-              for (const s of shaftsData?.shafts ?? []) {
-                if (!s?.id) continue;
-                const { u, v } = xzToTerrainUV({ x: s.x, z: s.z, terrainSize: TERRAIN_CONFIG.size });
-                const h01 = terrain.heightSampler(u, v);
-                groundYById[s.id] = terrainHeightToWorldY({ h01 });
-              }
-              shaftsLayer.updateGroundYById(groundYById);
+              snapAllShaftsToTerrain();
             }
 
             const shv = lineShaftsVisible.get(id) ?? true;
