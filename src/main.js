@@ -65,7 +65,7 @@ controls.touches = {
 // Works alongside OrbitControls (mouse) — use one or both
 const fpsControls = {
   enabled: true,
-  moveSpeed: 100.0,       // base movement speed (units/sec) — increased for tube scale
+  moveSpeed: 1000.0,      // base movement speed (units/sec) — 10X for tube-scale flying
   fastMultiplier: 2.0,    // W = faster
   rotateSpeed: 2.0,       // arrow key rotation speed (rad/sec)
   keys: new Set(),        // currently pressed keys
