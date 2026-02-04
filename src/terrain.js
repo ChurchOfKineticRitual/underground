@@ -23,14 +23,14 @@ export const TERRAIN_CONFIG = {
   baseY: -6.0,           // Base elevation offset
   
   // Material/displacement settings
-  displacementScale: 80,
-  displacementBias: -40,
-  opacity: 0.55,
-  
+  displacementScale: 120,
+  displacementBias: -60,
+  opacity: 0.75,
+
   // Color theming - lighter, more distinct from background
-  color: 0x1a2a3a,
-  roughness: 0.85,
-  metalness: 0.1,
+  color: 0x3a4a5a,
+  roughness: 0.75,
+  metalness: 0.15,
 };
 
 export async function tryCreateTerrainMesh({ opacity = TERRAIN_CONFIG.opacity, wireframe = false } = {}) {
@@ -150,23 +150,23 @@ export function xzToTerrainUV({
 export const ENV_CONFIG = {
   // Altitude thresholds (in scene units/metres)
   surfaceY: 0,           // Ground level
-  skyStartY: 200,        // Where sky becomes visible
-  fogDepthY: -100,       // Where underground fog thickens
-  
-  // Colors
+  skyStartY: 100,        // Where sky becomes visible (lowered for earlier visibility)
+  fogDepthY: -50,        // Where underground fog thickens
+
+  // Colors - lighter for better visibility
   skyColor: 0x87CEEB,    // Sky blue (above)
-  groundColor: 0x0b1020, // Dark underground (below)
-  fogColorSky: 0x87CEEB,
-  fogColorGround: 0x0b1020,
-  
-  // Fog distances
-  fogNear: 500,
-  fogFar: 15000,
-  
+  groundColor: 0x1a2a3a, // Lighter dark underground (below)
+  fogColorSky: 0xa0d0f0, // Lighter fog when above ground
+  fogColorGround: 0x1a2a3a, // Match ground color when below
+
+  // Fog distances - wider range for clearer visibility
+  fogNear: 200,
+  fogFar: 25000,
+
   // Lighting intensities
-  ambientAbove: 0.4,
-  ambientBelow: 0.15,
-  sunIntensity: 1.0,
+  ambientAbove: 0.6,
+  ambientBelow: 0.25,
+  sunIntensity: 1.2,
 };
 
 // Create sky dome (simple gradient hemisphere)
