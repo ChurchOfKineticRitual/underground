@@ -25,9 +25,14 @@
 - [ ] Visual pass: confirm ~5-10m separation looks right at various zoom levels
 
 ### Terrain Heightmap
-- [ ] Download EA LiDAR tiles per `scripts/ea-dtm-tiles.md`
-- [ ] Generate heightmap PNG + JSON
-- [ ] Snap Victoria shaft ground cubes to terrain surface
+- [x] Download Copernicus DEM 30m tiles (2 tiles, 60MB) — `scripts/fetch-copernicus-dem.mjs`
+- [ ] **BLOCKED:** Generate heightmap PNG + JSON — gdalwarp too slow on VPS
+- [ ] Snap shaft ground cubes to terrain surface (all lines)
+
+**Blocker note:** Copernicus 30m GeoTIFFs are slow to resample. Options:
+1. Use existing Victoria-area terrain (central London only)
+2. Try NASA SRTM 90m (faster processing)
+3. Process offline with more RAM/CPU
 
 ### New Lines
 - [x] Add Bakerloo line shafts (25 stations, heuristic depths)
