@@ -75,7 +75,15 @@ export function createStationMarkers({
 
   const tmp = new THREE.Vector3();
   function update({ camera, renderer }) {
-    if (!labelsVisible || labelEls.length === 0) return;
+    console.log('stations.update called:', { labelsVisible, labelElsLength: labelEls.length, stationsLength: stations.length });
+    if (!labelsVisible) {
+      console.log('labels not visible, skipping update');
+      return;
+    }
+    if (labelEls.length === 0) {
+      console.log('no label elements, skipping update');
+      return;
+    }
 
     const w = renderer.domElement.clientWidth;
     const h = renderer.domElement.clientHeight;
