@@ -1,0 +1,137 @@
+{
+  "line": "metropolitan",
+  "origin": {
+    "lat": 51.5074,
+    "lon": -0.1278
+  },
+  "verticalScale": 3,
+  "groundY": -6,
+  "shafts": [
+    {
+      "id": "940GZZLUALD",
+      "name": "Aldgate Underground Station",
+      "x": 3610.6188618372844,
+      "z": -762.0967200003358,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLULVT",
+      "name": "Liverpool Street Underground Station",
+      "x": 3091.4507949848585,
+      "z": -1110.0830400005293,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUMGT",
+      "name": "Moorgate Underground Station",
+      "x": 2735.3152199653114,
+      "z": -1199.5843199999886,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUBBN",
+      "name": "Barbican Underground Station",
+      "x": 2065.239899729116,
+      "z": -1433.2450000001202,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUFCN",
+      "name": "Farringdon Underground Station",
+      "x": 1585.773327912915,
+      "z": -1430.6846400002566,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUKSX",
+      "name": "King's Cross St. Pancras Underground Station",
+      "x": 319.1362759805517,
+      "z": -2589.637160000004,
+      "groundY": -6,
+      "platformY": -51,
+      "depth_m": 17
+    },
+    {
+      "id": "940GZZLUESQ",
+      "name": "Euston Square Underground Station",
+      "x": -556.3059400451266,
+      "z": -2026.4692800004818,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUGPS",
+      "name": "Great Portland Street Underground Station",
+      "x": -1140.6038591384813,
+      "z": -1830.1008000003226,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUBST",
+      "name": "Baker Street Underground Station",
+      "x": -2032.1899640706868,
+      "z": -1723.567560000361,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUFYR",
+      "name": "Finchley Road Underground Station",
+      "x": -3606.0459147650504,
+      "z": -4388.791000000153,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUWYP",
+      "name": "Wembley Park Underground Station",
+      "x": -10494.359234165511,
+      "z": -6211.433360000323,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUPRD",
+      "name": "Preston Road Underground Station",
+      "x": -11592.212966886276,
+      "z": -7188.155040000602,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUNKP",
+      "name": "Northwick Park Underground Station",
+      "x": -13182.282093564017,
+      "z": -7912.736919999945,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    },
+    {
+      "id": "940GZZLUHOH",
+      "name": "Harrow-on-the-Hill Underground Station",
+      "x": -14510.446069741003,
+      "z": -7992.219400000179,
+      "groundY": -6,
+      "platformY": -30,
+      "depth_m": 10
+    }
+  ]
+}
