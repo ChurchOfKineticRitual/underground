@@ -1,6 +1,6 @@
 {
   "kind": "tfl-route-sequence-cache",
-  "generatedAt": "2026-02-03T11:20:56.450Z",
+  "generatedAt": "2026-02-04T18:00:00.000Z",
   "lines": {
     "bakerloo": {
       "file": "bakerloo.json",
@@ -17,6 +17,10 @@
     "district": {
       "file": "district.json",
       "url": "https://api.tfl.gov.uk/Line/district/Route/Sequence/all"
+    },
+    "dlr": {
+      "file": "dlr.json",
+      "url": "https://api.tfl.gov.uk/Line/dlr/Route/Sequence/all"
     },
     "hammersmith-city": {
       "file": "hammersmith-city.json",
