@@ -67,6 +67,10 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUDEB,Debden Underground Station,,https://en.wikipedia.org/wiki/Debden_tube_station,wikipedia-estimate
 940GZZLUTHB,Theydon Bois Underground Station,,https://en.wikipedia.org/wiki/Theydon_Bois_tube_station,wikipedia-estimate
 940GZZLUEPG,Epping Underground Station,,https://en.wikipedia.org/wiki/Epping_tube_station,wikipedia-estimate
+# Central line (continued - additional stations with researched depths)
+940GZZLUHBN,Holborn Underground Station,26,https://www.dailymail.co.uk/sciencetech/article-12938867/London-Underground-tube-deep-underground.html,85ft below surface per depth diagrams
+# Jubilee line (selected stations with researched depths)
+940GZZLUWSM,Westminster Underground Station,30,https://chaddavis.photography/westminster-tube-station/,Jubilee line platform approx 30m below ground
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Remaining West Acton through to Leytonstone
 # - Hainault loop stations
