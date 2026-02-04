@@ -1,0 +1,119 @@
+{
+  "line": "northern",
+  "origin": {
+    "lat": 51.5074,
+    "lon": -0.1278
+  },
+  "verticalScale": 3,
+  "groundY": -6,
+  "shafts": [
+    {
+      "id": "940GZZLUKNG",
+      "name": "Kennington Underground Station",
+      "x": 1513.0218972182606,
+      "z": 2122.0931599995115,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUOVL",
+      "name": "Oval Underground Station",
+      "x": 1064.3187875243718,
+      "z": 2844.2259999995013,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUSKW",
+      "name": "Stockwell Underground Station",
+      "x": 357.24416824918,
+      "z": 3920.2451199998172,
+      "groundY": -6,
+      "platformY": -18,
+      "depth_m": 6
+    },
+    {
+      "id": "940GZZLUCPN",
+      "name": "Clapham North Underground Station",
+      "x": -153.5401623041471,
+      "z": 4704.939800000049,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUCPC",
+      "name": "Clapham Common Underground Station",
+      "x": -728.6921872530314,
+      "z": 5082.648559999552,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUCPS",
+      "name": "Clapham South Underground Station",
+      "x": -1370.6369542872935,
+      "z": 6094.3247199993775,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUBLM",
+      "name": "Balham Underground Station",
+      "x": -1745.8264754411557,
+      "z": 7136.947839999376,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUTBC",
+      "name": "Tooting Bec Underground Station",
+      "x": -2212.752086347134,
+      "z": 7984.093039999339,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUTBY",
+      "name": "Tooting Broadway Underground Station",
+      "x": -2811.2538561951606,
+      "z": 8879.996399999593,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUCSD",
+      "name": "Colliers Wood Underground Station",
+      "x": -3484.16994658229,
+      "z": 9934.196799999627,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUSWN",
+      "name": "South Wimbledon Underground Station",
+      "x": -4448.576769286004,
+      "z": 10251.570119999596,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    },
+    {
+      "id": "940GZZLUMDN",
+      "name": "Morden Underground Station",
+      "x": -4644.9363450847195,
+      "z": 11717.32055999991,
+      "groundY": -6,
+      "platformY": -78,
+      "depth_m": 26
+    }
+  ]
+}
