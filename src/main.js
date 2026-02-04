@@ -43,7 +43,8 @@ renderer.domElement.style.touchAction = 'none';
 renderer.domElement.style.webkitTapHighlightColor = 'transparent';
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0x0b1020, 2500, 15000);
+// Fog disabled for terrain visibility debugging
+// scene.fog = new THREE.Fog(0x0b1020, 2500, 15000);
 
 const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 50000);
 camera.position.set(0, 900, 2200);
@@ -393,9 +394,15 @@ scene.add(rim);
     terrain.mesh.material.needsUpdate = true;
   };
 
-  tryCreateTerrainMesh({ opacity: prefs.groundOpacity ?? TERRAIN_CONFIG.opacity, wireframe: false }).then(result => {
-    if (!result) return;
+  tryCreateTerrainMesh({ opacity: prefs.groundOpacity ?? TERRAIN_CONFIG.opacity, wireframe: true }).then(result => {
+    console.log('Terrain load result:', result ? 'success' : 'failed', result);
+    if (!result) {
+      console.warn('Terrain failed to load - check heightmap files');
+      return;
+    }
     terrain = result;
+    console.log('Terrain mesh added to scene:', result.mesh);
+    console.log('Terrain meta:', result.meta);
     scene.add(result.mesh);
 
     // If we have real terrain, hide the debug grid so it doesn't visually fight the heightmap.
