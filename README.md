@@ -61,7 +61,30 @@ Example:
 
 `/?t=12&vz=2.5&hx=1.2`
 
-## Data notes
+## Data sources
 
-- `data/station_depths.csv` contains curated station/platform depth anchors (metres below ground), with citations.
-- Terrain assets/pipeline notes live under `data/` and `scripts/`.
+- **Tube depth data**: TfL "Bakerloo, Central and Victoria Lines — Tube depths" PDF
+- **Route sequences**: TfL Unified API (`/Line/{id}/Route/Sequence` endpoints)
+- **Terrain**: Environment Agency LiDAR DTM (1m resolution) via data.gov.uk
+- **Coordinate system**: Origin at Trafalgar Square (51.5074°N, -0.1278°W)
+
+## Project structure
+
+```
+src/           # Main application source
+  main.js      # Scene setup, tunnel rendering, camera control
+  depth.js     # Station depth loading and heuristics
+  stations.js  # Station marker visualization
+  shafts.js    # Vertical shaft rendering
+  terrain.js   # Heightmap integration
+scripts/       # Data generation utilities
+  victoria_shafts.mjs   # Generate Victoria line shafts JSON
+  bakerloo_shafts.mjs   # Generate Bakerloo line shafts JSON
+  central_shafts.mjs    # Generate Central line shafts JSON
+  build-heightmap.mjs   # Process EA LiDAR tiles
+public/data/   # Static assets served at runtime
+  victoria/shafts.json  # Victoria station positions & depths
+  bakerloo/shafts.json  # Bakerloo station positions & depths
+  central/shafts.json   # Central station positions & depths
+  station_depths.csv    # Curated depth anchors
+```
