@@ -2,12 +2,15 @@
 
 ## Current Status (04 Feb 2026)
 
-- **ALL 11 Underground lines with shafts** (236 stations total):
+- **ALL 11 Underground lines + DLR with shafts** (248 stations total):
   - Deep tube: Victoria (16), Bakerloo (25), Central (22), Jubilee (27), Northern (12), Piccadilly (28), Waterloo & City (2)
   - Sub-surface: Circle (28), District (33), Hammersmith & City (29), Metropolitan (14)
+  - Light rail: DLR (12)
 - **Camera framing**: Auto-focuses on visible lines
 - **Mobile UX**: OrbitControls with explicit touch gestures, collapsible HUD
 - **Station depths CSV**: 16 Victoria stations with accurate depths; other lines use heuristic depths
+
+**PAUSED:** New line additions paused pending terrain integration.
 
 ## Immediate Tasks
 
