@@ -17,10 +17,10 @@ window.addEventListener('error', (e) => {
 // With 4.5m radius tubes, we need ~6-8m half-spacing to show clear separation.
 const TUNNEL_OFFSET_METRES = 6.0;
 
-// Twin tunnel toggle preference
-let twinTunnelsEnabled = prefs.twinTunnelsEnabled ?? true;
-let tunnelOffsetM = prefs.tunnelOffsetM ?? TUNNEL_OFFSET_METRES;
-let twinTunnelOffset = twinTunnelsEnabled ? tunnelOffsetM : 0;
+// Twin tunnel toggle preference (initialized after prefs loads)
+let twinTunnelsEnabled = true;
+let tunnelOffsetM = TUNNEL_OFFSET_METRES;
+let twinTunnelOffset = TUNNEL_OFFSET_METRES;
 
 function setNetStatus({ kind, text }) {
   const el = document.getElementById('netStatus');
@@ -226,6 +226,11 @@ function resetPrefsAndCache() {
 }
 const prefs = loadPrefs();
 console.log('Prefs loaded:', { groundOpacity: prefs.groundOpacity, twinTunnels: prefs.twinTunnelsEnabled });
+
+// Initialize twin tunnel settings now that prefs is loaded
+twinTunnelsEnabled = prefs.twinTunnelsEnabled ?? true;
+tunnelOffsetM = prefs.tunnelOffsetM ?? TUNNEL_OFFSET_METRES;
+twinTunnelOffset = twinTunnelsEnabled ? tunnelOffsetM : 0;
 
 // ---------- Simulation params ----------
 // Set by the terrain loader when/if a terrain mesh exists.
