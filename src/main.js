@@ -786,8 +786,9 @@ async function buildNetworkMvp() {
         setLineVisible(id, (initialLineVisibility[id] ?? true) !== false);
         console.log('built', id, 'stops', sps.length, 'depth[m] min/max', ds.min, ds.max);
 
-        // Victoria line station markers + labels + simple shafts
-        if (id === 'victoria') {
+        // Station markers + labels + shafts for deep tube lines (Victoria, Bakerloo, Central, etc.)
+        const DEEP_LINES_WITH_SHAFTS = new Set(['victoria', 'bakerloo', 'central']);
+        if (DEEP_LINES_WITH_SHAFTS.has(id)) {
           const stations = sps
             .filter(sp => Number.isFinite(sp.lat) && Number.isFinite(sp.lon))
             .map(sp => {
@@ -817,10 +818,10 @@ async function buildNetworkMvp() {
           try {
             // Prefer prebuilt/cached shaft positions (generated via scripts), but fall back
             // to deriving them from the station list so shafts still render in dev/offline.
-            let shaftsData = await loadLineShafts('victoria');
+            let shaftsData = await loadLineShafts(id);
             if (!shaftsData) {
               shaftsData = {
-                line: 'victoria',
+                line: id,
                 origin: ORIGIN,
                 verticalScale: sim.verticalScale,
                 groundY: -6,
@@ -837,7 +838,7 @@ async function buildNetworkMvp() {
             }
 
             // Build a lookup from station id -> nearest centerline y.
-            const centerPts = lineCenterPoints.get('victoria');
+            const centerPts = lineCenterPoints.get(id);
             const platformYById = {};
             if (centerPts?.length) {
               for (const st of stations) {
@@ -877,12 +878,15 @@ async function buildNetworkMvp() {
           }
 
           // Keep HUD checkboxes in sync (in case build happens after user toggled)
-          const stCb = document.getElementById('victoriaStations');
-          if (stCb) stCb.checked = victoriaStationsVisible;
-          const lbCb = document.getElementById('victoriaLabels');
-          if (lbCb) lbCb.checked = victoriaLabelsVisible;
-          const shCb = document.getElementById('victoriaShafts');
-          if (shCb) shCb.checked = victoriaShaftsVisible;
+          // TODO: Generalize UI toggles for Bakerloo/Central
+          if (id === 'victoria') {
+            const stCb = document.getElementById('victoriaStations');
+            if (stCb) stCb.checked = victoriaStationsVisible;
+            const lbCb = document.getElementById('victoriaLabels');
+            if (lbCb) lbCb.checked = victoriaLabelsVisible;
+            const shCb = document.getElementById('victoriaShafts');
+            if (shCb) shCb.checked = victoriaShaftsVisible;
+          }
         }
 
         loadedCount++;
