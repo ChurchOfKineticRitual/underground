@@ -2,7 +2,9 @@
 
 ## Current Status (04 Feb 2026)
 
-- **Deep tube lines with shafts**: Victoria (16), Bakerloo (25), Central (22), Jubilee (27), Northern (12), Piccadilly (28), Waterloo & City (2)
+- **ALL 11 Underground lines with shafts** (236 stations total):
+  - Deep tube: Victoria (16), Bakerloo (25), Central (22), Jubilee (27), Northern (12), Piccadilly (28), Waterloo & City (2)
+  - Sub-surface: Circle (28), District (33), Hammersmith & City (29), Metropolitan (14)
 - **Camera framing**: Auto-focuses on visible lines
 - **Mobile UX**: OrbitControls with explicit touch gestures, collapsible HUD
 - **Station depths CSV**: 16 Victoria stations with accurate depths; other lines use heuristic depths
@@ -31,8 +33,12 @@
 - [x] Add Northern line shafts (12 stations, heuristic depths)
 - [x] Add Piccadilly line shafts (28 stations, heuristic depths)
 - [x] Add Waterloo & City line shafts (2 stations, heuristic depths)
+- [x] Add Circle line shafts (28 stations, heuristic depths)
+- [x] Add District line shafts (33 stations, heuristic depths)
+- [x] Add Hammersmith & City line shafts (29 stations, heuristic depths)
+- [x] Add Metropolitan line shafts (14 stations, heuristic depths)
 - [x] Generalize shaft loader for any line ID
-- [ ] Sub-surface lines (Circle, District, H&C, Metropolitan) - cut-and-cover, lower priority
+- [x] **ALL 11 Underground lines complete** (236 stations)
 
 ## Technical Debt
 - [ ] Depth heuristics for lines without CSV data
