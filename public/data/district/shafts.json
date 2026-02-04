@@ -1,0 +1,308 @@
+{
+  "line": "district",
+  "origin": {
+    "lat": 51.5074,
+    "lon": -0.1278
+  },
+  "verticalScale": 3,
+  "groundY": -6,
+  "shafts": [
+    {
+      "id": "940GZZLUUPM",
+      "name": "Upminster Underground Station",
+      "x": 26237.768836488776,
+      "z": -5751.125160000545,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUUPB",
+      "name": "Upminster Bridge Underground Station",
+      "x": 25193.404727097797,
+      "z": -5695.131200000332,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUHCH",
+      "name": "Hornchurch Underground Station",
+      "x": 24036.795553206495,
+      "z": -5197.86476000053,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUEPK",
+      "name": "Elm Park Underground Station",
+      "x": 22618.07336758388,
+      "z": -4717.184999999981,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUDGE",
+      "name": "Dagenham East Underground Station",
+      "x": 20357.72105943938,
+      "z": -4084.998720000699,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUDGY",
+      "name": "Dagenham Heathway Underground Station",
+      "x": 19076.603008444938,
+      "z": -3811.4854800007315,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUBEC",
+      "name": "Becontree Underground Station",
+      "x": 17655.455775132497,
+      "z": -3665.8789200005485,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUUPY",
+      "name": "Upney Underground Station",
+      "x": 15889.605334481099,
+      "z": -3447.803040000618,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUBKG",
+      "name": "Barking Underground Station",
+      "x": 14470.813861781631,
+      "z": -3553.445720000455,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUEHM",
+      "name": "East Ham Underground Station",
+      "x": 12401.416737441392,
+      "z": -3511.923360000089,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUUPK",
+      "name": "Upton Park Underground Station",
+      "x": 11298.158612726167,
+      "z": -3110.2808000001073,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUPLW",
+      "name": "Plaistow Underground Station",
+      "x": 10064.017199837414,
+      "z": -2665.112120000073,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUWHM",
+      "name": "West Ham Underground Station",
+      "x": 9205.134595179377,
+      "z": -2308.3315200007264,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUBBB",
+      "name": "Bromley-by-Bow Underground Station",
+      "x": 8055.454128973278,
+      "z": -1941.3094800003441,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUBWR",
+      "name": "Bow Road Underground Station",
+      "x": 7113.84275455389,
+      "z": -2175.1928000007047,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUMED",
+      "name": "Mile End Underground Station",
+      "x": 6524.071156389222,
+      "z": -1972.813040000694,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUSGN",
+      "name": "Stepney Green Underground Station",
+      "x": 5626.387788694035,
+      "z": -1609.4645600005283,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUWPL",
+      "name": "Whitechapel Underground Station",
+      "x": 4699.67313579784,
+      "z": -1348.9757600001071,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUADE",
+      "name": "Aldgate East Underground Station",
+      "x": 3839.612650833317,
+      "z": -850.1508400002848,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUTWH",
+      "name": "Tower Hill Underground Station",
+      "x": 3551.2398369750763,
+      "z": -286.2037200003573,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUMMT",
+      "name": "Monument Underground Station",
+      "x": 2898.3477117981893,
+      "z": -367.3560000003303,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUCST",
+      "name": "Cannon Street Underground Station",
+      "x": 2589.1194878074816,
+      "z": -457.5252000004761,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUMSH",
+      "name": "Mansion House Underground Station",
+      "x": 2341.2796139076913,
+      "z": -525.096440000726,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUBKF",
+      "name": "Blackfriars Underground Station",
+      "x": 1672.6593222853885,
+      "z": -465.42892000029553,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUTMP",
+      "name": "Temple Underground Station",
+      "x": 938.1470205767847,
+      "z": -401.4199200005436,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUEMB",
+      "name": "Embankment Underground Station",
+      "x": 355.71985255843526,
+      "z": 38.07143999958697,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUWSM",
+      "name": "Westminster Underground Station",
+      "x": 203.6347188681808,
+      "z": 676.8255999996882,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUSJP",
+      "name": "St. James's Park Underground Station",
+      "x": -402.4193423567189,
+      "z": 874.5299199996387,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUVIC",
+      "name": "Victoria Underground Station",
+      "x": -1060.2308499901014,
+      "z": 1229.0841199998604,
+      "groundY": -6,
+      "platformY": -15,
+      "depth_m": 5
+    },
+    {
+      "id": "940GZZLUSSQ",
+      "name": "Sloane Square Underground Station",
+      "x": -1980.0167952010913,
+      "z": 1684.271599999911,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUSKS",
+      "name": "South Kensington Underground Station",
+      "x": -3210.6245671703878,
+      "z": 1481.2239200000045,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUGTR",
+      "name": "Gloucester Road Underground Station",
+      "x": -3800.9504619498716,
+      "z": 1456.5108799999118,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    },
+    {
+      "id": "940GZZLUECT",
+      "name": "Earl's Court Underground Station",
+      "x": -4543.70792580387,
+      "z": 1707.3148399994736,
+      "groundY": -6,
+      "platformY": -36,
+      "depth_m": 12
+    }
+  ]
+}
