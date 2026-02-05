@@ -112,14 +112,22 @@ const scene = new THREE.Scene();
 scene.fog = new THREE.Fog(0x1a2a3a, 800, 20000);
 
 const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 50000);
-camera.position.set(0, 900, 2200);
+// Curated view: straight down over central London
+// Position above the city looking directly down
+const INITIAL_VIEW = {
+  position: new THREE.Vector3(0, 4500, 0),  // High above, straight down
+  target: new THREE.Vector3(0, 0, 0)          // Looking at center of network
+};
+camera.position.copy(INITIAL_VIEW.position);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
-controls.target.set(0, 0, 0);
+controls.target.copy(INITIAL_VIEW.target);
 controls.minDistance = 10;
 controls.maxDistance = 25000;
+// Lock controls during initial load to prevent accidental movement
+controls.enabled = false;
 
 // Mobile/touch UX:
 // - 1 finger: rotate
@@ -1032,9 +1040,20 @@ async function buildNetworkMvp() {
 
     const failed = [];
     let loadedCount = 0;
+    const totalLines = wanted.length;
+
+    // Loading bar helper
+    function updateLoadingProgress(current, total) {
+      const fill = document.getElementById('loadingFill');
+      if (fill) {
+        const pct = Math.round((current / total) * 100);
+        fill.style.width = `${pct}%`;
+      }
+    }
 
     for (const id of wanted) {
       setNetStatus({ kind: 'warn', text: `Loading TfL route sequences… (${loadedCount}/${wanted.length})` });
+      updateLoadingProgress(loadedCount, totalLines);
 
       try {
         const colour = LINE_COLOURS[id] ?? 0xffffff;
@@ -1174,6 +1193,15 @@ async function buildNetworkMvp() {
       }
     }
 
+    // Loading complete: set bar to 100% and hide it
+    updateLoadingProgress(totalLines, totalLines);
+    setTimeout(() => {
+      const loadingBar = document.getElementById('loadingBar');
+      if (loadingBar) loadingBar.classList.add('done');
+      // Enable controls now that loading is done
+      controls.enabled = true;
+    }, 300);
+
     // Summary status
     if (failed.length) {
       setNetStatus({
@@ -1202,31 +1230,14 @@ async function buildNetworkMvp() {
       const cb = wrap?.querySelector?.(`input[type="checkbox"][data-line="${focusId}"]`);
       if (cb) cb.checked = true;
 
+      // Focus camera on specific line (user explicitly requested this)
       const pts = lineCenterPoints.get(focusId);
       if (pts && pts.length) {
         focusCameraOnStations({ stations: pts.map(pos => ({ pos })), controls, camera, pad: 1.22 });
       }
     }
-
-    // Otherwise frame the camera over all currently-visible tube lines.
-    if (!focusId || focusId === 'all') {
-      // Explicitly clear focus from URL if we're doing the default framing.
-      if (focusId === 'all') deleteUrlParam('focus');
-
-      const pts = [];
-      for (const [lineId, group] of lineGroups.entries()) {
-        if (!group?.visible) continue;
-        const cps = lineCenterPoints.get(lineId);
-        if (cps && cps.length) pts.push(...cps);
-      }
-
-      if (pts.length) {
-        focusCameraOnStations({ stations: pts.map(pos => ({ pos })), controls, camera, pad: 1.15 });
-      } else {
-        // Fallback: keep an OK-ish target if we somehow have no points.
-        controls.target.set(0, -120, 0);
-      }
-    }
+    // Note: When viewing all lines, we keep the curated straight-down view set at init
+    // rather than reframing - this provides a stable, predictable UX
 
     // Update HUD focus label once the network is built.
     updateSimUi();
