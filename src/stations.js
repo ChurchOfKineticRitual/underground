@@ -112,9 +112,9 @@ export function createStationMarkers({
         continue;
       }
 
-      // mild distance-based fade to reduce clutter
+      // distance-based fade: labels visible from further away, minimum 0.35 opacity
       const d = camera.position.distanceTo(st.pos);
-      const alpha = THREE.MathUtils.clamp(1.0 - (d - 70) / 220, 0.12, 1.0);
+      const alpha = THREE.MathUtils.clamp(1.0 - (d - 150) / 800, 0.35, 1.0);
 
       el.style.display = 'block';
       visibleCount++;
