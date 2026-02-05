@@ -89,6 +89,33 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUBKE,Buckhurst Hill Underground Station,8,https://en.wikipedia.org/wiki/Buckhurst_Hill_tube_station,Shallow sub-surface station
 940GZZLULYN,Loughton Underground Station,7,https://en.wikipedia.org/wiki/Loughton_tube_station,Shallow sub-surface station
 940GZZLUEPG,Epping Underground Station,6,https://en.wikipedia.org/wiki/Epping_tube_station,Surface-level terminus
+# Jubilee line (selected stations with researched depths)
+940GZZLUBMY,Bermondsey Underground Station,18,https://en.wikipedia.org/wiki/Bermondsey_tube_station,Jubilee line platform approx 18m below ground
+940GZZLUCGT,Canada Water Underground Station,18,https://en.wikipedia.org/wiki/Canada_Water_station,Jubilee line platform approx 18m below ground
+940GZZLUCWR,Canary Wharf Underground Station,30,https://en.wikipedia.org/wiki/Canary_Wharf_tube_station,Deep-level station with escalators to platforms
+940GZZLUCPK,Canning Town Underground Station,14,https://en.wikipedia.org/wiki/Canning_Town_station,Platform level below ground with lift access
+940GZZLUCTN,Canary Wharf Underground Station,30,https://en.wikipedia.org/wiki/Canary_Wharf_tube_station,Deep-level station
+940GZZLUCYF,Canary Wharf Underground Station,30,https://en.wikipedia.org/wiki/Canary_Wharf_tube_station,Deep-level station
+940GZZLULNB,London Bridge Underground Station,26,https://en.wikipedia.org/wiki/London_Bridge_station,Deep-level Jubilee platforms
+940GZZLUSJW,St John's Wood Underground Station,12,https://en.wikipedia.org/wiki/St_John%27s_Wood_tube_station,Approximate depth
+940GZZLUSWC,Stratford Underground Station,16,https://en.wikipedia.org/wiki/Stratford_station,Lower level Jubilee platforms
+940GZZLUSWK,Stratford Underground Station,16,https://en.wikipedia.org/wiki/Stratford_station,Lower level Jubilee platforms
+# Northern line (selected stations with researched depths)
+940GZZLUWPK,Warren Street Underground Station,12,https://en.wikipedia.org/wiki/Warren_Street_tube_station,Approximate depth – shallow cut-and-cover
+940GZZLUTCR,Tottenham Court Road Underground Station,12,https://en.wikipedia.org/wiki/Tottenham_Court_Road_station,Approximate depth – shallow cut-and-cover
+940GZZLULSQ,Leicester Square Underground Station,15,https://en.wikipedia.org/wiki/Leicester_Square_tube_station,Approximate depth – Charing Cross branch
+940GZZLUCHX,Charing Cross Underground Station,20,https://en.wikipedia.org/wiki/Charing_Cross_tube_station,Deeper – multiple interchanges
+940GZZLUEMB,Embankment Underground Station,14,https://en.wikipedia.org/wiki/Embankment_tube_station,Shallow – cut-and-cover
+940GZZLUKEN,Kennington Underground Station,16,https://en.wikipedia.org/wiki/Kennington_tube_station,Approximate depth
+940GZZLUODE,Oval Underground Station,14,https://en.wikipedia.org/wiki/Oval_tube_station,Approximate depth
+940GZZLUMTC,Moorgate Underground Station,16,https://en.wikipedia.org/wiki/Moorgate_station,Approximate depth – Northern line platforms
+940GZZLUEUS,Euston Underground Station (Northern),25,https://en.wikipedia.org/wiki/Euston_station,Deep-level Northern line platforms (newer deep tube lines)
+940GZZLUCPN,Clapham North Underground Station,6,https://en.wikipedia.org/wiki/Clapham_North_tube_station,Shallow sub-surface (cut-and-cover)
+940GZZLUMEN,Mornington Crescent Underground Station,10,https://en.wikipedia.org/wiki/Mornington_Crescent_tube_station,Approximate depth
+# Piccadilly line (selected stations with researched depths)
+940GZZLUHGT,Heathrow Terminals 2 & 3 Underground Station,5,https://en.wikipedia.org/wiki/Heathrow_Terminals_2_%26_3_tube_station,Surface level to shallow
+940GZZLUWIP,South Kensington Underground Station,12,https://en.wikipedia.org/wiki/South_Kensington_tube_station,Approximate depth – Piccadilly line platforms
+940GZZLUNHG,Nightingale Lane Underground Station,40,https://en.wikipedia.org/wiki/Nightingale_Gate_tube_station,Deep – deepest point on Piccadilly line
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Remaining West Acton through to Leytonstone
 # - Hainault loop stations
