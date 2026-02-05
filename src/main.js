@@ -1310,6 +1310,30 @@ window.addEventListener('resize', () => {
     return hit?.userData?.lineId || null;
   }
 
+  // Station pickables for hover detection
+  const stationPickables = [];
+  
+  function pickStationUnderPointer(ev) {
+    getMouseNdc(ev);
+    raycaster.setFromCamera(mouse, camera);
+    // Check station markers from all line shaft layers
+    const allStationMeshes = [];
+    for (const [, layers] of lineShaftLayers) {
+      if (layers.stationsLayer?.mesh) {
+        allStationMeshes.push(layers.stationsLayer.mesh);
+      }
+    }
+    if (allStationMeshes.length === 0) return null;
+    const hits = raycaster.intersectObjects(allStationMeshes, false);
+    if (!hits || hits.length === 0) return null;
+    const hit = hits[0];
+    const mesh = hit.object;
+    // Get instance ID to look up station data
+    const instanceId = hit.instanceId;
+    if (instanceId == null || !mesh.userData?.stations?.[instanceId]) return null;
+    return mesh.userData.stations[instanceId];
+  }
+
   function setHoverHighlight(lineId) {
     // Clear all highlights (cheap; only ~11 lines).
     for (const [id, meshes] of lineMeshesById.entries()) {
@@ -1336,7 +1360,34 @@ window.addEventListener('resize', () => {
     }
   }
 
+  function moveStationTip(ev, station) {
+    if (!tip) return;
+    if (!station) {
+      // Don't hide here - let line hover take over
+      return;
+    }
+
+    const depthM = Math.abs(station.pos?.z ? station.pos.z / 3.0 : 0).toFixed(0);
+    const depthLabel = depthM > 0 ? `${depthM}m below ground` : 'Surface station';
+    
+    tip.innerHTML = `<b>${station.name}</b><br/><span class="muted">${depthLabel}</span>`;
+    tip.style.display = 'block';
+    
+    const x = (ev.clientX ?? 0) + 12;
+    const y = (ev.clientY ?? 0) + 14;
+    tip.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
   function onPointerMove(ev) {
+    // Check for station hover first (takes priority)
+    const station = pickStationUnderPointer(ev);
+    if (station) {
+      moveStationTip(ev, station);
+      setHoverHighlight(null); // Clear line highlight when hovering station
+      return;
+    }
+    
+    // Fall back to line hover
     const lineId = pickLineUnderPointer(ev);
     moveTip(ev, lineId);
     setHoverHighlight(lineId);

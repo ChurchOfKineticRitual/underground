@@ -40,6 +40,7 @@ export function createStationMarkers({
   mesh.frustumCulled = true;
   mesh.renderOrder = 5;
   mesh.userData.kind = 'station-markers';
+  mesh.userData.stations = stations; // Store for raycasting lookup
 
   const dummy = new THREE.Object3D();
   for (let i = 0; i < stations.length; i++) {
