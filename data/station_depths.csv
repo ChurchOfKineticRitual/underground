@@ -190,12 +190,21 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLULVT,Liverpool Street Underground Station (Central),18,https://en.wikipedia.org/wiki/Liverpool_Street_station,Deep-level Central line platforms
 940GZZLUBLG,Bethnal Green Underground Station,20,https://en.wikipedia.org/wiki/Bethnal_Green_tube_station,Deep-level station
 940GZZLUSTD,Stratford Underground Station (Central),18,https://en.wikipedia.org/wiki/Stratford_station,Deep-level Central line platforms
-# Central line — western extension
+# Central line — western extension (West Acton branch and main line)
+940GZZLUWTA,West Acton Underground Station,6,https://en.wikipedia.org/wiki/West_Acton_tube_station,Elevated station
 940GZZLUSBC,Shepherd's Bush Underground Station (Central),19,https://en.wikipedia.org/wiki/Shepherd%27s_Bush_tube_station,Deep-level Central line platforms
 940GZZLUWCY,White City Underground Station,5,https://en.wikipedia.org/wiki/White_City_tube_station,At-grade station with surface platforms
 940GZZLUEAN,East Acton Underground Station,8,https://en.wikipedia.org/wiki/East_Acton_tube_station,Shallow station
 940GZZLUNAC,North Acton Underground Station,6,https://en.wikipedia.org/wiki/North_Acton_tube_station,Elevated/surface station
+940GZZLUWCS,West Ruislip Underground Station,6,https://en.wikipedia.org/wiki/Ruislip_tube_station,Surface station
+940GZZLURBG,Ruislip Gardens Underground Station,5,https://en.wikipedia.org/wiki/Ruislip_Gardens_tube_station,Surface station
+940GZZLUSRP,South Ruislip Underground Station,6,https://en.wikipedia.org/wiki/South_Ruislip_station,Surface station
+940GZZLUNHT,Northolt Underground Station,6,https://en.wikipedia.org/wiki/Northolt_tube_station,Elevated station
+940GZZLUBKE,Buckhurst Hill Underground Station,5,https://en.wikipedia.org/wiki/Buckhurst_Hill_tube_station,Surface station
+940GZZLULGN,Loughton Underground Station,6,https://en.wikipedia.org/wiki/Loughton_tube_station,Surface station
+940GZZLUDEB,Debden Underground Station,5,https://en.wikipedia.org/wiki/Debden_tube_station,Surface station
+940GZZLUTCR,Theydon Bois Underground Station,6,https://en.wikipedia.org/wiki/Theydon_Bois_tube_station,Surface station
+940GZZLUEPP,Epping Underground Station,5,https://en.wikipedia.org/wiki/Epping_tube_station,Surface station
 # TODO: Extract depths from PDF for remaining Central line stations
-# - West Ruislip to Northolt (western end)
-# - Leytonstone to Epping (eastern end)
 # - Hainault loop stations
+# - Ealing Broadway to West Acton (main line)
