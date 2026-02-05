@@ -256,6 +256,26 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUSGB,Southgate Underground Station,12,https://en.wikipedia.org/wiki/Southgate_tube_station,Sub-surface (famous Art Deco station)
 940GZZLUOAK,Oakwood Underground Station,10,https://en.wikipedia.org/wiki/Oakwood_tube_station,Shallow sub-surface
 940GZZLUCKS,Cockfosters Underground Station,6,https://en.wikipedia.org/wiki/Cockfosters_tube_station,Surface terminus
+# Northern line — Edgware branch (northern)
+940GZZLUEGW,Edgware Underground Station,6,https://en.wikipedia.org/wiki/Edgware_tube_station,Surface terminus
+940GZZLUBUR,Burnt Oak Underground Station,8,https://en.wikipedia.org/wiki/Burnt_Oak_tube_station,Shallow sub-surface
+940GZZLUCND,Colindale Underground Station,8,https://en.wikipedia.org/wiki/Colindale_tube_station,Shallow sub-surface
+940GZZLUHND,Hendon Central Underground Station,10,https://en.wikipedia.org/wiki/Hendon_Central_tube_station,Sub-surface
+940GZZLUBST,Brent Cross Underground Station,12,https://en.wikipedia.org/wiki/Brent_Cross_tube_station,Sub-surface
+940GZZLUGGN,Golders Green Underground Station,15,https://en.wikipedia.org/wiki/Golders_Green_tube_station,Sub-surface
+# Northern line — High Barnet branch (northern)
+940GZZLUHBT,High Barnet Underground Station,6,https://en.wikipedia.org/wiki/High_Barnet_tube_station,Surface terminus
+940GZZLUTOT,Totteridge & Whetstone Underground Station,8,https://en.wikipedia.org/wiki/Totteridge_%26_Whetstone_tube_station,Shallow sub-surface
+940GZZLUWOP,Woodside Park Underground Station,10,https://en.wikipedia.org/wiki/Woodside_Park_tube_station,Sub-surface
+940GZZLUWFN,West Finchley Underground Station,10,https://en.wikipedia.org/wiki/West_Finchley_tube_station,Sub-surface
+940GZZLUFYC,Finchley Central Underground Station,12,https://en.wikipedia.org/wiki/Finchley_Central_tube_station,Sub-surface
+940GZZLUEGW,East Finchley Underground Station,15,https://en.wikipedia.org/wiki/East_Finchley_tube_station,Sub-surface
+# Northern line — southern section (Bank branch to Morden)
+940GZZLUBLM,Balham Underground Station,12,https://en.wikipedia.org/wiki/Balham_station,Sub-surface Northern line
+940GZZLUTBC,Tooting Bec Underground Station,14,https://en.wikipedia.org/wiki/Tooting_Bec_tube_station,Deep-level
+940GZZLUTBY,Tooting Broadway Underground Station,16,https://en.wikipedia.org/wiki/Tooting_Broadway_tube_station,Deep-level
+940GZZLUCOM,Colliers Wood Underground Station,18,https://en.wikipedia.org/wiki/Colliers_Wood_tube_station,Deep-level
+940GZZLUMDN,Morden Underground Station,20,https://en.wikipedia.org/wiki/Morden_tube_station,Deep-level terminus
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Hainault loop stations
 # - Ealing Broadway to West Acton (main line)
