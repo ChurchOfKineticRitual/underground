@@ -12,7 +12,7 @@
 # - Victoria line: complete (16 stations)
 # - Bakerloo line: partial (14 stations with depths)
 # - Central line: partial (8 stations with depths)
-# - Jubilee: 2 stations, Northern: 3 stations, Piccadilly: 6 stations
+# - Jubilee: 3 stations, Northern: 7 stations, Piccadilly: 6 stations
 #
 # Columns:
 # naptan_id,name,depth_m,source_url,notes
@@ -78,6 +78,7 @@ naptan_id,name,depth_m,source_url,notes
 # Jubilee line (selected stations with researched depths)
 940GZZLUWSM,Westminster Underground Station,30,https://chaddavis.photography/westminster-tube-station/,Jubilee line platform approx 30m below ground
 940GZZLUBMY,Bermondsey Underground Station,32,https://en.wikipedia.org/wiki/Bermondsey_tube_station,wikipedia-estimate-deep-tube
+940GZZLUBDS,Bond Street Underground Station (Jubilee),24,https://en.wikipedia.org/wiki/Bond_Street_tube_station,wikipedia-estimate-deep-tube
 # Piccadilly line (selected stations with researched depths)
 940GZZLUCGN,Covent Garden Underground Station,37,https://www.dailymail.co.uk/sciencetech/article-12938867/London-Underground-tube-deep-underground.html,121ft below surface per depth diagrams
 940GZZLULSQ,Leicester Square Underground Station,33,https://www.dailymail.co.uk/sciencetech/article-12938867/London-Underground-tube-deep-underground.html,108ft below surface per depth diagrams
@@ -89,6 +90,10 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUAGL,Angel Underground Station,28,https://en.wikipedia.org/wiki/Angel_tube_station,27.5m escalator vertical distance (approx platform depth)
 940GZZLUHTD,Hampstead Underground Station,55,https://www.mylondon.news/news/transport/london-underground-station-deepest-lift-32575981,55.2m shaft depth - deepest on Northern line
 940GZZLUGGN,Goodge Street Underground Station,30,https://en.wikipedia.org/wiki/Goodge_Street_tube_station,wikipedia-estimate-deep-tube
+940GZZLUWRR,Warren Street Underground Station (Northern),26,https://en.wikipedia.org/wiki/Warren_Street_tube_station,wikipedia-estimate-deep-tube
+940GZZLUEUS,Euston Underground Station (Northern),27,https://en.wikipedia.org/wiki/Euston_tube_station,wikipedia-estimate-deep-tube
+940GZZLUODS,Old Street Underground Station,16,https://en.wikipedia.org/wiki/Old_Street_station,wikipedia-estimate-deep-tube
+940GZZLUMTC,Moorgate Underground Station (Northern),14,https://en.wikipedia.org/wiki/Moorgate_station,wikipedia-estimate-deep-tube
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Remaining West Acton through to Leytonstone
 # - Hainault loop stations
