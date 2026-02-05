@@ -7,6 +7,7 @@ import { createStationMarkers } from './stations.js';
 import { loadLineShafts, addShaftsToScene } from './shafts.js';
 import { loadThamesData, createThamesMesh } from './thames.js';
 import { loadTidewayData, createTidewayTunnel, addTidewayToLegend } from './tideway.js';
+import { loadCrossrailData, createCrossrailTunnel, addCrossrailToLegend } from './crossrail.js';
 
 // Version: 2026-02-05-0553 - Work tick: clean up console.log spam
 // Emergency debugging: catch all errors
@@ -541,6 +542,19 @@ loadTidewayData().then(tidewayData => {
       scene.add(tidewayMesh);
       addTidewayToLegend();
       console.log('Tideway Tunnel added to scene');
+    }
+  }
+});
+
+// ---------- Crossrail/Elizabeth Line (deep rail infrastructure) ----------
+let crossrailMesh = null;
+loadCrossrailData().then(crossrailData => {
+  if (crossrailData) {
+    crossrailMesh = createCrossrailTunnel(crossrailData, (lat, lon) => latLonToMeters(lat, lon, TERRAIN_CONFIG.originLat, TERRAIN_CONFIG.originLon), TERRAIN_CONFIG.depthScale);
+    if (crossrailMesh) {
+      scene.add(crossrailMesh);
+      addCrossrailToLegend();
+      console.log('Crossrail added to scene');
     }
   }
 });

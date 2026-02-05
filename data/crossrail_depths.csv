@@ -1,0 +1,44 @@
+# Crossrail (Elizabeth Line) Depth Anchors
+#
+# Crossrail is a 118km railway line with 42km of new tunnels beneath London
+# Deepest point: Liverpool Street at ~41m below ground
+# Diameter: 6.2m (slightly larger than tube tunnels)
+#
+# Columns:
+# id,name,depth_m,lat,lon,source_url,notes
+
+# Western section (Heathrow to Acton)
+crw-heathrow-t5,Heathrow Terminal 5,20,51.4700,-0.4880,https://en.wikipedia.org/wiki/Heathrow_Terminal_5_station,Elizabeth line platforms
+crw-heathrow-t23,Heathrow Terminals 2 & 3,18,51.4710,-0.4520,https://en.wikipedia.org/wiki/Heathrow_Terminals_2_%26_3_station,Elizabeth line platforms
+crw-hayes,Hayes & Harlington,15,51.5030,-0.4200,https://en.wikipedia.org/wiki/Hayes_%26_Harlington_station,Surface station
+crw-southall,Southall,15,51.5060,-0.3800,https://en.wikipedia.org/wiki/Southall_station,Surface station
+crw-hanwell,Hanwell,16,51.5120,-0.3400,https://en.wikipedia.org/wiki/Hanwell_station,Viaduct
+
+# Central tunnel section (deepest part)
+crw-ealing,Ealing Broadway,22,51.5150,-0.3020,https://en.wikipedia.org/wiki/Ealing_Broadway_station,Deep platforms
+crw-acton,Acton Main Line,20,51.5170,-0.2800,https://en.wikipedia.org/wiki/Acton_Main_Line_station,Surface station
+crw-paddington,Paddington,28,51.5160,-0.1760,https://en.wikipedia.org/wiki/Paddington_station,Deep Elizabeth line platforms
+crw-bond-street,Bond Street,32,51.5140,-0.1500,https://en.wikipedia.org/wiki/Bond_Street_station,Elizabeth line platforms
+crw-tottenham-court,Tottenham Court Road,35,51.5160,-0.1310,https://en.wikipedia.org/wiki/Tottenham_Court_Road_station,Elizabeth line platforms
+crw-farringdon,Farringdon,38,51.5200,-0.1050,https://en.wikipedia.org/wiki/Farringdon_station,Deep platforms
+crw-liverpool-street,Liverpool Street,41,51.5180,-0.0820,https://en.wikipedia.org/wiki/Liverpool_Street_station,DEEPEST - 41m below ground
+crw-whitechapel,Whitechapel,30,51.5190,-0.0600,https://en.wikipedia.org/wiki/Whitechapel_station,Elizabeth line platforms
+crw-canary-wharf,Canary Wharf,25,51.5060,-0.0200,https://en.wikipedia.org/wiki/Canary_Wharf_station,Deep platforms in former dock
+crw-custom-house,Custom House,18,51.5100,0.0200,https://en.wikipedia.org/wiki/Custom_House_station,Surface station
+
+# Eastern section (Stratford to Abbey Wood/Shenfield)
+crw-woolwich,Woolwich,22,51.4900,0.0700,https://en.wikipedia.org/wiki/Woolwich_station,Elizabeth line platforms
+crw-abbey-wood,Abbey Wood,15,51.4910,0.1200,https://en.wikipedia.org/wiki/Abbey_Wood_station,Eastern terminus
+crw-stratford,Stratford,18,51.5440,-0.0030,https://en.wikipedia.org/wiki/Stratford_station,Elizabeth line platforms
+crw-maryland,Maryland,12,51.5460,0.0060,https://en.wikipedia.org/wiki/Maryland_station,Surface station
+crw-forest-gate,Forest Gate,12,51.5490,0.0240,https://en.wikipedia.org/wiki/Forest_Gate_station,Surface station
+crw-manor-park,Manor Park,12,51.5520,0.0460,https://en.wikipedia.org/wiki/Manor_park_station,Surface station
+crw-ilford,Ilford,12,51.5590,0.0700,https://en.wikipedia.org/wiki/Ilford_station,Surface station
+crw-seven-kings,Seven Kings,12,51.5640,0.0970,https://en.wikipedia.org/wiki/Seven_Kings_station,Surface station
+crw-goodmayes,Goodmayes,12,51.5660,0.1120,https://en.wikipedia.org/wiki/Goodmayes_station,Surface station
+crw-chadwell-heath,Chadwell Heath,12,51.5680,0.1290,https://en.wikipedia.org/wiki/Chadwell_Heath_station,Surface station
+crw-romford,Romford,10,51.5750,0.1830,https://en.wikipedia.org/wiki/Romford_station,Surface station
+crw-gidea-park,Gidea Park,10,51.5720,0.2060,https://en.wikipedia.org/wiki/Gidea_Park_station,Surface station
+crw-harold-wood,Harold Wood,10,51.5930,0.2340,https://en.wikipedia.org/wiki/Harold_Wood_station,Surface station
+crw-brentwood,Brentwood,10,51.6140,0.3000,https://en.wikipedia.org/wiki/Brentwood_station,Surface station
+crw-shenfield,Shenfield,10,51.6300,0.3300,https://en.wikipedia.org/wiki/Shenfield_station,Eastern terminus (National Rail)
