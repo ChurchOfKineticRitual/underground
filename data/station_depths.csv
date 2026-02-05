@@ -180,6 +180,22 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUALD,Aldgate Underground Station,8,https://en.wikipedia.org/wiki/Aldgate_tube_station,Shallow sub-surface
 940GZZLULVT,Liverpool Street Underground Station (Circle),8,https://en.wikipedia.org/wiki/Liverpool_Street_station,Shallow sub-surface Circle line
 940GZZLUBNK,Bank Underground Station (Circle),8,https://en.wikipedia.org/wiki/Bank_and_Monument_stations,Shallow sub-surface Circle line
+# Central line — deep-level tube (central section)
+940GZZLUBND,Bond Street Underground Station (Central),24,https://en.wikipedia.org/wiki/Bond_Street_tube_station,Deep-level Central line platforms
+940GZZLUTCR,Tottenham Court Road Underground Station (Central),22,https://en.wikipedia.org/wiki/Tottenham_Court_Road_tube_station,Deep-level Central line platforms
+940GZZLUHBN,Holborn Underground Station,21,https://en.wikipedia.org/wiki/Holborn_tube_station,Deep-level station
+940GZZLUCHL,Chancery Lane Underground Station,22,https://en.wikipedia.org/wiki/Chancery_Lane_tube_station,Deep-level station
+940GZZLUSTP,St Paul's Underground Station,20,https://en.wikipedia.org/wiki/St_Paul%27s_tube_station,Deep-level station
+940GZZLUBNK,Bank Underground Station (Central),22,https://en.wikipedia.org/wiki/Bank_and_Monument_stations,Deep-level Central line platforms
+940GZZLULVT,Liverpool Street Underground Station (Central),18,https://en.wikipedia.org/wiki/Liverpool_Street_station,Deep-level Central line platforms
+940GZZLUBLG,Bethnal Green Underground Station,20,https://en.wikipedia.org/wiki/Bethnal_Green_tube_station,Deep-level station
+940GZZLUSTD,Stratford Underground Station (Central),18,https://en.wikipedia.org/wiki/Stratford_station,Deep-level Central line platforms
+# Central line — western extension
+940GZZLUSBC,Shepherd's Bush Underground Station (Central),19,https://en.wikipedia.org/wiki/Shepherd%27s_Bush_tube_station,Deep-level Central line platforms
+940GZZLUWCY,White City Underground Station,5,https://en.wikipedia.org/wiki/White_City_tube_station,At-grade station with surface platforms
+940GZZLUEAN,East Acton Underground Station,8,https://en.wikipedia.org/wiki/East_Acton_tube_station,Shallow station
+940GZZLUNAC,North Acton Underground Station,6,https://en.wikipedia.org/wiki/North_Acton_tube_station,Elevated/surface station
 # TODO: Extract depths from PDF for remaining Central line stations
-# - Remaining West Acton through to Leytonstone
+# - West Ruislip to Northolt (western end)
+# - Leytonstone to Epping (eastern end)
 # - Hainault loop stations
