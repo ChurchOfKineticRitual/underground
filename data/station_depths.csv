@@ -246,6 +246,16 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUHBN,Holloway Road Underground Station,20,https://en.wikipedia.org/wiki/Holloway_Road_tube_station,Deep-level station
 940GZZLUHAI,Arsenal Underground Station,19,https://en.wikipedia.org/wiki/Arsenal_tube_station,Deep-level station
 940GZZLUFYC,Finsbury Park Underground Station (Piccadilly),16,https://en.wikipedia.org/wiki/Finsbury_Park_station,Deep-level Piccadilly platforms
+# Piccadilly line — eastern extension (to Cockfosters)
+940GZZLUMAN,Manor House Underground Station,21,https://en.wikipedia.org/wiki/Manor_House_tube_station,Deep-level station
+940GZZLUTPN,Turnpike Lane Underground Station,19,https://en.wikipedia.org/wiki/Turnpike_Lane_tube_station,Deep-level station
+940GZZLUWOG,Wood Green Underground Station,18,https://en.wikipedia.org/wiki/Wood_Green_tube_station,Deep-level station
+940GZZLUBLM,Bounds Green Underground Station,18,https://en.wikipedia.org/wiki/Bounds_Green_tube_station,Deep-level station
+940GZZLUARN,Arnos Grove Underground Station,12,https://en.wikipedia.org/wiki/Arnos_Grove_tube_station,Shallow sub-surface (unique surface building)
+940GZZLUBDS,Bruce Grove Underground Station,10,https://en.wikipedia.org/wiki/Bruce_Grove_station,Surface station
+940GZZLUSGB,Southgate Underground Station,12,https://en.wikipedia.org/wiki/Southgate_tube_station,Sub-surface (famous Art Deco station)
+940GZZLUOAK,Oakwood Underground Station,10,https://en.wikipedia.org/wiki/Oakwood_tube_station,Shallow sub-surface
+940GZZLUCKS,Cockfosters Underground Station,6,https://en.wikipedia.org/wiki/Cockfosters_tube_station,Surface terminus
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Hainault loop stations
 # - Ealing Broadway to West Acton (main line)
