@@ -1533,7 +1533,7 @@ function setVictoriaShaftsVisible(v) {
   const tunnelOffsetContainer = document.getElementById('tunnelOffsetContainer');
   const tunnelOffsetSlider = document.getElementById('tunnelOffset');
   const tunnelOffsetValue = document.getElementById('tunnelOffsetValue');
-  
+
   if (twinCb) {
     twinCb.checked = twinTunnelsEnabled;
     // Show/hide offset slider based on twin tunnel state
@@ -1547,6 +1547,31 @@ function setVictoriaShaftsVisible(v) {
       savePrefs(prefs);
       // Reload to apply tunnel offset change
       location.reload();
+    });
+  }
+
+  // Infrastructure toggles (Tideway, Crossrail, Geology)
+  const tidewayCb = document.getElementById('toggleTideway');
+  if (tidewayCb) {
+    tidewayCb.checked = false; // Default off
+    tidewayCb.addEventListener('change', () => {
+      if (tidewayMesh) tidewayMesh.visible = tidewayCb.checked;
+    });
+  }
+
+  const crossrailCb = document.getElementById('toggleCrossrail');
+  if (crossrailCb) {
+    crossrailCb.checked = false; // Default off
+    crossrailCb.addEventListener('change', () => {
+      if (crossrailMesh) crossrailMesh.visible = crossrailCb.checked;
+    });
+  }
+
+  const geologyCb = document.getElementById('toggleGeology');
+  if (geologyCb) {
+    geologyCb.checked = false; // Default off
+    geologyCb.addEventListener('change', () => {
+      if (geologyGroup) geologyGroup.visible = geologyCb.checked;
     });
   }
   
