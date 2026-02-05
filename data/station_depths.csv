@@ -337,5 +337,27 @@ naptan_id,name,depth_m,source_url,notes
 # Central line — West London (Ealing Broadway branch)
 940GZZLUEAN,Ealing Broadway Underground Station,6,https://en.wikipedia.org/wiki/Ealing_Broadway_station,Surface terminus
 940GZZLUECY,Ealing Common Underground Station,6,https://en.wikipedia.org/wiki/Ealing_Common_tube_station,Shallow sub-surface
+# Metropolitan line — core stations
+940GZZLUHGD,Harrow-on-the-Hill Underground Station,8,https://en.wikipedia.org/wiki/Harrow-on-the-Hill_station,Elevated/sub-surface
+940GZZLUNE,Northwick Park Underground Station,8,https://en.wikipedia.org/wiki/Northwick_Park_tube_station,Shallow sub-surface
+940GZZLUPNR,Preston Road Underground Station,8,https://en.wikipedia.org/wiki/Preston_Road_tube_station,Shallow sub-surface
+940GZZLUWYP,Wembley Park Underground Station (Metropolitan),12,https://en.wikipedia.org/wiki/Wembley_Park_tube_station,Shallow sub-surface Metropolitan platforms
+940GZZLUHOH,Harrow-on-the-Hill Underground Station,8,https://en.wikipedia.org/wiki/Harrow-on-the-Hill_station,Metropolitan line platforms
+# Metropolitan line — Uxbridge branch
+940GZZLUHGD,Ickenham Underground Station,5,https://en.wikipedia.org/wiki/Ickenham_tube_station,Surface station
+940GZZLURSM,Ruislip Manor Underground Station,6,https://en.wikipedia.org/wiki/Ruislip_Manor_tube_station,Surface station
+940GZZLURSP,Ruislip Underground Station,6,https://en.wikipedia.org/wiki/Ruislip_tube_station,Surface station
+940GZZLUEAE,Eastcote Underground Station,6,https://en.wikipedia.org/wiki/Eastcote_tube_station,Surface station
+940GZZLURAY,Rayners Lane Underground Station,6,https://en.wikipedia.org/wiki/Rayners_Lane_tube_station,Surface station
+940GZZLUWAF,West Harrow Underground Station,6,https://en.wikipedia.org/wiki/West_Harrow_tube_station,Surface station
+# Metropolitan line — Watford branch
+940GZZLUHOH,Harrow-on-the-Hill Underground Station,8,https://en.wikipedia.org/wiki/Harrow-on-the-Hill_station,Sub-surface interchange
+940GZZLUNK,North Harrow Underground Station,6,https://en.wikipedia.org/wiki/North_Harrow_tube_station,Surface station
+940GZZLUPNR,Pinner Underground Station,6,https://en.wikipedia.org/wiki/Pinner_tube_station,Surface station
+940GZZLUNHA,Northwood Hills Underground Station,6,https://en.wikipedia.org/wiki/Northwood_Hills_tube_station,Surface station
+940GZZLUNWD,Northwood Underground Station,5,https://en.wikipedia.org/wiki/Northwood_tube_station,Surface station
+940GZZLUMHC,Moor Park Underground Station,5,https://en.wikipedia.org/wiki/Moor_Park_tube_station,Surface station
+940GZZLUCXY,Croxley Underground Station,5,https://en.wikipedia.org/wiki/Croxley_tube_station,Surface station
+940GZZLUWAF,Watford Underground Station,5,https://en.wikipedia.org/wiki/Watford_tube_station,Surface terminus
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Ealing Broadway to West Acton (main line - already partially covered above)
