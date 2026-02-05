@@ -1708,6 +1708,20 @@ window.addEventListener('keydown', (e) => {
     e.preventDefault();
     toggleSimPaused();
   }
+
+  // Help overlay toggle
+  if (e.key === '?' || e.key === '/' || e.key.toLowerCase() === 'h') {
+    const helpOverlay = document.getElementById('helpOverlay');
+    if (helpOverlay) {
+      helpOverlay.classList.toggle('visible');
+    }
+  }
+  if (e.key === 'Escape') {
+    const helpOverlay = document.getElementById('helpOverlay');
+    if (helpOverlay) {
+      helpOverlay.classList.remove('visible');
+    }
+  }
 });
 
 // ---------- Animate ----------
