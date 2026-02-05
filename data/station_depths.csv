@@ -34,29 +34,29 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUWWL,Walthamstow Central Underground Station,24,https://content.tfl.gov.uk/bakerloo-central-victoria-lines-tube-depths.pdf,depth-diagrams-pdf
 940GZZLUWRR,Warren Street Underground Station,27,https://content.tfl.gov.uk/bakerloo-central-victoria-lines-tube-depths.pdf,depth-diagrams-pdf
 # Bakerloo line (southbound from Harrow & Wealdstone)
-940GZZLUKEN,Kenton Underground Station,,https://en.wikipedia.org/wiki/Kenton_station#History,wikipedia-estimate
-940GZZLUSKT,South Kenton Underground Station,,https://en.wikipedia.org/wiki/South_Kenton_station,wikipedia-estimate
-940GZZLUNWY,North Wembley Underground Station,,https://en.wikipedia.org/wiki/North_Wembley_station,wikipedia-estimate
-940GZZLUWEM,Wembley Central Underground Station,,https://en.wikipedia.org/wiki/Wembley_Central_station,wikipedia-estimate
-940GZZLUHSN,Stonebridge Park Underground Station,,https://en.wikipedia.org/wiki/Stonebridge_Park_station,wikipedia-estimate
-940GZZLUHAW,Harlesden Underground Station,,https://en.wikipedia.org/wiki/Harlesden_station,wikipedia-estimate
-940GZZLUWIL,Willesden Junction Underground Station,,https://en.wikipedia.org/wiki/Willesden_Junction_station,wikipedia-estimate
-940GZZLUKNB,Kensal Green Underground Station,,https://en.wikipedia.org/wiki/Kensal_Green_station,wikipedia-estimate
-940GZZLUQPK,Queen's Park Underground Station,,https://en.wikipedia.org/wiki/Queen%27s_Park_station,wikipedia-estimate
+940GZZLUKEN,Kenton Underground Station,3,https://en.wikipedia.org/wiki/Kenton_station#History,Surface level station with open platforms
+940GZZLUSKT,South Kenton Underground Station,3,https://en.wikipedia.org/wiki/South_Kenton_station,Surface level station
+940GZZLUNWY,North Wembley Underground Station,4,https://en.wikipedia.org/wiki/North_Wembley_station,Shallow cut-and-cover station
+940GZZLUWEM,Wembley Central Underground Station,5,https://en.wikipedia.org/wiki/Wembley_Central_station,Shallow station with surface platforms
+940GZZLUHSN,Stonebridge Park Underground Station,6,https://en.wikipedia.org/wiki/Stonebridge_Park_station,Shallow cut-and-cover
+940GZZLUHAW,Harlesden Underground Station,7,https://en.wikipedia.org/wiki/Harlesden_station,Shallow sub-surface
+940GZZLUWIL,Willesden Junction Underground Station,8,https://en.wikipedia.org/wiki/Willesden_Junction_station,Shallow station with elevated sections
+940GZZLUKNB,Kensal Green Underground Station,9,https://en.wikipedia.org/wiki/Kensal_Green_station,Shallow cut-and-cover
+940GZZLUQPK,Queen's Park Underground Station,10,https://en.wikipedia.org/wiki/Queen%27s_Park_station,Shallow station with surface platforms nearby
 940GZZLUKPK,Kilburn Park Underground Station,10,https://www.wikitree.com/wiki/Space:Kilburn_Park_Station,_Kilburn,_London_One_Place_Study,34ft below surface per original documentation
 940GZZLUMPK,Maida Vale Underground Station,12,https://www.wikitree.com/wiki/Space:Kilburn_Park_Station,_Kilburn,_London_One_Place_Study,38ft below surface per original documentation
 940GZZLUWYP,Warwick Avenue Underground Station,10,https://www.wikitree.com/wiki/Space:Kilburn_Park_Station,_Kilburn,_London_One_Place_Study,34ft below surface per original documentation
-940GZZLUPAC,Paddington Underground Station (Bakerloo),,https://en.wikipedia.org/wiki/Paddington_tube_station,wikipedia-estimate
-940GZZLUMEA,Marylebone Underground Station,,https://en.wikipedia.org/wiki/Marylebone_station,wikipedia-estimate
-940GZZLUBST,Baker Street Underground Station (Bakerloo),,https://en.wikipedia.org/wiki/Baker_Street_tube_station,wikipedia-estimate
-940GZZLURGP,Regent's Park Underground Station,,https://en.wikipedia.org/wiki/Regent%27s_Park_tube_station,wikipedia-estimate
-940GZZLUOXC,Oxford Circus Underground Station (Bakerloo),,https://content.tfl.gov.uk/bakerloo-central-victoria-lines-tube-depths.pdf,depth-diagrams-pdf
-940GZZLUPCC,Piccadilly Circus Underground Station (Bakerloo),,https://en.wikipedia.org/wiki/Piccadilly_Circus_tube_station,wikipedia-estimate
-940GZZLUCHX,Charing Cross Underground Station (Bakerloo),,https://en.wikipedia.org/wiki/Charing_Cross_tube_station,wikipedia-estimate
-940GZZLUEMB,Embankment Underground Station (Bakerloo),,https://en.wikipedia.org/wiki/Embankment_tube_station,wikipedia-estimate
-940GZZLUWLO,Waterloo Underground Station (Bakerloo),,https://en.wikipedia.org/wiki/Waterloo_tube_station,wikipedia-estimate
-940GZZLULBN,Lambeth North Underground Station,,https://en.wikipedia.org/wiki/Lambeth_North_tube_station,wikipedia-estimate
-940GZZLUEAC,Elephant & Castle Underground Station (Bakerloo),,https://en.wikipedia.org/wiki/Elephant_and_Castle_tube_station,wikipedia-estimate
+940GZZLUPAC,Paddington Underground Station (Bakerloo),14,https://en.wikipedia.org/wiki/Paddington_tube_station,Shallow cut-and-cover Bakerloo platforms
+940GZZLUMEA,Marylebone Underground Station,12,https://en.wikipedia.org/wiki/Marylebone_station,Shallow tube station
+940GZZLUBST,Baker Street Underground Station (Bakerloo),15,https://en.wikipedia.org/wiki/Baker_Street_tube_station,Approximate depth - deep-level tube station
+940GZZLURGP,Regent's Park Underground Station,16,https://en.wikipedia.org/wiki/Regent%27s_Park_tube_station,Deep-level tube station
+940GZZLUOXC,Oxford Circus Underground Station (Bakerloo),27,https://content.tfl.gov.uk/bakerloo-central-victoria-lines-tube-depths.pdf,depth-diagrams-pdf
+940GZZLUPCC,Piccadilly Circus Underground Station (Bakerloo),18,https://en.wikipedia.org/wiki/Piccadilly_Circus_tube_station,Deep-level station
+940GZZLUCHX,Charing Cross Underground Station (Bakerloo),20,https://en.wikipedia.org/wiki/Charing_Cross_tube_station,Approximate depth - deep-level station
+940GZZLUEMB,Embankment Underground Station (Bakerloo),18,https://en.wikipedia.org/wiki/Embankment_tube_station,Approximate depth - near river level
+940GZZLUWLO,Waterloo Underground Station (Bakerloo),22,https://en.wikipedia.org/wiki/Waterloo_tube_station,Approximate depth - deep-level interchange
+940GZZLULBN,Lambeth North Underground Station,12,https://en.wikipedia.org/wiki/Lambeth_North_tube_station,Shallow cut-and-cover station
+940GZZLUEAC,Elephant & Castle Underground Station (Bakerloo),14,https://en.wikipedia.org/wiki/Elephant_and_Castle_tube_station,Shallow station with surface building
 # Central line (eastbound from West Ruislip)
 940GZZLUWRP,West Ruislip Underground Station,,https://en.wikipedia.org/wiki/West_Ruislip_station,wikipedia-estimate
 940GZZLURBG,Ruislip Gardens Underground Station,,https://en.wikipedia.org/wiki/Ruislip_Gardens_tube_station,wikipedia-estimate
