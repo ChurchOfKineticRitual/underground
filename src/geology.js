@@ -30,7 +30,7 @@ export function createGeologicalStrata(bounds, verticalScale = 3.0) {
   const clayMaterial = new THREE.MeshPhysicalMaterial({
     color: 0x4a5568,      // Blue-grey clay color
     transparent: true,
-    opacity: 0.15,
+    opacity: 0.35,
     roughness: 0.9,
     metalness: 0.0,
     side: THREE.DoubleSide,
@@ -77,7 +77,7 @@ export function createGeologicalStrata(bounds, verticalScale = 3.0) {
   const chalkMaterial = new THREE.MeshPhysicalMaterial({
     color: 0xf7fafc,      // White chalk color
     transparent: true,
-    opacity: 0.12,
+    opacity: 0.30,
     roughness: 0.7,
     metalness: 0.0,
     side: THREE.DoubleSide,
