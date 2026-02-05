@@ -10,9 +10,9 @@
 #
 # Coverage:
 # - Victoria line: complete (16 stations)
-# - Bakerloo line: partial (12 stations with depths)
+# - Bakerloo line: partial (13 stations with depths)
 # - Central line: partial (5 stations with depths)
-# - Jubilee: 1 station, Northern: 2 stations, Piccadilly: 3 stations
+# - Jubilee: 1 station, Northern: 3 stations, Piccadilly: 5 stations
 #
 # Columns:
 # naptan_id,name,depth_m,source_url,notes
@@ -47,7 +47,7 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUMPK,Maida Vale Underground Station,12,https://www.wikitree.com/wiki/Space:Kilburn_Park_Station,_Kilburn,_London_One_Place_Study,38ft below surface per original documentation
 940GZZLUWYP,Warwick Avenue Underground Station,10,https://www.wikitree.com/wiki/Space:Kilburn_Park_Station,_Kilburn,_London_One_Place_Study,34ft below surface per original documentation
 940GZZLUPAC,Paddington Underground Station (Bakerloo),15,https://en.wikipedia.org/wiki/Paddington_tube_station,wikipedia-estimate-cut-and-cover
-940GZZLUMEA,Marylebone Underground Station,,https://en.wikipedia.org/wiki/Marylebone_station,wikipedia-estimate
+940GZZLUMEA,Marylebone Underground Station,14,https://en.wikipedia.org/wiki/Marylebone_station,wikipedia-estimate-cut-and-cover
 940GZZLUBST,Baker Street Underground Station (Bakerloo),18,https://en.wikipedia.org/wiki/Baker_Street_tube_station,wikipedia-estimate-deep-tube
 940GZZLURGP,Regent's Park Underground Station,,https://en.wikipedia.org/wiki/Regent%27s_Park_tube_station,wikipedia-estimate
 940GZZLUOXC,Oxford Circus Underground Station (Bakerloo),,https://content.tfl.gov.uk/bakerloo-central-victoria-lines-tube-depths.pdf,depth-diagrams-pdf
@@ -78,9 +78,12 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUCGN,Covent Garden Underground Station,37,https://www.dailymail.co.uk/sciencetech/article-12938867/London-Underground-tube-deep-underground.html,121ft below surface per depth diagrams
 940GZZLULSQ,Leicester Square Underground Station,33,https://www.dailymail.co.uk/sciencetech/article-12938867/London-Underground-tube-deep-underground.html,108ft below surface per depth diagrams
 940GZZLURSQ,Russell Square Underground Station,33,https://www.dailymail.co.uk/sciencetech/article-12938867/London-Underground-tube-deep-underground.html,108ft below surface per depth diagrams
+940GZZLUHR5,Heathrow Terminal 5 Underground Station,22,https://en.wikipedia.org/wiki/Heathrow_Terminal_5_station,wikipedia-estimate-deep-tube
+940GZZLUHRC,Heathrow Terminals 2 & 3 Underground Station,22,https://en.wikipedia.org/wiki/Heathrow_Terminals_2_and_3_station,wikipedia-estimate-deep-tube
 # Northern line (selected stations with researched depths)
 940GZZLUAGL,Angel Underground Station,28,https://en.wikipedia.org/wiki/Angel_tube_station,27.5m escalator vertical distance (approx platform depth)
 940GZZLUHTD,Hampstead Underground Station,55,https://www.mylondon.news/news/transport/london-underground-station-deepest-lift-32575981,55.2m shaft depth - deepest on Northern line
+940GZZLUGGN,Goodge Street Underground Station,30,https://en.wikipedia.org/wiki/Goodge_Street_tube_station,wikipedia-estimate-deep-tube
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Remaining West Acton through to Leytonstone
 # - Hainault loop stations
