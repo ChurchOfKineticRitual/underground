@@ -89,6 +89,9 @@ export function createStationMarkers({
     const w = renderer.domElement.clientWidth;
     const h = renderer.domElement.clientHeight;
     let visibleCount = 0;
+    let behindCount = 0;
+    let offscreenCount = 0;
+    let hiddenNames = [];
 
     for (let i = 0; i < stations.length; i++) {
       const st = stations[i];
@@ -100,6 +103,8 @@ export function createStationMarkers({
       const behind = tmp.z > 1;
       if (behind) {
         el.style.display = 'none';
+        behindCount++;
+        if (behindCount <= 3) hiddenNames.push(st.name + '(behind)');
         continue;
       }
 
@@ -109,6 +114,8 @@ export function createStationMarkers({
       // quick reject off-screen
       if (x < -40 || x > w + 40 || y < -20 || y > h + 20) {
         el.style.display = 'none';
+        offscreenCount++;
+        if (offscreenCount <= 3) hiddenNames.push(st.name + '(offscr)');
         continue;
       }
 
@@ -125,7 +132,8 @@ export function createStationMarkers({
     }
     
     if (updateCount % 30 === 0) {
-      window.mobileDebug?.show(`labels: ${visibleCount}/${labelEls.length} visible`);
+      const hidden = hiddenNames.length > 0 ? ' | ' + hiddenNames.join(', ') : '';
+      window.mobileDebug?.show(`vis:${visibleCount} b:${behindCount} off:${offscreenCount}${hidden}`);
     }
   }
 
