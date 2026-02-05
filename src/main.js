@@ -14,31 +14,58 @@ window.addEventListener('error', (e) => {
   document.body.insertAdjacentHTML('beforeend', `<div style="position:fixed;top:10px;left:10px;background:red;color:white;padding:10px;z-index:9999">ERROR: ${e.error?.message || e.message}</div>`);
 });
 
-// Mobile debug overlay: shows key logs on screen
+// Mobile debug overlay: shows key logs on screen (only when ?debug=1 or on error)
 (function setupMobileDebug() {
-  const debugDiv = document.createElement('div');
-  debugDiv.id = 'mobile-debug';
-  debugDiv.style.cssText = 'position:fixed;bottom:10px;left:10px;right:10px;max-height:150px;overflow:auto;background:rgba(0,0,0,0.85);color:#0f0;font-family:monospace;font-size:11px;padding:8px;z-index:10000;border-radius:8px;pointer-events:none;';
-  document.body.appendChild(debugDiv);
+  const urlParams = new URLSearchParams(location.search);
+  const debugEnabled = urlParams.get('debug') === '1';
   
-  const logs = [];
+  let debugDiv = null;
+  let logs = [];
+  
+  function createDebugDiv() {
+    if (debugDiv) return debugDiv;
+    debugDiv = document.createElement('div');
+    debugDiv.id = 'mobile-debug';
+    debugDiv.style.cssText = 'position:fixed;bottom:10px;left:10px;right:10px;max-height:150px;overflow:auto;background:rgba(0,0,0,0.85);color:#0f0;font-family:monospace;font-size:11px;padding:8px;z-index:10000;border-radius:8px;pointer-events:none;';
+    document.body.appendChild(debugDiv);
+    // Populate with any buffered logs
+    if (logs.length > 0) {
+      debugDiv.textContent = logs.join('\n');
+    }
+    return debugDiv;
+  }
+  
   function show(msg) {
     logs.push(msg);
     if (logs.length > 10) logs.shift();
-    debugDiv.textContent = logs.join('\n');
+    if (debugDiv) {
+      debugDiv.textContent = logs.join('\n');
+    }
   }
   
-  // Capture key logs
+  // If debug mode enabled via URL, create immediately
+  if (debugEnabled) {
+    createDebugDiv();
+  }
+  
+  // Capture key logs only when debug is enabled or after an error
   const origLog = console.log;
   console.log = (...args) => {
     origLog.apply(console, args);
+    if (!debugEnabled) return;
     const msg = args.join(' ');
     if (msg.includes('stations') || msg.includes('labels') || msg.includes('update')) {
       show(msg.slice(0, 100));
     }
   };
   
-  window.mobileDebug = { show };
+  // Expose show() for error handlers to use even when debug not enabled
+  window.mobileDebug = { 
+    show: (msg) => {
+      createDebugDiv();
+      show(msg);
+    }
+  };
 })();
 
 // Real-world tube tunnels are built as parallel bores roughly 5–10 m apart (centre-to-centre).
