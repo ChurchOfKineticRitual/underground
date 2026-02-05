@@ -6,6 +6,7 @@ import { tryCreateTerrainMesh, xzToTerrainUV, terrainHeightToWorldY, TERRAIN_CON
 import { createStationMarkers } from './stations.js';
 import { loadLineShafts, addShaftsToScene } from './shafts.js';
 import { loadThamesData, createThamesMesh } from './thames.js';
+import { loadTidewayData, createTidewayTunnel, addTidewayToLegend } from './tideway.js';
 
 // Version: 2026-02-05-0553 - Work tick: clean up console.log spam
 // Emergency debugging: catch all errors
@@ -526,6 +527,20 @@ loadThamesData().then(thamesData => {
     if (thamesMesh) {
       thamesMesh.position.y = -2.0;
       scene.add(thamesMesh);
+    }
+  }
+});
+
+// ---------- Tideway Tunnel (Super Sewer - deeper infrastructure) ----------
+let tidewayMesh = null;
+loadTidewayData().then(tidewayData => {
+  if (tidewayData) {
+    // Use the same projection as tube stations
+    tidewayMesh = createTidewayTunnel(tidewayData, (lat, lon) => latLonToMeters(lat, lon, TERRAIN_CONFIG.originLat, TERRAIN_CONFIG.originLon), TERRAIN_CONFIG.depthScale);
+    if (tidewayMesh) {
+      scene.add(tidewayMesh);
+      addTidewayToLegend();
+      console.log('Tideway Tunnel added to scene');
     }
   }
 });
