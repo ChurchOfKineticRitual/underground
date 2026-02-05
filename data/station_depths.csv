@@ -323,6 +323,19 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUODS,Old Street Underground Station,16,https://en.wikipedia.org/wiki/Old_Street_station,Deep-level station
 940GZZLUEUS,Euston Underground Station (Northern City),22,https://en.wikipedia.org/wiki/Euston_station,Northern City Line platforms
 940GZZLUMRH,Moorgate Underground Station (Northern City),16,https://en.wikipedia.org/wiki/Moorgate_station,Northern City Line platforms
+# Central line — Hainault loop stations
+940GZZLUSBC,Snaresbrook Underground Station,8,https://en.wikipedia.org/wiki/Snaresbrook_tube_station,Sub-surface station
+940GZZLUSWF,South Woodford Underground Station,8,https://en.wikipedia.org/wiki/South_Woodford_tube_station,Sub-surface station
+940GZZLUWFD,Woodford Underground Station,6,https://en.wikipedia.org/wiki/Woodford_tube_station,Elevated/surface station
+940GZZLURBG,Roding Valley Underground Station,6,https://en.wikipedia.org/wiki/Roding_Valley_tube_station,Surface station
+940GZZLUCSG,Chigwell Underground Station,6,https://en.wikipedia.org/wiki/Chigwell_tube_station,Surface station
+940GZZLUGTH,Grange Hill Underground Station,6,https://en.wikipedia.org/wiki/Grange_Hill_tube_station,Surface station
+940GZZLUHAI,Hainault Underground Station,8,https://en.wikipedia.org/wiki/Hainault_tube_station,Sub-surface station
+940GZZLUFOP,Fairlop Underground Station,8,https://en.wikipedia.org/wiki/Fairlop_tube_station,Sub-surface station
+940GZZLUBKE,Barkingside Underground Station,8,https://en.wikipedia.org/wiki/Barkingside_tube_station,Sub-surface station
+940GZZLUNBP,Newbury Park Underground Station,8,https://en.wikipedia.org/wiki/Newbury_Park_tube_station,Sub-surface station
+# Central line — West London (Ealing Broadway branch)
+940GZZLUEAN,Ealing Broadway Underground Station,6,https://en.wikipedia.org/wiki/Ealing_Broadway_station,Surface terminus
+940GZZLUECY,Ealing Common Underground Station,6,https://en.wikipedia.org/wiki/Ealing_Common_tube_station,Shallow sub-surface
 # TODO: Extract depths from PDF for remaining Central line stations
-# - Hainault loop stations
-# - Ealing Broadway to West Acton (main line)
+# - Ealing Broadway to West Acton (main line - already partially covered above)
