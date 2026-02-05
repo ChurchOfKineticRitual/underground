@@ -89,9 +89,6 @@ export function createStationMarkers({
     const w = renderer.domElement.clientWidth;
     const h = renderer.domElement.clientHeight;
     let visibleCount = 0;
-    let behindCount = 0;
-    let offscreenCount = 0;
-    let hiddenNames = [];
 
     for (let i = 0; i < stations.length; i++) {
       const st = stations[i];
@@ -100,9 +97,7 @@ export function createStationMarkers({
       tmp.copy(st.pos);
       tmp.project(camera);
 
-      // Less aggressive behind-camera check: only hide if well behind (z > 1.5)
-      // and reduce opacity for marginal cases instead of hiding completely
-      const behind = tmp.z > 1.5;
+      // Less aggressive behind-camera check: reduce opacity for marginal cases
       const marginal = tmp.z > 1 && tmp.z <= 1.5;
 
       const x = (tmp.x * 0.5 + 0.5) * w;
@@ -111,8 +106,6 @@ export function createStationMarkers({
       // quick reject off-screen
       if (x < -40 || x > w + 40 || y < -20 || y > h + 20) {
         el.style.display = 'none';
-        offscreenCount++;
-        if (offscreenCount <= 3) hiddenNames.push(st.name + '(offscr)');
         continue;
       }
 
