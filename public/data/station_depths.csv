@@ -10,9 +10,9 @@
 #
 # Coverage:
 # - Victoria line: complete (16 stations)
-# - Bakerloo line: partial (13 stations with depths)
+# - Bakerloo line: partial (14 stations with depths)
 # - Central line: partial (6 stations with depths)
-# - Jubilee: 2 stations, Northern: 3 stations, Piccadilly: 5 stations
+# - Jubilee: 2 stations, Northern: 3 stations, Piccadilly: 6 stations
 #
 # Columns:
 # naptan_id,name,depth_m,source_url,notes
@@ -49,7 +49,7 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUPAC,Paddington Underground Station (Bakerloo),15,https://en.wikipedia.org/wiki/Paddington_tube_station,wikipedia-estimate-cut-and-cover
 940GZZLUMEA,Marylebone Underground Station,14,https://en.wikipedia.org/wiki/Marylebone_station,wikipedia-estimate-cut-and-cover
 940GZZLUBST,Baker Street Underground Station (Bakerloo),18,https://en.wikipedia.org/wiki/Baker_Street_tube_station,wikipedia-estimate-deep-tube
-940GZZLURGP,Regent's Park Underground Station,,https://en.wikipedia.org/wiki/Regent%27s_Park_tube_station,wikipedia-estimate
+940GZZLURGP,Regent's Park Underground Station,20,https://en.wikipedia.org/wiki/Regent%27s_Park_tube_station,wikipedia-estimate-deep-tube
 940GZZLUOXC,Oxford Circus Underground Station (Bakerloo),,https://content.tfl.gov.uk/bakerloo-central-victoria-lines-tube-depths.pdf,depth-diagrams-pdf
 940GZZLUPCC,Piccadilly Circus Underground Station (Bakerloo),19,https://en.wikipedia.org/wiki/Piccadilly_Circus_tube_station,wikipedia-estimate-deep-tube
 940GZZLUCHX,Charing Cross Underground Station (Bakerloo),21,https://en.wikipedia.org/wiki/Charing_Cross_tube_station,wikipedia-estimate-deep-tube
@@ -82,6 +82,7 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLURSQ,Russell Square Underground Station,33,https://www.dailymail.co.uk/sciencetech/article-12938867/London-Underground-tube-deep-underground.html,108ft below surface per depth diagrams
 940GZZLUHR5,Heathrow Terminal 5 Underground Station,22,https://en.wikipedia.org/wiki/Heathrow_Terminal_5_station,wikipedia-estimate-deep-tube
 940GZZLUHRC,Heathrow Terminals 2 & 3 Underground Station,22,https://en.wikipedia.org/wiki/Heathrow_Terminals_2_and_3_station,wikipedia-estimate-deep-tube
+940GZZLUBOS,Piccadilly Circus Underground Station (Piccadilly),20,https://en.wikipedia.org/wiki/Piccadilly_Circus_tube_station,wikipedia-estimate-deep-tube
 # Northern line (selected stations with researched depths)
 940GZZLUAGL,Angel Underground Station,28,https://en.wikipedia.org/wiki/Angel_tube_station,27.5m escalator vertical distance (approx platform depth)
 940GZZLUHTD,Hampstead Underground Station,55,https://www.mylondon.news/news/transport/london-underground-station-deepest-lift-32575981,55.2m shaft depth - deepest on Northern line
