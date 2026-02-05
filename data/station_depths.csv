@@ -276,6 +276,19 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUTBY,Tooting Broadway Underground Station,16,https://en.wikipedia.org/wiki/Tooting_Broadway_tube_station,Deep-level
 940GZZLUCOM,Colliers Wood Underground Station,18,https://en.wikipedia.org/wiki/Colliers_Wood_tube_station,Deep-level
 940GZZLUMDN,Morden Underground Station,20,https://en.wikipedia.org/wiki/Morden_tube_station,Deep-level terminus
+# Jubilee line — western section (Stanmore to Baker Street)
+940GZZLUSTM,Stanmore Underground Station,5,https://en.wikipedia.org/wiki/Stanmore_tube_station,Surface terminus
+940GZZLUCAN,Canons Park Underground Station,8,https://en.wikipedia.org/wiki/Canons_Park_tube_station,Sub-surface
+940GZZLUQBY,Queensbury Underground Station,10,https://en.wikipedia.org/wiki/Queensbury_tube_station,Sub-surface
+940GZZLUKEN,Kingsbury Underground Station,10,https://en.wikipedia.org/wiki/Kingsbury_tube_station,Sub-surface
+940GZZLUND,Wembley Park Underground Station,12,https://en.wikipedia.org/wiki/Wembley_Park_tube_station,Sub-surface Jubilee platforms
+940GZZLUNE,Neasden Underground Station,18,https://en.wikipedia.org/wiki/Neasden_tube_station,Deep-level station
+940GZZLUDOH,Dollis Hill Underground Station,16,https://en.wikipedia.org/wiki/Dollis_Hill_tube_station,Deep-level station
+940GZZLUWIL,Willesden Green Underground Station,15,https://en.wikipedia.org/wiki/Willesden_Green_tube_station,Deep-level station
+940GZZLUKGN,Kilburn Underground Station,14,https://en.wikipedia.org/wiki/Kilburn_tube_station,Deep-level station
+940GZZLUWYP,West Hampstead Underground Station,14,https://en.wikipedia.org/wiki/West_Hampstead_tube_station,Deep-level station
+940GZZLUFIN,Finchley Road Underground Station,16,https://en.wikipedia.org/wiki/Finchley_Road_tube_station,Deep-level Jubilee platforms
+940GZZLUSJW,Swiss Cottage Underground Station,18,https://en.wikipedia.org/wiki/Swiss_Cottage_tube_station,Deep-level station
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Hainault loop stations
 # - Ealing Broadway to West Acton (main line)
