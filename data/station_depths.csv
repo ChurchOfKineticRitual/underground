@@ -226,6 +226,26 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUSUH,Sudbury Hill Underground Station,6,https://en.wikipedia.org/wiki/Sudbury_Hill_tube_station,Elevated station
 940GZZLUSGB,South Harrow Underground Station,6,https://en.wikipedia.org/wiki/South_Harrow_tube_station,Elevated station
 940GZZLUHGD,Rayners Lane Underground Station,6,https://en.wikipedia.org/wiki/Rayners_Lane_tube_station,Elevated station
+# Piccadilly line — Uxbridge branch
+940GZZLUUXB,Uxbridge Underground Station,5,https://en.wikipedia.org/wiki/Uxbridge_tube_station,Surface station with distinctive architecture
+940GZZLUHGD,Hillingdon Underground Station,5,https://en.wikipedia.org/wiki/Hillingdon_tube_station,Surface station
+940GZZLUICK,Ickenham Underground Station,5,https://en.wikipedia.org/wiki/Ickenham_tube_station,Surface station
+940GZZLURSP,Ruislip Underground Station,6,https://en.wikipedia.org/wiki/Ruislip_tube_station,Surface station
+940GZZLURSM,Ruislip Manor Underground Station,6,https://en.wikipedia.org/wiki/Ruislip_Manor_tube_station,Surface station
+940GZZLUEAE,Eastcote Underground Station,6,https://en.wikipedia.org/wiki/Eastcote_tube_station,Elevated/surface station
+# Piccadilly line — central deep-level section
+940GZZLUHPC,Hyde Park Corner Underground Station,15,https://en.wikipedia.org/wiki/Hyde_Park_Corner_tube_station,Deep-level station
+940GZZLUGPK,Green Park Underground Station (Piccadilly),18,https://en.wikipedia.org/wiki/Green_Park_tube_station,Piccadilly line platforms
+940GZZLUPCC,Piccadilly Circus Underground Station,18,https://en.wikipedia.org/wiki/Piccadilly_Circus_tube_station,Piccadilly line platforms
+940GZZLULSQ,Leicester Square Underground Station,22,https://en.wikipedia.org/wiki/Leicester_Square_tube_station,Deep-level station
+940GZZLUCGN,Covent Garden Underground Station,20,https://en.wikipedia.org/wiki/Covent_Garden_tube_station,Deep-level station
+940GZZLUHOL,Holborn Underground Station,21,https://en.wikipedia.org/wiki/Holborn_tube_station,Deep-level station
+940GZZLURSG,Russell Square Underground Station,18,https://en.wikipedia.org/wiki/Russell_Square_tube_station,Deep-level station
+940GZZLUKXX,King's Cross St. Pancras Underground Station (Piccadilly),16,https://en.wikipedia.org/wiki/King%27s_Cross_St_Pancras_tube_station,Deep-level Piccadilly platforms
+940GZZLUCAR,Caledonian Road Underground Station,18,https://en.wikipedia.org/wiki/Caledonian_Road_tube_station,Deep-level station
+940GZZLUHBN,Holloway Road Underground Station,20,https://en.wikipedia.org/wiki/Holloway_Road_tube_station,Deep-level station
+940GZZLUHAI,Arsenal Underground Station,19,https://en.wikipedia.org/wiki/Arsenal_tube_station,Deep-level station
+940GZZLUFYC,Finsbury Park Underground Station (Piccadilly),16,https://en.wikipedia.org/wiki/Finsbury_Park_station,Deep-level Piccadilly platforms
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Hainault loop stations
 # - Ealing Broadway to West Acton (main line)
