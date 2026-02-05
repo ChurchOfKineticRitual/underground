@@ -7,7 +7,7 @@ import { createStationMarkers } from './stations.js';
 import { loadLineShafts, addShaftsToScene } from './shafts.js';
 import { loadThamesData, createThamesMesh } from './thames.js';
 
-// Version: 2026-02-05-0015 - Force fresh Netlify build
+// Version: 2026-02-05-0410 - Failsafe work tick update
 // Emergency debugging: catch all errors
 window.addEventListener('error', (e) => {
   console.error('GLOBAL ERROR:', e.error);

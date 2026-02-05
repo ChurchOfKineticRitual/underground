@@ -124,7 +124,7 @@ export function createStationMarkers({
       el.style.opacity = alpha.toFixed(3);
     }
     
-    if (updateCount % 30 === 0) {
+    if (updateCount % 60 === 0) {
       window.mobileDebug?.show(`vis:${visibleCount}/${labelEls.length} cam:${camera.position.z.toFixed(0)}`);
     }
   }
