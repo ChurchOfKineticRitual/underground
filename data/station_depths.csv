@@ -289,6 +289,22 @@ naptan_id,name,depth_m,source_url,notes
 940GZZLUWYP,West Hampstead Underground Station,14,https://en.wikipedia.org/wiki/West_Hampstead_tube_station,Deep-level station
 940GZZLUFIN,Finchley Road Underground Station,16,https://en.wikipedia.org/wiki/Finchley_Road_tube_station,Deep-level Jubilee platforms
 940GZZLUSJW,Swiss Cottage Underground Station,18,https://en.wikipedia.org/wiki/Swiss_Cottage_tube_station,Deep-level station
+# Jubilee line — central section (Baker Street to Westminster)
+940GZZLUSJP,St John's Wood Underground Station,17,https://en.wikipedia.org/wiki/St_John%27s_Wood_tube_station,Deep-level station
+940GZZLUBST,Baker Street Underground Station (Jubilee),16,https://en.wikipedia.org/wiki/Baker_Street_tube_station,Deep-level Jubilee platforms
+940GZZLUBND,Bond Street Underground Station (Jubilee),22,https://en.wikipedia.org/wiki/Bond_Street_tube_station,Deep-level Jubilee platforms
+940GZZLUGPK,Green Park Underground Station (Jubilee),18,https://en.wikipedia.org/wiki/Green_Park_tube_station,Jubilee line platforms
+940GZZLUWSM,Westminster Underground Station,30,https://en.wikipedia.org/wiki/Westminster_tube_station,Deep-level Jubilee platforms
+# Jubilee line — eastern section (Waterloo to Stratford)
+940GZZLUWLO,Waterloo Underground Station (Jubilee),26,https://en.wikipedia.org/wiki/Waterloo_tube_station,Deep-level Jubilee platforms
+940GZZLUSWK,Southwark Underground Station,20,https://en.wikipedia.org/wiki/Southwark_tube_station,Deep-level station
+940GZZLULNB,London Bridge Underground Station (Jubilee),28,https://en.wikipedia.org/wiki/London_Bridge_station,Deep-level Jubilee platforms
+940GZZLUBMY,Bermondsey Underground Station,18,https://en.wikipedia.org/wiki/Bermondsey_tube_station,Jubilee line platform
+940GZZLUCGT,Canada Water Underground Station,18,https://en.wikipedia.org/wiki/Canada_Water_station,Jubilee line platform
+940GZZLUCYF,Canary Wharf Underground Station,20,https://en.wikipedia.org/wiki/Canary_W Wharf_tube_station,Deep-level Jubilee platforms
+940GZZLUNGX,North Greenwich Underground Station,16,https://en.wikipedia.org/wiki/North_Greenwich_tube_station,Jubilee line platforms
+940GZZLUCGT,Canning Town Underground Station,14,https://en.wikipedia.org/wiki/Canning_Town_station,Jubilee line platforms
+940GZZLUSTD,Stratford Underground Station (Jubilee),16,https://en.wikipedia.org/wiki/Stratford_station,Jubilee line platforms
 # TODO: Extract depths from PDF for remaining Central line stations
 # - Hainault loop stations
 # - Ealing Broadway to West Acton (main line)
