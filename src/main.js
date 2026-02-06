@@ -10,7 +10,7 @@ import { loadTidewayData, createTidewayTunnel, addTidewayToLegend } from './tide
 import { loadCrossrailData, createCrossrailTunnel, addCrossrailToLegend } from './crossrail.js';
 import { createGeologicalStrata, addGeologyToLegend } from './geology.js';
 
-// Version: 2026-02-05-0553 - Work tick: clean up console.log spam
+// Version: 2026-02-06-1330 - UnderGround MVP
 // Emergency debugging: catch all errors
 window.addEventListener('error', (e) => {
   console.error('GLOBAL ERROR:', e.error);
